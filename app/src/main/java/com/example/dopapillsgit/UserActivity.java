@@ -51,7 +51,7 @@ public class UserActivity extends AppCompatActivity {
                                 selectedFragment = new HomeFragment();
                                 break;
                             case R.id.profil:
-                                selectedFragment = new HomeFragment();
+                                selectedFragment = new ProfilFragment();
                                 break;
                             case R.id.evolution:
                                 selectedFragment = new HomeFragment();
