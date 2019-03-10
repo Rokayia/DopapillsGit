@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/background">
+
+        <TextView
+            android:layout_width="350dp"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:text="@string/connexion"
+            android:textColor="#55BAA9"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/votremail"
+            android:singleLine="true"
+            android:layout_weight="0.04"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="20dp"
+            android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/mdppatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/votremdp"
+            android:singleLine="true"
+            android:layout_weight="0.04"
+            android:inputType="textPassword"
+            android:layout_marginBottom="20dp"
+            android:autofillHints="" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.125"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/boutonseconnecter"
+                android:layout_width="300dp"
+                android:layout_height="91dp"
+                android:layout_marginTop="55dp"
+                android:layout_gravity="center"
+                android:text="@string/seconnecter"
+                android:background="@drawable/symbole130"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.125"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:clickable="true"
+                android:text="@string/mdpoublie"
+                android:textStyle="italic"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

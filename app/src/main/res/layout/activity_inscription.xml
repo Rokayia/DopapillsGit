@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/background">
+
+        <TextView
+            android:layout_width="350dp"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:text="@string/vosid"
+            android:textSize="30sp"
+            android:textColor="#55BAA9"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/pseudo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/et_pseudo"
+            android:singleLine="true"
+            android:layout_weight="0.06"
+            android:layout_marginBottom="20dp"
+            android:autofillHints=""
+            android:inputType="" />
+        <EditText
+            android:id="@+id/mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/et_email"
+            android:singleLine="true"
+            android:layout_weight="0.06"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="20dp"
+            android:autofillHints="" />
+        <EditText
+            android:id="@+id/mdppatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/mdp"
+            android:singleLine="true"
+            android:layout_weight="0.06"
+            android:inputType="textPassword"
+            android:layout_marginBottom="20dp" />
+        <EditText
+            android:id="@+id/mdppatient2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/mdpconfirmer"
+            android:singleLine="true"
+            android:layout_weight="0.06"
+            android:inputType="textPassword"
+            android:layout_marginBottom="20dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.125"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            >
+            <Button
+                android:id="@+id/boutonsuivantvalider"
+                android:layout_width="300dp"
+                android:layout_height="91dp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/symbolee2981"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

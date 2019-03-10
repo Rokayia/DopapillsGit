@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">DopaPills</string>
+    <string name="connexion">Connexion</string>
+    <string name="seconnecter">Se connecter</string>
+    <string name="mdpoublie">Mot de passe oublié ?</string>
+    <string name="votremdp">Votre mot de passe</string>
+    <string name="votremail">Votre adresse e-mail</string>
+    <string name="annuler">Annuler</string>
+    <string name="sinscrire">Inscrivez-vous</string>
+    <string name="boutonsinscrire">Valider mon inscription</string>
+    <string name="et_pseudo">Votre pseudo</string>
+    <string name="et_email">Votre adresse e-mail</string>
+    <string name="mdp">Votre mot de passe</string>
+    <string name="mdpconfirmer">Confirmez votre mot de passe</string>
+    <string name="creercompte">Créer un compte</string>
+    <string name="vosid">Vos identifiants</string>
+    <string name="suivant">Suivant</string>
+    <string name="bienvenue">Bienvenue</string>
+    <string name="votrenom">Votre nom</string>
+    <string name="votreprenom">Votre prénom</string>
+    <string name="vousetes">Vous êtes</string>
+    <string name="profilvalide">Profil validé!</string>
+    <string name="installerunemontre">Installer une montre</string>
+    <string name="ignoreretape">Ignorer cette étape</string>
+    <string name="montre">Image de la montre</string>
+    <string name="activerbluetooth">Veuillez activer votre Bluetooth</string>
+    <string name="montreajoutee">Montre ajoutée avec succès!</string>
+    <string name="registration_success">Enregistrement réussi</string>
+    <string name="registration_failed">Echec enregistrement</string>
+    <string name="modif_success">Modification réussie</string>
+    <string name="modif_failed">Echec modification</string>
+    <string name="un_homme">Un homme</string>
+    <string name="une_femme">Une femme</string>
+    <string name="votre_age">Votre âge</string>
+    <string name="votre_poids">Votre poids (en kg)</string>
+    <string name="votre_taille">Votre taille (en cm)</string>
+    <string name="acceuil_navbar" >Accueil</string>
+    <string name="profil_navbar" >Mon profil</string>
+    <string name="evolution_navbar" >Mon evolution</string>
+    <string name="eval_navbar" >Auto-evaluation</string>
+    <string name="reseau_navbar" >Mon réseau</string>
+    <string name="identifiants_de_compte">Identifiants du compte</string>
+    <string name="donn_es_de_sant">Données de santé</string>
+    <string name="vos_m_dicaments">Vos médicaments</string>
+    <string name="vos_m_decins">Vos médecins</string>
+    <string name="supprimer_votre_compte">Supprimer votre compte</string>
+    <string name="identifiants_du_compte">Identifiants du compte</string>
+    <string name="votre_nom">Votre nom</string>
+    <string name="votre_pr_nom">Votre prénom</string>
+    <string name="votre_e_mail">Votre e-mail</string>
+    <string name="modifier_votre_profil">Modifier votre profil</string>
+    <string name="date_de_naissance">Date de naissance</string>
+    <string name="poids_kg">Poids (kg)</string>
+    <string name="taille_cm">Taille (cm)</string>
+    <string name="_53">53</string>
+    <string name="_162">162</string>
+    <string name="_2017">2017</string>
+    <string name="ann_e_du_diagnostic">Année du diagnostic</string>
+    <string name="groupe_sanguin">Groupe sanguin</string>
+    <string name="a">A+</string>
+    <string name="contact_d_urgence">Contact d\'urgence</string>
+    <string name="marc">Marc</string>
+    <string name="allergie_s">Allergie(s)</string>
+    <string name="contre_indications">Contre-indications</string>
+    <string name="ajouter_votre_dispositif_m_dical">Ajouter votre dispositif médical</string>
+    <string name="modification_termin_e">Modification terminée</string>
+    <string-array name="allergies">
+        <item>Pollen</item>
+        <item>Animaux</item>
+        <item>Acariens</item>
+    </string-array>
+    <string-array name="medicaments">
+        <item>Duodopa</item>
+        <item>Corbila</item>
+    </string-array>
+    <string-array name="contreIndication">
+        <item>IRM1</item>
+        <item>IRM2</item>
+        <item>IRM3</item>
+        <item>IRM4</item>
+        <item>IRM5</item>
+        <item>IRM6</item>
+    </string-array>
+
+</resources>

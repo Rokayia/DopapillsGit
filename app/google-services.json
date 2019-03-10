@@ -1,0 +1,135 @@
+{
+  "project_info": {
+    "project_number": "729828938933",
+    "firebase_url": "https://dopapills-94d22.firebaseio.com",
+    "project_id": "dopapills-94d22",
+    "storage_bucket": "dopapills-94d22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729828938933:android:86d53776e3c42f88",
+        "android_client_info": {
+          "package_name": "com.example.dopapill"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729828938933-c1qtouulcd60mvf39puf1srilqjpsqjk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqS18B2gXEnaM8hIYt3aThbyqKd61A4uw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729828938933:android:e49573781a744d86",
+        "android_client_info": {
+          "package_name": "com.example.dopapillpartage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729828938933-c1qtouulcd60mvf39puf1srilqjpsqjk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqS18B2gXEnaM8hIYt3aThbyqKd61A4uw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729828938933:android:d98adeec999416b8",
+        "android_client_info": {
+          "package_name": "com.example.dopapills"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729828938933-c1qtouulcd60mvf39puf1srilqjpsqjk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqS18B2gXEnaM8hIYt3aThbyqKd61A4uw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729828938933:android:70f9433e3d2b7748",
+        "android_client_info": {
+          "package_name": "com.example.dopapillsgit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729828938933-c1qtouulcd60mvf39puf1srilqjpsqjk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqS18B2gXEnaM8hIYt3aThbyqKd61A4uw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

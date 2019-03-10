@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="15px"
+    android:layout_marginRight="15px"
+    android:layout_marginBottom="20px"
+    android:layout_marginTop="20px"
+    android:background="@drawable/background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:textColor="#55BAA9"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="@string/vousetes"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="0.04">
+
+        <ToggleButton
+            android:id="@+id/button_homme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@drawable/my_btn_toggle"
+            android:checked="false"
+            android:text="@string/un_homme"
+            android:textColor="#FFFFFF"
+            android:textOff="@string/un_homme"
+            android:textOn="@string/un_homme" />
+        <ToggleButton
+            android:id="@+id/button_femme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/une_femme"
+            android:textOff="@string/une_femme"
+            android:textOn="@string/une_femme"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/my_btn_toggle"/>
+    </LinearLayout>
+    <EditText
+        android:id="@+id/age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/votre_age"
+        android:singleLine="true"
+        android:inputType="number"
+        android:layout_weight="0.04"
+        android:layout_marginBottom="20dp"
+        android:autofillHints=""/>
+    <EditText
+        android:id="@+id/poids"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/votre_poids"
+        android:inputType="number"
+        android:singleLine="true"
+        android:layout_weight="0.04"
+        android:layout_marginBottom="20dp"
+        android:autofillHints=""/>
+    <EditText
+        android:id="@+id/taille"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="@string/votre_taille"
+        android:singleLine="true"
+        android:layout_weight="0.04"
+        android:layout_marginBottom="20dp"
+        android:autofillHints=""/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.125"
+        android:clickable="true"
+        android:layout_gravity="center"
+        >
+        <Button
+            android:id="@+id/buttonVousEtes"
+            android:layout_width="300dp"
+            android:layout_height="91dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:background="@drawable/symbolee2981"
+            />
+    </LinearLayout>
+
+</LinearLayout>
