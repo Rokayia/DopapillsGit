@@ -64,6 +64,8 @@
     <string name="contre_indications">Contre-indications</string>
     <string name="ajouter_votre_dispositif_m_dical">Ajouter votre dispositif médical</string>
     <string name="modification_termin_e">Modification terminée</string>
+    <string name="se_d_connecter">Se déconnecter</string>
+
     <string-array name="allergies">
         <item>Pollen</item>
         <item>Animaux</item>
