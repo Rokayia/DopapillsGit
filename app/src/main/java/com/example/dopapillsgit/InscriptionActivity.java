@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dopapillsgitModel.ContactUrgence;
+import com.example.dopapillsgitModel.DonneesSante;
 import com.example.dopapillsgitModel.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -65,8 +67,12 @@ public class InscriptionActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task task) {
 
                             if (task.isSuccessful()) {
-                                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
-                                String userId = mDatabase.push().getKey();
+                                FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+                                DatabaseReference myRefu=mDatabase.getReference("Patient");
+                                DatabaseReference myRefd=mDatabase.getReference("DonneesDeSante");
+                                DatabaseReference myRefc=mDatabase.getReference("ContactUrgence");
+                                String userId = myRefu.push().getKey();
+                                String userC=myRefc.push().getKey();
                                 Intent i = getIntent();
                                 String strnAge = "";
                                 String strSexe = "";
@@ -74,6 +80,7 @@ public class InscriptionActivity extends AppCompatActivity {
                                 String strTaille = "";
                                 String strNom = "";
                                 String strPrenom = "";
+                                String id=FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 if(i !=null){
                                     if (i.hasExtra(POIDS)&&i.hasExtra(TAILLE)&&i.hasExtra(AGE)&&i.hasExtra(SEXE)){
                                         strnAge = i.getStringExtra(AGE);
@@ -85,12 +92,52 @@ public class InscriptionActivity extends AppCompatActivity {
 
                                     }
                                 }
-                                User user = new User(strNom, strPrenom,strSexe,strnAge,strPoids,strTaille,pseudo,emailID);
-                                DatabaseReference ref = mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                //Création de la base de données Patient
+
+                                User user = new User(strNom, strPrenom,strSexe,strnAge,strPoids,strTaille,pseudo,emailID,id);
 
 
+                                DatabaseReference refu = myRefu.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                refu.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
 
-                                       ref.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(InscriptionActivity.this, getString( R.string.registration_success), Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(InscriptionActivity.this, getString(R.string.registration_failed), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+                                //Création de la base de données DonnéesDeSanté
+                                String groupeSanguin="";
+                                String contactUrgence="";
+                                String allergies="";
+                                String dateDeNaissance="";
+                                String anneeDiagnostic="";
+                                String contreIndication="";
+                                DonneesSante donneesDeSante= new DonneesSante(id,groupeSanguin, contactUrgence,allergies, strTaille, strPoids, dateDeNaissance,  anneeDiagnostic,contreIndication);
+                                DatabaseReference refd = myRefd.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                refd.setValue(donneesDeSante).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(InscriptionActivity.this, getString( R.string.registration_success), Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(InscriptionActivity.this, getString(R.string.registration_failed), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+                                //Création de la base de données ContactUrgence
+                                String nomC="";
+                                String prenomC="";
+                                String numeroTelC="";
+                                String idC=userC;
+
+                                ContactUrgence contactU= new ContactUrgence(nomC,prenomC, numeroTelC,idC);
+                                DatabaseReference refc = myRefc.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                refc.setValue(contactU).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 

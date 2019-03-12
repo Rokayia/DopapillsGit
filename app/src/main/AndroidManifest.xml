@@ -13,12 +13,13 @@
         <activity android:name=".UserActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".ConnexionActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.example.dopapillsgit.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.dopapillsgit.MainActivity" />
@@ -48,5 +49,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.dopapillsgit.UserActivity" />
         </activity>
+        <activity android:name=".DonnesSanteActivity"
+            android:parentActivityName=".UserActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.dopapillsgit.UserActivity" />
+        </activity>
+
     </application>
 </manifest>

@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class ProfilFragment extends Fragment {
@@ -56,7 +57,7 @@ public class ProfilFragment extends Fragment {
 //Firebase
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
+        myRef = mFirebaseDatabase.getReference("Patient");
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
 
@@ -67,19 +68,11 @@ public class ProfilFragment extends Fragment {
             }
         };
 //afficher le nom,prenoom et mail de l'utiilisateur
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                showData(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        Query query=myRef
+                .orderByChild("id")
+                .equalTo(userID);
+        toastMessage(userID);
+        query.addListenerForSingleValueEvent(valueEventListener);
 
 // Déconnection
 
@@ -99,37 +92,39 @@ public class ProfilFragment extends Fragment {
             }
         });
         //Données de santé
-        /*btnDonnes.setOnClickListener(new View.OnClickListener() {
+        btnDonnes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 startActivity(new Intent(getActivity(), DonnesSanteActivity.class));
             }
-        });*/
+        });
 
         return view;
     }
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+toastMessage(Boolean.toString(dataSnapshot.exists()));
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    String nom =user.getNom();
+                    String prenom =user.getPrenom();
+                    editTextNomPrenomProfil.setText(nom +" " +prenom);
 
-    private void showData(DataSnapshot dataSnapshot) {
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            User uInfo = new User();
-            uInfo.setNom(ds.child(userID).getValue(User.class).getNom()); //set the name
-            uInfo.setEmail(ds.child(userID).getValue(User.class).getEmail()); //set the email
-            uInfo.setPrenom(ds.child(userID).getValue(User.class).getPrenom()); //set the phone_num
+                }
 
-            //display all the information
-            Log.d(TAG, "showData: name: " + uInfo.getNom());
-            Log.d(TAG, "showData: email: " + uInfo.getEmail());
-            Log.d(TAG, "showData: phone_num: " + uInfo.getPrenom());
+            }
+        }
 
-
-
-            String nom =uInfo.getNom();
-            String prenom =uInfo.getPrenom();
-            editTextNomPrenomProfil.setText(nom +" " +prenom);
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
 
         }
-    }
+    };
+
+
     @Override
     public void onStart() {
         super.onStart();

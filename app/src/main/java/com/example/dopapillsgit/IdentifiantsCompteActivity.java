@@ -1,6 +1,7 @@
 package com.example.dopapillsgit;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class IdentifiantsCompteActivity extends AppCompatActivity {
@@ -37,7 +39,7 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
+        myRef = mFirebaseDatabase.getReference("Patient");
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
 
@@ -49,43 +51,36 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
             }
         };
 //afficher le nom,prenom et mail de l'utilisateur
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                showData(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        Query query=myRef;
+        toastMessage(userID);
+        query.addListenerForSingleValueEvent(valueEventListener);
     }
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            toastMessage(Boolean.toString(dataSnapshot.exists()));
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    String nom = user.getNom();
+                    String prenom = user.getPrenom();
+                    String email = user.getEmail();
 
-    private void showData(DataSnapshot dataSnapshot) {
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            User uInfo = new User();
-            uInfo.setNom(ds.child(userID).getValue(User.class).getNom());
-            uInfo.setEmail(ds.child(userID).getValue(User.class).getEmail());
-            uInfo.setPrenom(ds.child(userID).getValue(User.class).getPrenom());
+                    editTextNom.setText(nom);
+                    editTextPrenom.setText(prenom);
+                    editTextEmail.setText(email);
 
-            //visualiser les données sur Logcat
-            Log.d(TAG, "showData: nom: " + uInfo.getNom());
-            Log.d(TAG, "showData: prenom: " + uInfo.getPrenom());
-            Log.d(TAG, "showData: email: " + uInfo.getEmail());
+                }
 
-            String nom = uInfo.getNom();
-            String prenom = uInfo.getPrenom();
-            String email = uInfo.getEmail();
+            }
+        }
 
-            editTextNom.setText(nom);
-            editTextPrenom.setText(prenom);
-            editTextEmail.setText(email);
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
 
         }
-    }
+    };
 
     @Override
     public void onStart() {
@@ -100,6 +95,9 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+        private void toastMessage(String message){
+            Toast.makeText(IdentifiantsCompteActivity.this,message,Toast.LENGTH_SHORT).show();
+        }
     }
 
 
