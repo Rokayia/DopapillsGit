@@ -9,7 +9,7 @@ public class User {
     private String taille;
     private String pseudo;
     private String email;
-
+    private String id;
     public User(){
 
     }
@@ -29,7 +29,7 @@ public class User {
     }
 
 
-    public User(String nom, String prenom, String sexe, String age, String poids, String taille, String pseudo, String email) {
+    public User(String nom, String prenom,String sexe,String age,String poids,String taille,String pseudo, String email,String id) {
         this.setNom(nom);
         this.setPrenom(prenom);
         this.setSexe(sexe);
@@ -38,6 +38,7 @@ public class User {
         this.setTaille(taille);
         this.setPseudo(pseudo);
         this.setEmail(email);
+        this.setId(id);
 
     }
 
@@ -103,5 +104,12 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

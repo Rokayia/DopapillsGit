@@ -65,6 +65,9 @@
     <string name="ajouter_votre_dispositif_m_dical">Ajouter votre dispositif médical</string>
     <string name="modification_termin_e">Modification terminée</string>
     <string name="se_d_connecter">Se déconnecter</string>
+    <string name="nom">Nom</string>
+    <string name="pr_nom">Prénom</string>
+    <string name="num_ro_de_t_l_phone">Numéro de téléphone</string>
 
     <string-array name="allergies">
         <item>Pollen</item>
@@ -82,6 +85,16 @@
         <item>IRM4</item>
         <item>IRM5</item>
         <item>IRM6</item>
+    </string-array>
+    <string-array name="groupeSanguin">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>AB+</item>
+        <item>AB-</item>
     </string-array>
 
 </resources>

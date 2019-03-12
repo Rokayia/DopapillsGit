@@ -113,8 +113,8 @@
             android:background="@drawable/baseboutonprofil">
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
@@ -133,7 +133,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginStart="-12dp"
+                android:layout_marginStart="-15dp"
                 android:clickable="true"
                 android:src="@drawable/symbole34725"
                 android:layout_marginLeft="-12dp" />
@@ -209,7 +209,8 @@
             android:layout_marginLeft="40dp"
             android:text="@string/se_d_connecter"
             android:textColor="@color/blanc"
-            android:textSize="12dp"
+            android:textSize="15dp"
+            android:textStyle="bold"
             android:layout_marginStart="4dp" />
 
 
