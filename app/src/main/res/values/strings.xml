@@ -68,15 +68,51 @@
     <string name="nom">Nom</string>
     <string name="pr_nom">Prénom</string>
     <string name="num_ro_de_t_l_phone">Numéro de téléphone</string>
+    <string name="nom_m_dicament">Nom médicament :</string>
+    <string name="dosage">Dosage (mg) :</string>
+    <string name="fr_quence">Fréquence (nombre de fois/semaine) :</string>
+    <string name="nombre_de_fois_par_jour">Nombre de fois par jour :</string>
+    <string name="ajouter">Ajouter</string>
+
+    <string name="ajout_d_un_m_dicament">Ajout d\'un médicament</string>
+    <string name="horaire_s">Horaire(s)</string>
+    <string name="sauvegarder">Sauvegarder</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="dialog_new_med">New Med Dialog</string>
+    <string name="dialog_view_med">View Med Dialog</string>
+    <string name="ajouter_un_m_dicament">Ajouter un médicament</string>
+
 
     <string-array name="allergies">
         <item>Pollen</item>
         <item>Animaux</item>
         <item>Acariens</item>
     </string-array>
+    <string-array name="fréquence">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
     <string-array name="medicaments">
-        <item>Duodopa</item>
-        <item>Corbila</item>
+        <item>AKINETON LP</item>
+        <item>BROMOCRIPTINE ZENTIVA</item>
+        <item>DEPRENYL</item>
+        <item>LEVODOPA</item>
+        <item>MODOPAR </item>
+        <item>NEUPRO </item>
+        <item>OPRYMEA </item>
+        <item>PARLODEL </item>
+        <item>PRAMIPEXOLE BIOGARAN</item>
+        <item>RASAGILINE ARROW</item>
+        <item>REQUIP</item>
+        <item>ROPINIROLE EG</item>
+        <item>SIFROL</item>
+        <item>STALEVO </item>
+        <item>TRIVASTAL</item>
     </string-array>
     <string-array name="contreIndication">
         <item>IRM1</item>

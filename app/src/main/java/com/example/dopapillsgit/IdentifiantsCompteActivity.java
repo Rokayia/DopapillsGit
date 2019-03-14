@@ -52,7 +52,9 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
         };
 //afficher le nom,prenom et mail de l'utilisateur
 
-        Query query=myRef;
+        Query query=myRef
+                .orderByChild("id")
+                .equalTo(userID);
         toastMessage(userID);
         query.addListenerForSingleValueEvent(valueEventListener);
     }

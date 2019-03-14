@@ -52,6 +52,8 @@ public class ProfilFragment extends Fragment {
         btnSignOut = (LinearLayout) view.findViewById(R.id.sign_out_button);
         btnId = (LinearLayout) view.findViewById(R.id.button_identifiants);
         btnDonnes = (LinearLayout) view.findViewById(R.id.button_donnees_sante);
+        btnMedicaments= (LinearLayout) view.findViewById(R.id.button_medicaments);
+
        // btnMedicaments = (LinearLayout) view.findViewById(R.id.button_medicaments);
     //    btnMedecin = (LinearLayout) view.findViewById(R.id.button_medecin);
 //Firebase
@@ -99,7 +101,15 @@ public class ProfilFragment extends Fragment {
                 startActivity(new Intent(getActivity(), DonnesSanteActivity.class));
             }
         });
+        //medicament
 
+        btnMedicaments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getActivity(), MedicamentActivity.class));
+            }
+        });
         return view;
     }
     ValueEventListener valueEventListener = new ValueEventListener() {
