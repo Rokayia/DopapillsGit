@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="490dp"
+    android:orientation="vertical"
+    android:background="@drawable/fondidcompte">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/vos_m_dicaments"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:textColor="@color/vertBleu"
+        android:textStyle="bold"/>
+
+        <ListView
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:id="@+id/listview"/>
+
+
+
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/ajouter_medicament"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:background="@drawable/base">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/drugadd"
+            android:layout_marginLeft="30dp" />
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="@string/ajout_d_un_m_dicament"
+            android:textColor="@color/grisFonce"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:layout_gravity="center"
+            android:layout_marginStart="4dp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

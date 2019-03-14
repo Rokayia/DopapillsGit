@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+    <TextView
+        android:id="@+id/NomMedicamentTextView"
+        android:layout_width="350dp"
+        android:layout_height="30dp"
+        android:text="Rechercher votre médicament :"
+        android:textColor="@color/black_overlay"
+        android:textSize="16sp"
+        android:layout_below="@+id/editTextcontact_urgence_donnesSante"/>
+    <EditText
+        android:id="@+id/editNomMedicament"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginBottom="15dp"
+        android:inputType="none"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textColor="@color/noir"
+        android:textAlignment="textEnd"
+        android:gravity="end"
+        android:layout_below="@+id/NomMedicamentTextView" />
+    <Spinner
+        android:id="@+id/NomMedicament"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:textAlignment="textEnd"
+        android:textColor="@color/noir"
+        android:gravity="end"
+        android:layout_below="@+id/NomMedicamentTextView"/>
+
+    <TextView
+        android:id="@+id/DosageMedicamentTextView"
+        android:layout_width="350dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/dosage"
+        android:textColor="@color/black_overlay"
+        android:textSize="16sp"
+        android:layout_below="@+id/NomMedicament"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:textSize="16sp"
+        android:id="@+id/DosageMedicament"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:layout_below="@id/DosageMedicamentTextView" />
+
+
+    <TextView
+        android:id="@+id/FreqMedicamentTextView"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fr_quence"
+        android:textColor="@color/black_overlay"
+        android:textSize="16sp"
+        android:layout_below="@+id/DosageMedicament"/>
+    <EditText
+        android:id="@+id/editFreqMedicament"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginBottom="15dp"
+        android:inputType="none"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textColor="@color/noir"
+        android:textAlignment="textEnd"
+        android:gravity="end"
+        android:layout_below="@+id/FreqMedicamentTextView" />
+    <Spinner
+        android:id="@+id/FreqMedicament"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/noir"
+        android:textAlignment="textEnd"
+        android:gravity="end"
+        android:layout_below="@+id/FreqMedicamentTextView" />
+
+
+
+    <TextView
+        android:id="@+id/NombreFoisMedicamentTextView"
+        android:layout_width="350dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/nombre_de_fois_par_jour"
+        android:textColor="@color/black_overlay"
+        android:textSize="16sp"
+        android:layout_below="@+id/FreqMedicament"/>
+    <EditText
+        android:id="@+id/NombreFoisMedicament"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:textSize="16sp"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:layout_below="@+id/NombreFoisMedicamentTextView" />
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/HoraireMedicament"
+        android:imeOptions="actionNext"
+        android:layout_marginTop="15dp"
+        android:inputType="none"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textSize="16sp"
+        android:hint="Horaire(s)"
+        android:layout_below="@id/NombreFoisMedicament" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/HoraireMedicamentTextView"
+        android:layout_marginStart="200dp"
+        android:imeOptions="actionNext"
+        android:layout_marginTop="15dp"
+        android:textSize="20sp"
+        android:layout_below="@id/NombreFoisMedicament"
+        android:layout_marginLeft="200dp" />
+    <ImageButton
+        android:id="@+id/HoraireMedicamentButton"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+
+        android:layout_marginLeft="230dp"
+        android:layout_marginStart="230dp"
+        android:layout_marginBottom="25dp"
+        android:textColor="@color/noir"
+        android:gravity="left"
+        android:layout_below="@+id/NombreFoisMedicament"
+        android:background="@drawable/clock"/>
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

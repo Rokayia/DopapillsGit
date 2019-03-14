@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.dopapillsgitModel.ContactUrgence;
 import com.example.dopapillsgitModel.DonneesSante;
+import com.example.dopapillsgitModel.Medicament;
 import com.example.dopapillsgitModel.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -68,11 +69,13 @@ public class InscriptionActivity extends AppCompatActivity {
 
                             if (task.isSuccessful()) {
                                 FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-                                DatabaseReference myRefu=mDatabase.getReference("Patient");
-                                DatabaseReference myRefd=mDatabase.getReference("DonneesDeSante");
-                                DatabaseReference myRefc=mDatabase.getReference("ContactUrgence");
+                                DatabaseReference myRefu = mDatabase.getReference("Patient");
+                                DatabaseReference myRefd = mDatabase.getReference("DonneesDeSante");
+                                DatabaseReference myRefc = mDatabase.getReference("ContactUrgence");
+                                DatabaseReference myRefmedicament = mDatabase.getReference("Medicament");
                                 String userId = myRefu.push().getKey();
-                                String userC=myRefc.push().getKey();
+                                String ContactId=myRefc.push().getKey();
+
                                 Intent i = getIntent();
                                 String strnAge = "";
                                 String strSexe = "";
@@ -133,7 +136,7 @@ public class InscriptionActivity extends AppCompatActivity {
                                 String nomC="";
                                 String prenomC="";
                                 String numeroTelC="";
-                                String idC=userC;
+                                String idC=ContactId;
 
                                 ContactUrgence contactU= new ContactUrgence(nomC,prenomC, numeroTelC,idC);
                                 DatabaseReference refc = myRefc.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -148,6 +151,29 @@ public class InscriptionActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
+                                //Creation de la base de données Medicament
+                               // String idMedicament=MedicamentId;
+                                String idPatient=userId;
+                                String nom="";
+                                String dosage="";
+                                String frequence="";
+                                String nombreDeFoisParJour="";
+                                String horaires="";
+
+                               // Medicament med= new Medicament(idPatient,idMedicament,nom,dosage,frequence,nombreDeFoisParJour, horaires);
+                                DatabaseReference refmed = myRefmedicament.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                refmed.setValue("lala").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(InscriptionActivity.this, getString( R.string.registration_success), Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(InscriptionActivity.this, getString(R.string.registration_failed), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+
 
 
                             } else {

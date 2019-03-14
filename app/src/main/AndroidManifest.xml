@@ -55,6 +55,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.dopapillsgit.UserActivity" />
         </activity>
-
+        <activity android:name=".MedicamentActivity"
+            android:parentActivityName=".UserActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.dopapillsgit.UserActivity" />
+        </activity>
     </application>
 </manifest>

@@ -42,7 +42,7 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String dateDeNaissance,taille,poids,anneeDiagnostic,groupeSanguin,allergie,contreIndication;
     private String nomC,prenomC,numeroTelC, userC;
-    private int tailleint, poidsint;
+
 
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
@@ -450,17 +450,18 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
                 toastMessage(Boolean.toString(dataSnapshot.exists()));
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        ContactUrgence contact= (ContactUrgence)snapshot.getValue(ContactUrgence.class);
-                        userC=contact.getIdContact();
-                        nomC= contact.getNom();
-                        prenomC = contact.getPrenom();
-                        numeroTelC = contact.getNumeroTel();
-                        toastMessage("num"+numeroTelC);
-                        contactUrgence= new ContactUrgence(nomC,prenomC,numeroTelC,userC);
+                        if(snapshot.getKey()==userID) {
+                            ContactUrgence contact = (ContactUrgence) snapshot.getValue(ContactUrgence.class);
+                            userC = contact.getIdContact();
+                            nomC = contact.getNom();
+                            prenomC = contact.getPrenom();
+                            numeroTelC = contact.getNumeroTel();
+                            toastMessage("num" + numeroTelC);
+                            contactUrgence = new ContactUrgence(nomC, prenomC, numeroTelC, userC);
 
 
-                        editTextContactUrgence.setText(nomC + " "+prenomC+" "+ '\n'+ numeroTelC);
-
+                            editTextContactUrgence.setText(nomC + " " + prenomC + " " + '\n' + numeroTelC);
+                        }
 
 
                     }
