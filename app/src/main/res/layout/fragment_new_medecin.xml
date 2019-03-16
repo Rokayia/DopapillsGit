@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edit_nom_medecin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:hint="@string/nom" />
+
+    <EditText
+        android:id="@+id/edit_prenom_medecin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_nom_medecin"
+        android:layout_alignParentStart="true"
+        android:singleLine="true"
+        android:hint="@string/pr_nom"
+        android:layout_alignParentLeft="true" />
+    <EditText
+        android:id="@+id/edit_ville_medecin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_prenom_medecin"
+        android:hint="@string/ville"
+        android:singleLine="true"
+        android:layout_marginBottom="20dp" />
+    <EditText
+        android:id="@+id/edit_RPPS_medecin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_ville_medecin"
+        android:hint="N° RPPPS"
+        android:inputType="number"
+        android:singleLine="true"
+        android:layout_marginBottom="20dp" />
+    <EditText
+        android:id="@+id/edit_mail_medecin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_RPPS_medecin"
+        android:hint="Adresse e-mail"
+        android:singleLine="true"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="20dp" />
+    <TextView
+        android:id="@+id/specialiteMedecinTextView"
+        android:layout_width="350dp"
+        android:layout_height="30dp"
+        android:text="Spécialité :"
+        android:textColor="@color/black_overlay"
+        android:textSize="16sp"
+        android:layout_below="@+id/edit_mail_medecin"/>
+    <EditText
+        android:id="@+id/editspecialiteMedecin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginBottom="15dp"
+        android:inputType="none"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textColor="@color/noir"
+        android:textAlignment="textEnd"
+        android:gravity="end"
+        android:layout_below="@+id/specialiteMedecinTextView" />
+    <Spinner
+        android:id="@+id/spinner_specialiteMedecin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:textAlignment="textEnd"
+        android:textColor="@color/noir"
+        android:gravity="end"
+        android:layout_below="@+id/specialiteMedecinTextView"/>
+
+
+
+
+</RelativeLayout>

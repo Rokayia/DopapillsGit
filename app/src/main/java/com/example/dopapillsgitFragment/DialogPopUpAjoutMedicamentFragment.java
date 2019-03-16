@@ -33,11 +33,14 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
     private ImageButton mHoraire;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     private String horaire;
+    int heure,min;
 
     private DialogPopUpAjoutMedicamentFragment.DialogListener listener;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_new_medicament, null);
@@ -62,8 +65,12 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
         horaireTextView= view.findViewById(R.id.HoraireMedicamentTextView);
         mHoraire= view.findViewById(R.id.HoraireMedicamentButton);
         mHoraire.setVisibility(View.VISIBLE);
+
+        
+
         builder.setView(view)
                 .setTitle("Ajout d'un médicament")
+                .setIcon(R.drawable.medicamentadd)
                 .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -88,7 +95,7 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
 
 
 
-                        listener.applyTexts(nom, dosage,frequence,nombreFoisJour,horaire);
+                        listener.applyTexts(nom, dosage,frequence,nombreFoisJour,horaire,heure,min);
                     }
                 });
 
@@ -97,6 +104,9 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
                 Calendar cal2 = Calendar.getInstance();
                 int hour = cal2.get(Calendar.HOUR);
                 int minute = cal2.get(Calendar.MINUTE);
+                heure=hour;
+                min=minute;
+
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, mTimeSetListener, hour, minute, true);
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -134,7 +144,7 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
     }
 
     public interface DialogListener {
-        void applyTexts(String nom, String dosage,String frequence,String nombreFoisJour,String horaire);
+        void applyTexts(String nom, String dosage,String frequence,String nombreFoisJour,String horaire,int heure,int minute);
     }
     private void toastMessage(String message){
         Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();

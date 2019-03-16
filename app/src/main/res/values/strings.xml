@@ -81,7 +81,8 @@
     <string name="dialog_new_med">New Med Dialog</string>
     <string name="dialog_view_med">View Med Dialog</string>
     <string name="ajouter_un_m_dicament">Ajouter un médicament</string>
-
+    <string name="ajouter_un_m_decin">Ajouter un médecin</string>
+    <string name="ville">Ville</string>
 
     <string-array name="allergies">
         <item>Pollen</item>
@@ -131,6 +132,14 @@
         <item>O-</item>
         <item>AB+</item>
         <item>AB-</item>
+    </string-array>
+    <string-array name="spécialitéMedecin">
+        <item>Neurologue</item>
+        <item>Medecin traitant</item>
+        <item>Kinésithérapeute</item>
+        <item>Orthophoniste</item>
+        <item>Urologue </item>
+        <item>Ergothérapeute </item>
     </string-array>
 
 </resources>
