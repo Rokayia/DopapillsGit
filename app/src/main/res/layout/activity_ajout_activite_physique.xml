@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/fondidcompte">
+        <TextView
+            android:id="@+id/ajout_activite"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="Ajout d'une activité physique"
+            android:textColor="#55BAA9"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/editTextTypeDActivite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:inputType="none"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:text="Type d'activité"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/ajout_activite" />
+
+        <EditText
+            android:id="@+id/editTextLieu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="Lieu"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/editTextTypeDActivite"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="300dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="105dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/symbole1352"
+            android:foregroundGravity="center"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="300dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="155dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/iconlocationonfilled"
+            android:foregroundGravity="center" />
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@drawable/base3"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/editTextLieu">
+
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_width="125dp"
+                android:layout_height="140dp"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_below="@+id/editTextLieu">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:hint="Date"
+                    android:id="@+id/tvDate"
+                    android:layout_marginLeft="17dp"
+                    android:textSize="23dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="Heure"
+                    android:id="@+id/heure"
+                    android:layout_marginLeft="17dp"
+                    android:textSize="23dp"
+                    android:layout_below="@+id/tvDate"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:layout_marginLeft="0.5dp"
+                android:background="@drawable/symbole34725"/>
+
+            <LinearLayout
+                android:id="@+id/ll3"
+                android:layout_width="120dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_below="@+id/editTextLieu">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:hint="Date"
+                    android:id="@+id/tvDate2"
+                    android:layout_marginLeft="17dp"
+                    android:textSize="23dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="Heure"
+                    android:id="@+id/heure2"
+                    android:layout_marginLeft="17dp"
+                    android:textSize="23dp"
+                    android:layout_below="@+id/tvDate"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Intensité"
+            android:textSize="20dp"
+            android:id="@+id/intensite"
+            android:layout_below="@+id/ll"
+            android:layout_marginLeft="40dp"/>
+
+        <RadioGroup
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkedButton="@+id/radio2"
+            android:orientation="horizontal"
+            android:layout_below="@+id/intensite"
+            android:layout_marginLeft="22dp">
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/custom_checkbox_selected"
+                android:textColor="@color/pink"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:text="Faible"
+                android:textSize="20dp"
+                />
+
+            <RadioButton
+                android:id="@+id/radio2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:drawableTop="@drawable/custom_checkbox_selected"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textColor="@color/pink"
+                android:textSize="20dp"
+                android:text="Moyenne"
+                />
+
+            <RadioButton
+                android:id="@+id/radio3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/pink"
+                android:layout_marginLeft="15dp"
+                android:drawableTop="@drawable/custom_checkbox_selected"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="20dp"
+                android:text="Forte"
+                />
+            <RadioButton
+                android:id="@+id/radio4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:textSize="20dp"
+                android:drawableTop="@drawable/custom_checkbox_selected"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textColor="@color/pink"
+                android:text="Trés forte"
+                />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/ajoutremarque"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="Ajouter une remarque"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/group"/>
+
+        <Button
+            android:id="@+id/ajoutevent"
+            android:layout_below="@+id/group"
+            android:layout_width="300dp"
+            android:layout_height="91dp"
+            android:layout_marginTop="55dp"
+            android:layout_gravity="center"
+            android:text="Ajouter l'évènement"
+            android:background="@drawable/basegrise"
+            android:textColor="#FFFFFF" />
+
+        <EditText
+            android:layout_width="244dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/rectangle555"
+            android:layout_marginTop="400dp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="2dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

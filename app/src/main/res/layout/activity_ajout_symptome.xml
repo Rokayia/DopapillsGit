@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/fondidcompte">
+
+        <TextView
+            android:id="@+id/ajout_symptome"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="Ajout d'un symptôme"
+            android:textColor="#55BAA9"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Date"
+            android:id="@+id/date"
+            android:layout_below="@+id/ajout_symptome"
+            android:layout_marginLeft="210dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Heure"
+            android:id="@+id/heure"
+            android:layout_below="@+id/date"
+            android:layout_marginLeft="280dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Mobilité"
+            android:id="@+id/mobilite"
+            android:layout_below="@+id/heure"
+            android:layout_marginLeft="40dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkedButton="@+id/radio1"
+            android:orientation="horizontal"
+            android:layout_below="@+id/mobilite"
+            android:layout_marginLeft="22dp"
+            >
+            <RadioButton
+                android:id="@+id/radio1"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bonne"
+                android:layout_marginLeft="8dp"
+                />
+
+            <RadioButton
+                android:id="@+id/radio2"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Un peu ralentie"
+                android:layout_marginLeft="10dp"
+                />
+            <RadioButton
+                android:id="@+id/radio3"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Très ralentie"
+                android:layout_marginLeft="10dp"
+                />
+            <RadioButton
+                android:id="@+id/radio4"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Totalement bloqué"
+                android:layout_marginLeft="10dp"
+                />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Mouvements anormaux"
+            android:id="@+id/mouvements"
+            android:layout_below="@+id/group"
+            android:layout_marginLeft="40dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/group2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkedButton="@+id/radio5"
+            android:orientation="horizontal"
+            android:layout_below="@+id/mouvements"
+            android:layout_marginLeft="22dp"
+            >
+            <RadioButton
+                android:id="@+id/radio5"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aucun"
+                android:layout_marginLeft="16dp"
+                />
+            <RadioButton
+                android:id="@+id/radio6"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Léger"
+                android:layout_marginLeft="16dp"
+                />
+            <RadioButton
+                android:id="@+id/radio7"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Moyen"
+                android:layout_marginLeft="16dp"
+                />
+            <RadioButton
+                android:id="@+id/radio8"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Très fort"
+                android:layout_marginLeft="16dp"
+                />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Tremblements"
+            android:id="@+id/tremblements"
+            android:layout_below="@+id/group2"
+            android:layout_marginLeft="40dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/group3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkedButton="@+id/radio9"
+            android:orientation="horizontal"
+            android:layout_below="@+id/tremblements"
+            android:layout_marginLeft="22dp"
+            >
+            <RadioButton
+                android:id="@+id/radio9"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aucun"
+                android:layout_marginLeft="16dp"
+                />
+            <RadioButton
+                android:id="@+id/radio10"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Léger"
+                android:layout_marginLeft="16dp"
+                />
+            <RadioButton
+                android:id="@+id/radio11"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Moyen"
+                android:layout_marginLeft="16dp"
+                />
+            <RadioButton
+                android:id="@+id/radio12"
+                android:drawableTop="@drawable/custom_checkbox_selected2"
+                android:textColor="@color/vertBleu"
+                android:background="@android:color/transparent"
+                android:button="@android:color/transparent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Très fort"
+                android:layout_marginLeft="16dp"
+                />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/rechercherunsymptome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:inputType="none"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:text="Rechercher un symptôme"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/group3" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="300dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="405dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/iconsearchfilled"
+            android:foregroundGravity="center"/>
+
+        <Button
+            android:id="@+id/ajoutetat"
+            android:layout_below="@+id/rechercherunsymptome"
+            android:layout_width="300dp"
+            android:layout_height="91dp"
+            android:layout_marginTop="55dp"
+            android:layout_gravity="center"
+            android:text="Ajouter votre état"
+            android:background="@drawable/basegrise"
+            android:textColor="#FFFFFF"/>
+
+        <EditText
+            android:layout_width="226dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="66dp"
+            android:background="@drawable/rectangle556"
+            android:layout_marginTop="373dp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <EditText
+            android:layout_width="226dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="66dp"
+            android:background="@drawable/rectangle556"
+            android:layout_marginTop="301dp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+        <EditText
+            android:layout_width="273dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="48dp"
+            android:background="@drawable/rectangle556"
+            android:layout_marginTop="221dp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="2dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
