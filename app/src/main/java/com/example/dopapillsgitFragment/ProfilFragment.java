@@ -30,7 +30,7 @@ public class ProfilFragment extends Fragment {
     View view;
     //Interface utilisateur
     public TextView editTextNomPrenomProfil;
-    LinearLayout  btnId, btnDonnes, btnMedicaments, btnMedecin;
+    LinearLayout  btnId, btnDonnes, btnMedicaments, btnMed;
     LinearLayout btnSignOut;
     private static final String TAG = "ProfilFragment";
 
@@ -53,6 +53,7 @@ public class ProfilFragment extends Fragment {
         btnId = (LinearLayout) view.findViewById(R.id.button_identifiants);
         btnDonnes = (LinearLayout) view.findViewById(R.id.button_donnees_sante);
         btnMedicaments= (LinearLayout) view.findViewById(R.id.button_medicaments);
+        btnMed=(LinearLayout) view.findViewById(R.id.button_medecin);
 
        // btnMedicaments = (LinearLayout) view.findViewById(R.id.button_medicaments);
     //    btnMedecin = (LinearLayout) view.findViewById(R.id.button_medecin);
@@ -108,6 +109,14 @@ public class ProfilFragment extends Fragment {
             public void onClick(View view) {
 
                 startActivity(new Intent(getActivity(), MedicamentActivity.class));
+            }
+        });
+        //medecin
+        btnMed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getActivity(), MedecinActivity.class));
             }
         });
         return view;
