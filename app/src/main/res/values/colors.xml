@@ -13,4 +13,6 @@
     <color name="noir">#191919</color>
     <color name="grisFonce">#414451</color>
     <color name="pink">#F26968</color>
+    <color name="vertPale">#CDEDEC</color>
+    <color name="rosePale">#EFE6E5</color>
 </resources>

@@ -36,7 +36,7 @@ public class UserActivity extends AppCompatActivity {
             //I added this if statement to keep the selected fragment when rotating the device
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new HomeFragment()).commit();
+                        new AccueilFragment()).commit();
             }
         }
 
@@ -48,7 +48,7 @@ public class UserActivity extends AppCompatActivity {
 
                         switch (item.getItemId()) {
                             case R.id.acceuil:
-                                selectedFragment = new HomeFragment();
+                                selectedFragment = new AccueilFragment();
                                 break;
                             case R.id.profil:
                                 selectedFragment = new ProfilFragment();

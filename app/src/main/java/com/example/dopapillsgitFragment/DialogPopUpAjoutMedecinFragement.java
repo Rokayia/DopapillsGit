@@ -31,6 +31,7 @@ public class DialogPopUpAjoutMedecinFragement extends AppCompatDialogFragment {
         builder.setView(view)
                 .setTitle("Ajout d'un medecin")
                 .setIcon(R.drawable.doctoraddpopup)
+
                 .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

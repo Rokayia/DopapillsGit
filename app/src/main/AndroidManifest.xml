@@ -67,6 +67,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.dopapillsgit.UserActivity" />
         </activity>
+        <activity android:name=".CalendrierActivity"
+            android:parentActivityName=".UserActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.dopapillsgit.UserActivity" />
+        </activity>
+        <activity android:name=".AjoutPhysiqueActivity"
+            android:parentActivityName=".UserActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.dopapillsgit.UserActivity" />
+        </activity>
+        <activity android:name=".AjoutSymptomeActivity"
+            android:parentActivityName=".UserActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.dopapillsgit.UserActivity" />
+        </activity>
         <activity android:name=".Rappel" />
     <activity android:name=".NotificationActivity" />
 

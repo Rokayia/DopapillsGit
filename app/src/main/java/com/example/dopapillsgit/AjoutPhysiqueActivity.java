@@ -2,20 +2,41 @@ package com.example.dopapillsgit;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.dopapillsgitModel.ActivitePhysique;
+import com.example.dopapillsgitModel.Medicament;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AjoutPhysiqueActivity extends AppCompatActivity {
-
+    //var
     public static final String TAG = "ajout_activite";
     public static final String TAG2 = "ajout_activite";
     private TextView mDisplayDate;
@@ -31,10 +52,44 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
     private TextView mDisplayTime2;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener2;
 
+    private Spinner spinner_type;
+    private EditText editTextLieu, editTextRemarque;
+    private RadioGroup radioButtonIntensite;
+    private Button btnAjoutActivte;
+    private Map<String, Object> childUpdates;
+
+    String intensite,hDebut,hFin,dateDebut,dateFin;
+
+
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference myRefActivite;
+    private DatabaseReference rootRef;
+    private String userID, ActiviteId;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajout_activite_physique);
+
+
+        //var
+        spinner_type = findViewById(R.id.spinner_typeActivite);
+        editTextLieu = findViewById(R.id.editTextLieu);
+        editTextRemarque = findViewById(R.id.ajoutremarque);
+        radioButtonIntensite=findViewById(R.id.radiogroup);
+        btnAjoutActivte=findViewById(R.id.ajoutevent);
+
+        //Remplir les cases du Spinner type activité
+        ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource(this, R.array.typeActivite, android.R.layout.simple_spinner_item);
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_type.setAdapter(adapterType);
+
 
         mDisplayDate = (TextView) findViewById(R.id.tvDate);
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +118,7 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
                 month = month + 1;
                 Log.d(TAG, "onDateSet : dd/mm/yyyy " + dayOfMonth + "/" + month + "/" + year);
                 String date = dayOfMonth + "/" + month + "/" + year;
+                dateDebut=date;
                 mDisplayDate.setText(date);
             }
         };
@@ -84,6 +140,7 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hour, int minute) {
                 Log.d(TAG2, "onTimeSet : hh:mm " + hour + ":" + minute);
                 String time = hour + ":" + minute;
+                hDebut=time;
                 mDisplayTime.setText(time);
             }
 
@@ -116,6 +173,7 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
                 month = month + 1;
                 Log.d(TAG3, "onDateSet : dd/mm/yyyy " + dayOfMonth + "/" + month + "/" + year);
                 String date = dayOfMonth + "/" + month + "/" + year;
+                dateFin=date;
                 mDisplayDate2.setText(date);
             }
         };
@@ -139,9 +197,67 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hour, int minute) {
                 Log.d(TAG4, "onTimeSet : hh:mm " + hour + ":" + minute);
                 String time = hour + ":" + minute;
+                hFin=time;
                 mDisplayTime2.setText(time);
             }
 
         };
+
+
+        //Firebase
+
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRefActivite = FirebaseDatabase.getInstance().getReference("ActivitePhysique");
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        childUpdates = new HashMap<>();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+            }
+        };
+
+
+        //ajouter une activite physique
+        //medecin
+        btnAjoutActivte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ajouterActivite();
+                startActivity(new Intent(AjoutPhysiqueActivity.this, UserActivity.class));
+            }
+        });
+
+    }
+
+    public void ajouterActivite() {
+
+
+        String type = spinner_type.getSelectedItem().toString();
+        String lieu = editTextLieu.getText().toString();
+        String remarque = editTextRemarque.getText().toString();
+
+        if(radioButtonIntensite.getCheckedRadioButtonId()!=-1) {
+            int id = radioButtonIntensite.getCheckedRadioButtonId();
+            View radioButton = radioButtonIntensite.findViewById(id);
+            int radioButtonId = radioButtonIntensite.indexOfChild(radioButton);
+            RadioButton radioButtonCheked = (RadioButton) radioButtonIntensite.getChildAt(radioButtonId);
+            intensite = radioButtonCheked.getText().toString();
+        }
+
+
+
+        //ajouter dans firebase
+        ActiviteId = myRefActivite.push().getKey();
+        ActivitePhysique activitePhysique = new ActivitePhysique(userID, ActiviteId, type, lieu, dateDebut, dateFin, hDebut, hFin, intensite, remarque);
+
+        childUpdates.put("/ActivitePhysique/" + userID + "/" +ActiviteId + "/", activitePhysique);
+        rootRef.updateChildren(childUpdates);
+
     }
 }

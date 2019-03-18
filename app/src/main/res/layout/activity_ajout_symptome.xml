@@ -10,41 +10,43 @@
         android:layout_width="match_parent"
         android:layout_height="600dp"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:background="@drawable/fondidcompte">
 
         <TextView
             android:id="@+id/ajout_symptome"
-            android:layout_width="350dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Ajout d'un symptôme"
+            android:text="@string/ajout_d_un_sympt_me"
             android:textColor="#55BAA9"
             android:textSize="24sp"
             android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="Date"
             android:id="@+id/date"
             android:layout_below="@+id/ajout_symptome"
             android:layout_marginLeft="210dp"
+            android:layout_marginTop="10dp"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="italic"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="Heure"
             android:id="@+id/heure"
+
             android:layout_below="@+id/date"
             android:layout_marginLeft="280dp"
             android:textSize="20sp"
             android:textStyle="bold"/>
 
         <TextView
+
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="Mobilité"
@@ -55,7 +57,7 @@
             android:textStyle="bold"/>
 
         <RadioGroup
-            android:id="@+id/group"
+            android:id="@+id/radiogroupMobilite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkedButton="@+id/radio1"
@@ -115,17 +117,18 @@
         </RadioGroup>
 
         <TextView
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="Mouvements anormaux"
             android:id="@+id/mouvements"
-            android:layout_below="@+id/group"
+            android:layout_below="@+id/radiogroupMobilite"
             android:layout_marginLeft="40dp"
             android:textSize="20sp"
             android:textStyle="bold"/>
 
         <RadioGroup
-            android:id="@+id/group2"
+            android:id="@+id/radiogrupMvmAnormaux"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkedButton="@+id/radio5"
@@ -184,17 +187,18 @@
         </RadioGroup>
 
         <TextView
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="Tremblements"
             android:id="@+id/tremblements"
-            android:layout_below="@+id/group2"
+            android:layout_below="@+id/radiogrupMvmAnormaux"
             android:layout_marginLeft="40dp"
             android:textSize="20sp"
             android:textStyle="bold"/>
 
         <RadioGroup
-            android:id="@+id/group3"
+            android:id="@+id/radiogroupTremblements"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkedButton="@+id/radio9"
@@ -252,73 +256,57 @@
                 />
         </RadioGroup>
 
-        <EditText
-            android:id="@+id/rechercherunsymptome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:inputType="none"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:text="Rechercher un symptôme"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_below="@+id/group3" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="300dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="405dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/iconsearchfilled"
-            android:foregroundGravity="center"/>
+
+
 
         <Button
-            android:id="@+id/ajoutetat"
-            android:layout_below="@+id/rechercherunsymptome"
-            android:layout_width="300dp"
-            android:layout_height="91dp"
-            android:layout_marginTop="55dp"
+            android:id="@+id/ajoutsymptome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radiogroupTremblements"
+            android:layout_marginStart="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginEnd="40dp"
             android:layout_gravity="center"
-            android:text="Ajouter votre état"
+            android:layout_marginTop="35dp"
             android:background="@drawable/basegrise"
-            android:textColor="#FFFFFF"/>
+            android:text="Ajouter l'évènement"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="40dp"/>
 
         <EditText
-            android:layout_width="226dp"
+            android:layout_width="270dp"
             android:layout_height="1dp"
-            android:layout_marginLeft="66dp"
+            android:layout_marginLeft="45dp"
             android:background="@drawable/rectangle556"
-            android:layout_marginTop="373dp"
+            android:layout_marginTop="3dp"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
-            android:focusableInTouchMode="false" />
+            android:layout_below="@+id/mobilite"
+            android:focusableInTouchMode="false"
+            android:layout_marginStart="45dp" />
 
         <EditText
             android:layout_width="226dp"
             android:layout_height="1dp"
             android:layout_marginLeft="66dp"
+            android:layout_below="@+id/mouvements"
             android:background="@drawable/rectangle556"
-            android:layout_marginTop="301dp"
+            android:layout_marginTop="3dp"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"/>
 
         <EditText
-            android:layout_width="273dp"
+            android:layout_width="226dp"
             android:layout_height="1dp"
-            android:layout_marginLeft="48dp"
+            android:layout_marginLeft="66dp"
+            android:layout_below="@+id/tremblements"
             android:background="@drawable/rectangle556"
-            android:layout_marginTop="221dp"
+            android:layout_marginTop="3dp"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
