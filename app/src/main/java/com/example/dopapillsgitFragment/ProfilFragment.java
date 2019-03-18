@@ -74,7 +74,7 @@ public class ProfilFragment extends Fragment {
         Query query=myRef
                 .orderByChild("id")
                 .equalTo(userID);
-        toastMessage(userID);
+       // toastMessage(userID);
         query.addListenerForSingleValueEvent(valueEventListener);
 
 // Déconnection
@@ -124,7 +124,7 @@ public class ProfilFragment extends Fragment {
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-toastMessage(Boolean.toString(dataSnapshot.exists()));
+//toastMessage(Boolean.toString(dataSnapshot.exists()));
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);

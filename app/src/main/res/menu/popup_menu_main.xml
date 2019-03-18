@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/rdv"
+        android:title="Rendez-vous"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/repas"
+        android:title="Repas"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/activitePhysique"
+        android:title="Activité physique"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/symptome"
+        android:title="Symptôme"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/notePersonnelle"
+        android:title="Note personnelle"
+        app:showAsAction="never" />
+
+
+</menu>

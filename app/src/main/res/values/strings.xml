@@ -73,7 +73,6 @@
     <string name="fr_quence">Fréquence (nombre de fois/semaine) :</string>
     <string name="nombre_de_fois_par_jour">Nombre de fois par jour :</string>
     <string name="ajouter">Ajouter</string>
-
     <string name="ajout_d_un_m_dicament">Ajout d\'un médicament</string>
     <string name="horaire_s">Horaire(s)</string>
     <string name="sauvegarder">Sauvegarder</string>
@@ -83,6 +82,13 @@
     <string name="ajouter_un_m_dicament">Ajouter un médicament</string>
     <string name="ajouter_un_m_decin">Ajouter un médecin</string>
     <string name="ville">Ville</string>
+    <string name="recherchealiment" >Recherchez un aliment</string>
+    <string name="ajoutsuivirepas" >Ajoutez le suivi d un repas</string>
+    <string name="bienvenue_sur_votre_espace_personnel">Bienvenue sur votre espace personnel,</string>
+    <string name="nous_sommes_le">Nous sommes le :</string>
+    <string name="suivez_votre_m_dicamention">Suivez votre médicamentation :</string>
+    <string name="encore_un_petit_effort_pour_atteindre_votre_objectif_journalier">Encore un petit effort pour atteindre votre objectif journalier !</string>
+    <string name="ajout_d_un_sympt_me">Ajout d\'un symptôme</string>
 
     <string-array name="allergies">
         <item>Pollen</item>
@@ -114,6 +120,25 @@
         <item>SIFROL</item>
         <item>STALEVO </item>
         <item>TRIVASTAL</item>
+    </string-array>
+    <string-array name="typeActivite">
+        <item>Alpinisme LP</item>
+        <item>Aquagym</item>
+        <item>Arts martiaux</item>
+        <item>Aviaton</item>
+        <item>Aviron </item>
+        <item>Badminton </item>
+        <item>Bateau </item>
+        <item>Canoe-kayak </item>
+        <item>Chass/pêche</item>
+        <item>Conduite</item>
+        <item>Course à pied</item>
+        <item>Course virtuelle</item>
+        <item>Cyclisme</item>
+        <item>Danse </item>
+        <item>Deltaplane</item>
+        <item>Equitation</item>
+        <item>Escalade</item>
     </string-array>
     <string-array name="contreIndication">
         <item>IRM1</item>
