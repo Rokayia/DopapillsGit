@@ -9,12 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="600dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/fondidcompte">
         <TextView
             android:id="@+id/ajout_activite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="Ajout d'une activité physique"
             android:textColor="#55BAA9"
@@ -60,7 +62,7 @@
             android:ems="10"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:text="Lieu"
+            android:hint="Lieu"
             android:textColor="@color/colorPrimary"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -269,7 +271,7 @@
             android:layout_marginTop="25dp"
             android:background="@drawable/basegrise"
             android:text="Ajouter l'évènement"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/blanc"
             android:layout_marginLeft="40dp" />
 
     </RelativeLayout>

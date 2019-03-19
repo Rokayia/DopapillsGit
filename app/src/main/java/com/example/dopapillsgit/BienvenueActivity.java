@@ -38,7 +38,7 @@ public class BienvenueActivity extends AppCompatActivity {
                     editTextPrenomId.setError("Veuillez entrer votre prénom!");
                     editTextPrenomId.requestFocus();
                 } else if (userNom.isEmpty() && userPrenom.isEmpty()) {
-                    Toast.makeText(BienvenueActivity.this, "Fields Empty!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BienvenueActivity.this, "Les champs sont vides!", Toast.LENGTH_SHORT).show();
                 } else if (!(userNom.isEmpty() && userPrenom.isEmpty())) {
 
                     Intent intent =new Intent(BienvenueActivity.this, VousEtesActivity.class);

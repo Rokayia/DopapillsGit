@@ -25,7 +25,7 @@
     <string name="montre">Image de la montre</string>
     <string name="activerbluetooth">Veuillez activer votre Bluetooth</string>
     <string name="montreajoutee">Montre ajoutée avec succès!</string>
-    <string name="registration_success">Enregistrement réussi</string>
+    <string name="registration_success">Votre compte a bien été créé !</string>
     <string name="registration_failed">Echec enregistrement</string>
     <string name="modif_success">Modification réussie</string>
     <string name="modif_failed">Echec modification</string>
@@ -90,6 +90,7 @@
     <string name="encore_un_petit_effort_pour_atteindre_votre_objectif_journalier">Encore un petit effort pour atteindre votre objectif journalier !</string>
     <string name="ajout_d_un_sympt_me">Ajout d\'un symptôme</string>
 
+
     <string-array name="allergies">
         <item>Pollen</item>
         <item>Animaux</item>
@@ -147,6 +148,13 @@
         <item>IRM4</item>
         <item>IRM5</item>
         <item>IRM6</item>
+    </string-array>
+    <string-array name="momentRepas">
+        <item>Petit-dejeuner</item>
+        <item>Déjeuner</item>
+        <item>Collation</item>
+        <item>Dîner</item>
+
     </string-array>
     <string-array name="groupeSanguin">
         <item>A+</item>

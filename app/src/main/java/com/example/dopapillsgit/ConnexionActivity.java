@@ -36,11 +36,11 @@ public class ConnexionActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    Toast.makeText(ConnexionActivity.this, "User logged in ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConnexionActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
                     Intent I = new Intent(ConnexionActivity.this, UserActivity.class);
                     startActivity(I);
                 } else {
-                    Toast.makeText(ConnexionActivity.this, "Login to continue", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConnexionActivity.this, "Continuer la connexion", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -51,26 +51,26 @@ public class ConnexionActivity extends AppCompatActivity {
                 String userEmail = loginEmailId.getText().toString();
                 String userPaswd = logInpasswd.getText().toString();
                 if (userEmail.isEmpty()) {
-                    loginEmailId.setError("Provide your Email first!");
+                    loginEmailId.setError("Veuillez fournir votre email d'abord.");
                     loginEmailId.requestFocus();
                 } else if (userPaswd.isEmpty()) {
-                    logInpasswd.setError("Enter Password!");
+                    logInpasswd.setError("Veuillez entrer votre mot de passe");
                     logInpasswd.requestFocus();
                 } else if (userEmail.isEmpty() && userPaswd.isEmpty()) {
-                    Toast.makeText(ConnexionActivity.this, "Fields Empty!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConnexionActivity.this, "Les champs sont vides", Toast.LENGTH_SHORT).show();
                 } else if (!(userEmail.isEmpty() && userPaswd.isEmpty())) {
                     firebaseAuth.signInWithEmailAndPassword(userEmail, userPaswd).addOnCompleteListener(ConnexionActivity.this, new OnCompleteListener() {
                         @Override
                         public void onComplete(@NonNull Task task) {
                             if (!task.isSuccessful()) {
-                                Toast.makeText(ConnexionActivity.this, "Not sucessfull", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ConnexionActivity.this, "Erreur de connexion : votre login ou mot de passe est incorrect. ", Toast.LENGTH_SHORT).show();
                             } else {
                                 startActivity(new Intent(ConnexionActivity.this, UserActivity.class));
                             }
                         }
                     });
                 } else {
-                    Toast.makeText(ConnexionActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConnexionActivity.this, "Erreur de connexion", Toast.LENGTH_SHORT).show();
                 }
             }
         });

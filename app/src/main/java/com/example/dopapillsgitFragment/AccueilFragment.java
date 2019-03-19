@@ -21,10 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopapillsgit.AjoutPhysiqueActivity;
+import com.example.dopapillsgit.AjoutRdvActivity;
+import com.example.dopapillsgit.AjoutRepasActivity;
 import com.example.dopapillsgit.AjoutSymptomeActivity;
 import com.example.dopapillsgit.CalendrierActivity;
 import com.example.dopapillsgit.R;
 import com.example.dopapillsgitModel.Medicament;
+import com.example.dopapillsgitModel.RDV;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,37 +49,40 @@ import java.util.Map;
 public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     //Var
 
-    private ListView mListView;
+    private ListView mListView,listview_voirEvenement;
     private View view;
     private ImageButton cal;
     private ImageButton ajouterEvenement;
-    private  ArrayList<String> array;
-    private ArrayAdapter<String> adapter;
+    private  ArrayList<String> array,array2;
+    private ArrayAdapter<String> adapter,adapter2;
 
     //Firebase
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference myRefMedicament;
+    private DatabaseReference myRefMedicament,myRefRDV;
     private DatabaseReference rootRef;
     private  String userID,MedicamentId;
 
     //Query
-    private  Query query;
+    private  Query query,query2;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_accueil, container, false);
+        //var
         cal = view.findViewById(R.id.bouttoncalendrier);
         ajouterEvenement =view.findViewById(R.id.ajouterevenement);
-
+        listview_voirEvenement=view.findViewById(R.id.listview_voirEvenement);
+        mListView = (ListView) view.findViewById(R.id.listview_voirMedicament);
 
         //Firebase
-        mListView = (ListView) view.findViewById(R.id.listview_voirMedicament);
+
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRefMedicament=FirebaseDatabase.getInstance().getReference("Medicament");
+        myRefRDV=FirebaseDatabase.getInstance().getReference("RDV");
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
         rootRef = FirebaseDatabase.getInstance().getReference();
@@ -88,6 +94,14 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
             }
         };
+
+        //afficher les evenements déjà entrées par l'utilisateur
+        array2 = new ArrayList<>();
+        query2=myRefRDV.child(userID);
+        //  toastMessage(userID);
+        query2.addListenerForSingleValueEvent(valueEventListener2);
+        adapter2 = new ArrayAdapter<String>(getActivity(), R.layout.list_item_accueil_medicament, array2);
+        listview_voirEvenement.setAdapter(adapter2);
 
 
         //afficher les informations déjà entrées par l'utilisateur
@@ -109,7 +123,7 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
         ajouterEvenement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopup(getView().findFocus());
+                showPopup(getActivity().findViewById(R.id.bottom_navigation));
             }
         });
         String date_n = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(new Date());
@@ -130,28 +144,28 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     public boolean onMenuItemClick(MenuItem item) {
         if(item.getItemId()==R.id.rdv)
         {
-            Intent rdv = new Intent (getContext(), AjoutPhysiqueActivity.class);
+            Intent rdv = new Intent (getActivity(), AjoutRdvActivity.class);
             startActivity(rdv);
         }
 
         else if(item.getItemId()==R.id.repas){
 
-            Intent repas = new Intent (getContext(), AjoutPhysiqueActivity.class);
+            Intent repas = new Intent (getActivity(), AjoutRepasActivity.class);
             startActivity(repas);
         }
         else if(item.getItemId()==R.id.activitePhysique){
 
-            Intent activitePhysique = new Intent (getContext(), AjoutPhysiqueActivity.class);
+            Intent activitePhysique = new Intent (getActivity(), AjoutPhysiqueActivity.class);
             startActivity(activitePhysique);
         }
         else if(item.getItemId()==R.id.symptome){
 
-            Intent symptome = new Intent (getContext(), AjoutSymptomeActivity.class);
+            Intent symptome = new Intent (getActivity(), AjoutSymptomeActivity.class);
             startActivity(symptome);
         }
         else if(item.getItemId()==R.id.notePersonnelle){
 
-            Intent notePersonnelle = new Intent (getContext(), AjoutPhysiqueActivity.class);
+            Intent notePersonnelle = new Intent (getActivity(), AjoutPhysiqueActivity.class);
             startActivity(notePersonnelle);
         }
         return false;
@@ -206,6 +220,56 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
 
 
+
+    ValueEventListener valueEventListener2 = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+            if (dataSnapshot.exists()) {
+                //  toastMessage("exist");
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String key = snapshot.getKey();
+                    //  toastMessage("child"+key);
+                    Query query1= myRefRDV.child(userID).child(key);
+//voir si on peut montrer que les rdv du jour + changer les iterfaces
+
+
+                    query1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            RDV rdv = (RDV) dataSnapshot.getValue(RDV.class);
+                            if(rdv.gethDebut()!=null &&rdv.gethFin()!=null ){
+
+                            array2.add( rdv.gethDebut()+"h - "+ rdv.gethFin()+"h "+rdv.getNom() + " à "+ rdv.getLieu());
+                            adapter2.notifyDataSetChanged();
+                            }else{
+                                array2.add( rdv.getDate()+" -  " +rdv.getNom() + " à "+ rdv.getLieu());
+                                adapter2.notifyDataSetChanged();
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }
+
+            }
+        }
+
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Log.e("error",databaseError.getMessage());
+        }
+    };
 
     @Override
     public void onStart() {

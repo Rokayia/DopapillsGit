@@ -54,7 +54,8 @@ public class DialogPopUpAjoutMedecinFragement extends AppCompatDialogFragment {
         editTextNom = view.findViewById(R.id.edit_nom_medecin);
         editTextPrenom = view.findViewById(R.id.edit_prenom_medecin);
         editTextRPPS= view.findViewById(R.id.edit_RPPS_medecin);
-        editTextMail=view.findViewById(R.id.edit_ville_medecin);
+        editTextMail=view.findViewById(R.id.edit_mail_medecin);
+
         editTextVille=view.findViewById(R.id.edit_ville_medecin);
         //spinner
             spinner_specialite = (Spinner) view.findViewById(R.id.spinner_specialiteMedecin);

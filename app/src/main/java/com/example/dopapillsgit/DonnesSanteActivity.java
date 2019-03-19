@@ -96,6 +96,7 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
         myRef = mFirebaseDatabase.getReference("DonneesDeSante");
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
+        toastMessage(userID+" utilisateur");
         myRefC= FirebaseDatabase.getInstance().getReference("ContactUrgence");
 
 

@@ -87,11 +87,13 @@
         <Button
             android:id="@+id/buttonVousEtes"
             android:layout_width="300dp"
-            android:layout_height="91dp"
+            android:layout_height="61dp"
             android:layout_marginTop="5dp"
             android:layout_gravity="center"
-            android:background="@drawable/symbolee2981"
-            />
+            android:textSize="22sp"
+            android:textColor="@color/blanc"
+            android:text="@string/suivant"
+            android:background="@drawable/symbole2"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -55,12 +55,12 @@ public class InscriptionActivity extends AppCompatActivity {
                     emailId.setError("Veuillez nous informer de votre email!");
                     emailId.requestFocus();
                 } else if (paswd.isEmpty()) {
-                    passwd.setError("Entrez un mot de passe!");
+                    passwd.setError("Veuillez entrer un mot de passe!");
                     passwd.requestFocus();
                 } else if (emailID.isEmpty() && paswd.isEmpty()) {
-                    Toast.makeText(InscriptionActivity.this, "Champs vides!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InscriptionActivity.this, "Les champs sont vides !", Toast.LENGTH_SHORT).show();
                 }else if(!paswd.equals(paswd2)){
-                    passwd2.setError("Les mots de passe ne correspondent pas. Veuillez réessayer!"+ passwd2.getText().toString()+" " + passwd.getText().toString());
+                    passwd2.setError("Les mots de passe ne correspondent pas. Veuillez réessayer!");
                     passwd2.requestFocus();
                 } else if ((!(emailID.isEmpty() && paswd.isEmpty())&&(paswd.equals(paswd2)))) {
                     firebaseAuth.createUserWithEmailAndPassword(emailID, paswd).addOnCompleteListener(InscriptionActivity.this, new OnCompleteListener() {
@@ -151,30 +151,6 @@ public class InscriptionActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-                                //Creation de la base de données Medicament
-                               // String idMedicament=MedicamentId;
-                                String idPatient=userId;
-                                String nom="";
-                                String dosage="";
-                                String frequence="";
-                                String nombreDeFoisParJour="";
-                                String horaires="";
-
-                               // Medicament med= new Medicament(idPatient,idMedicament,nom,dosage,frequence,nombreDeFoisParJour, horaires);
-                                DatabaseReference refmed = myRefmedicament.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                refmed.setValue("lala").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(InscriptionActivity.this, getString( R.string.registration_success), Toast.LENGTH_LONG).show();
-                                        } else {
-                                            Toast.makeText(InscriptionActivity.this, getString(R.string.registration_failed), Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                });
-
-
 
                             } else {
                                 Toast.makeText(InscriptionActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -182,7 +158,7 @@ public class InscriptionActivity extends AppCompatActivity {
 
                             if (!task.isSuccessful()) {
                                 Toast.makeText(InscriptionActivity.this.getApplicationContext(),
-                                        "SignUp unsuccessful: " + task.getException().getMessage(),
+                                        "L'inscription a échoué : " + task.getException().getMessage(),
                                         Toast.LENGTH_SHORT).show();
                             } else {
                                 startActivity(new Intent(InscriptionActivity.this, UserActivity.class));
@@ -190,7 +166,7 @@ public class InscriptionActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(InscriptionActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InscriptionActivity.this, "Erreur", Toast.LENGTH_SHORT).show();
                 }
             }
         });
