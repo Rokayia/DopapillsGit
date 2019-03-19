@@ -20,11 +20,10 @@
          android:layout_marginLeft="15dp" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView_avatarProfil"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="60dp"
-            android:background="@drawable/avatar"/>
+            android:layout_marginLeft="60dp" />
     </LinearLayout>
 
     <LinearLayout

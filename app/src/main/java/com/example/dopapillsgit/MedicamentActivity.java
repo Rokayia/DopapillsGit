@@ -95,19 +95,22 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
     //Query
     private  Query query;
 
+    private Context context;
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicament);
+        context=this;
 
 
 
         //var
         btnAjoutMed=(LinearLayout) findViewById(R.id.ajouter_medicament);
         childUpdates = new HashMap<>();
-       
+
 
         //Firebase
         mListView = (ListView) findViewById(R.id.listview);
@@ -131,8 +134,9 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
         array = new ArrayList<>();
         query=myRefMedicament.child(userID);
         //  toastMessage(userID);
+
         query.addListenerForSingleValueEvent(valueEventListener);
-        adapter = new ArrayAdapter<String>(this, R.layout.list_item_layout, array);
+        adapter = new ArrayAdapter<String>(this, R.layout.list_item_layout,R.id.textView_listView, array);
         mListView.setAdapter(adapter);
 
        // Context context=null;

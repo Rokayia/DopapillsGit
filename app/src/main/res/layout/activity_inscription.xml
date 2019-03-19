@@ -72,13 +72,17 @@
             android:layout_gravity="center"
             android:orientation="vertical"
             >
+
             <Button
                 android:id="@+id/boutonsuivantvalider"
                 android:layout_width="300dp"
-                android:layout_height="91dp"
+                android:layout_height="61dp"
                 android:layout_marginTop="5dp"
-                android:layout_gravity="center"
-                android:background="@drawable/symbolee2981"/>
+
+                android:background="@drawable/symbole2"
+                android:text="@string/suivant"
+                android:textColor="@color/blanc"
+                android:textSize="22sp" />
 
         </LinearLayout>
     </LinearLayout>

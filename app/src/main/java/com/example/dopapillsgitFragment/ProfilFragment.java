@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,16 +30,17 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfilFragment extends Fragment {
     View view;
     //Interface utilisateur
-    public TextView editTextNomPrenomProfil;
-    LinearLayout  btnId, btnDonnes, btnMedicaments, btnMed;
-    LinearLayout btnSignOut;
+    private TextView editTextNomPrenomProfil;
+    private LinearLayout  btnId, btnDonnes, btnMedicaments, btnMed;
+    private LinearLayout btnSignOut;
+    private ImageView imageViewAvatar;
     private static final String TAG = "ProfilFragment";
 
     //Firebase
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference myRef;
+    private DatabaseReference myRef,myRefAvatar;
     private  String userID;
 
 
@@ -54,6 +56,7 @@ public class ProfilFragment extends Fragment {
         btnDonnes = (LinearLayout) view.findViewById(R.id.button_donnees_sante);
         btnMedicaments= (LinearLayout) view.findViewById(R.id.button_medicaments);
         btnMed=(LinearLayout) view.findViewById(R.id.button_medecin);
+        imageViewAvatar= view.findViewById(R.id.imageView_avatarProfil);
 
        // btnMedicaments = (LinearLayout) view.findViewById(R.id.button_medicaments);
     //    btnMedecin = (LinearLayout) view.findViewById(R.id.button_medecin);
@@ -61,8 +64,10 @@ public class ProfilFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("Patient");
+        myRefAvatar=mFirebaseDatabase.getReference("Patient");
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -70,11 +75,16 @@ public class ProfilFragment extends Fragment {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
             }
         };
+
 //afficher le nom,prenoom et mail de l'utiilisateur
         Query query=myRef
                 .orderByChild("id")
                 .equalTo(userID);
-       // toastMessage(userID);
+
+        //afficher l'avatar qui correspond au sexe et à l'âge de l'utilsateur
+        query.addListenerForSingleValueEvent(valueEventListenerAvatar);
+
+        //afficher le nom et le prenom de l'utilisateur
         query.addListenerForSingleValueEvent(valueEventListener);
 
 // Déconnection
@@ -142,7 +152,40 @@ public class ProfilFragment extends Fragment {
 
         }
     };
+    ValueEventListener valueEventListenerAvatar = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+//toastMessage(Boolean.toString(dataSnapshot.exists()));
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    String sexe =user.getSexe();
+                    int age = Integer.parseInt(user.getAge());
 
+                   if(sexe.equals("Une femme")&&age<55){
+                      imageViewAvatar.setBackgroundResource(R.drawable.avatarfemmme);
+                   }
+                   else if(sexe.equals("Une femme") &&age>55){
+                       imageViewAvatar.setBackgroundResource(R.drawable.avatarfemmemature);
+                   }
+                   else if(sexe.equals("Un homme") && (age > 55)){
+                       imageViewAvatar.setBackgroundResource(R.drawable.avatarhommemature);
+                   }
+                   else if(sexe.equals("Un homme") &&age<55){
+                       imageViewAvatar.setBackgroundResource(R.drawable.avatarhomme);
+                   }
+
+
+                }
+
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     @Override
     public void onStart() {

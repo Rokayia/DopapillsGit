@@ -85,8 +85,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.dopapillsgit.UserActivity" />
         </activity>
-        <activity android:name=".Rappel" />
-    <activity android:name=".NotificationActivity" />
+        <activity android:name=".AjoutRdvActivity"
+            android:parentActivityName=".UserActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.dopapillsgit.UserActivity" />
+        </activity>
+        <activity android:name=".AjoutRepasActivity"
+            android:parentActivityName=".UserActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.dopapillsgit.UserActivity" />
+        </activity>
+        <activity android:name=".NotificationActivity" />
 
     <receiver android:name=".AlarmReceiver"/>
     </application>
