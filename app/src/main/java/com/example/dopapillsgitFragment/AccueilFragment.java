@@ -26,10 +26,12 @@ import com.example.dopapillsgit.AjoutRepasActivity;
 import com.example.dopapillsgit.AjoutSymptomeActivity;
 import com.example.dopapillsgit.CalendrierActivity;
 import com.example.dopapillsgit.R;
+import com.example.dopapillsgitModel.Medecin;
 import com.example.dopapillsgitModel.Medicament;
 import com.example.dopapillsgitModel.RDV;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -108,7 +110,50 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
         array = new ArrayList<>();
         query=myRefMedicament.child(userID);
         //  toastMessage(userID);
-        query.addListenerForSingleValueEvent(valueEventListener);
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.d("Data onChildAdded", dataSnapshot.getValue().toString());
+
+                Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+
+                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+                adapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Log.d("Data onChildChanged", dataSnapshot.getValue().toString());
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d("Data onChildRemoved", dataSnapshot.getValue().toString());
+                //Toast.makeText(getBaseContext(), "data=" + dataSnapshot.getValue(), Toast.LENGTH_LONG).show();
+
+
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                Log.d("Data onChildMoved", dataSnapshot.getValue().toString());
+                //Toast.makeText(getBaseContext(), "data=" + dataSnapshot.getValue(), Toast.LENGTH_LONG).show();
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+
+            }
+        });
+
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_accueil_medicament, array);
         mListView.setAdapter(adapter);
 

@@ -157,7 +157,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
         });
 
 
-        //Supprimer medecin
+        //Ajouter medecin
         btnAjoutMed.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -192,29 +192,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
     }
 
 
-    ValueEventListener valueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-            if (dataSnapshot.exists()) {
-                //  toastMessage("exist");
-
-                //  for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                // String key = snapshot.getKey();
-                //  toastMessage("child"+key);
-                // Query query1= myRefMedecin.child(userID).child(key);
-
-
-            }
-        }
-
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            Log.e("error", databaseError.getMessage());
-        }
-    };
 
 
     @Override
