@@ -163,7 +163,7 @@ public class ProfilFragment extends Fragment {
                     int age = Integer.parseInt(user.getAge());
 
                    if(sexe.equals("Une femme")&&age<55){
-                      imageViewAvatar.setBackgroundResource(R.drawable.avatarfemmme);
+                      imageViewAvatar.setBackgroundResource(R.drawable.avatar);
                    }
                    else if(sexe.equals("Une femme") &&age>55){
                        imageViewAvatar.setBackgroundResource(R.drawable.avatarfemmemature);

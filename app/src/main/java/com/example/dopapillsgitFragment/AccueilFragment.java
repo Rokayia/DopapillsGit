@@ -2,7 +2,12 @@ package com.example.dopapillsgitFragment;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.SensorEventListener;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -48,7 +53,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
+public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemClickListener, SensorEventListener   {
     //Var
 
     private ListView mListView,listview_voirEvenement;
@@ -57,6 +62,9 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     private ImageButton ajouterEvenement;
     private  ArrayList<String> array,array2;
     private ArrayAdapter<String> adapter,adapter2;
+    SensorManager sensorManager;
+    TextView steps;
+    Boolean running = false;
 
     //Firebase
     private FirebaseDatabase mFirebaseDatabase;
@@ -73,11 +81,16 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_accueil, container, false);
+
+        this.getActivity().getSystemService(Activity.SENSOR_SERVICE);
+
         //var
         cal = view.findViewById(R.id.bouttoncalendrier);
         ajouterEvenement =view.findViewById(R.id.ajouterevenement);
         listview_voirEvenement=view.findViewById(R.id.listview_voirEvenement);
         mListView = (ListView) view.findViewById(R.id.listview_voirMedicament);
+        steps = (TextView) view.findViewById(R.id.steps);
+        sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
 
         //Firebase
 
@@ -328,6 +341,39 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+    }
+    @Override
+    public void onResume (){
+        super.onResume();
+        running = true;
+        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        if(countSensor !=null){
+            sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
+        }
+        else {
+            Toast.makeText(getActivity(),"Aucun capteur trouvé !", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        running = false;
+        // si on désactive l'enregistrement, le matériel cessera de détecter l'étape.
+        //sensorManager/unregisterListerner(this);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (running) {
+            steps.setText(String.valueOf(event.values[0]));
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
 }
