@@ -1,5 +1,6 @@
 package com.example.dopapillsgitFragment;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -22,21 +23,31 @@ import android.widget.Toast;
 
 import com.example.dopapillsgit.MedicamentActivity;
 import com.example.dopapillsgit.R;
+import com.example.dopapillsgitModel.MultiSpinner;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
-public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment {
+public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment implements MultiSpinner.MultiSpinnerListener {
 
-    private EditText mDosage,mNombreFoisParJour;
+
+    //var
+    private EditText mDosage;
     private TextView horaireTextView;
     private Spinner spinner_medicament,spinner_fréquence;
+    private MultiSpinner multiSpinner;
     private ImageButton mHoraire;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     private String horaire;
     int heure,min;
 
+    List<String> items;
+    List<String> jour;
+
     private DialogPopUpAjoutMedicamentFragment.DialogListener listener;
 
+    @SuppressLint("ResourceType")
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -44,10 +55,27 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_new_medicament, null);
+        //var
+        items = new ArrayList<>();
+        jour=new ArrayList<>();
+
+        items.add("lundi");
+        items.add("mardi");
+        items.add("mercredi");
+        items.add("jeudi");
+        items.add("vendredi");
+        items.add("samedi");
+        items.add("dimanche");
+
+
+
 //spinner
         spinner_medicament = (Spinner) view.findViewById(R.id.NomMedicament);
         spinner_fréquence = (Spinner) view.findViewById(R.id.FreqMedicament);
-        mNombreFoisParJour= (EditText) view.findViewById(R.id.NombreFoisMedicament);
+        multiSpinner = (MultiSpinner) view.findViewById(R.id.spinner_jour_semaine);
+        multiSpinner.setItems(items,  "lundi", this);
+
+      //  mNombreFoisParJour= (EditText) view.findViewById(R.id.NombreFoisMedicament);
 
         //Remplir les cases du Spinner des noms de médicament
         ArrayAdapter<CharSequence> adapterMedicamentNom = ArrayAdapter.createFromResource(getActivity(), R.array.medicaments, android.R.layout.simple_spinner_item);
@@ -83,7 +111,7 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
                         String nom = spinner_medicament.getSelectedItem().toString();
                         String dosage = mDosage.getText().toString();
                         String frequence = spinner_fréquence.getSelectedItem().toString();
-                        String nombreFoisJour = mNombreFoisParJour.getText().toString();
+
 
                         spinner_medicament.setSelection(((ArrayAdapter)spinner_medicament.getAdapter()).getPosition(nom));
                         toastMessage(nom);
@@ -95,7 +123,7 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
 
 
 
-                        listener.applyTexts(nom, dosage,frequence,nombreFoisJour,horaire,heure,min);
+                        listener.applyTexts(nom, dosage,frequence,jour,horaire,heure,min);
                     }
                 });
 
@@ -144,9 +172,22 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
     }
 
     public interface DialogListener {
-        void applyTexts(String nom, String dosage,String frequence,String nombreFoisJour,String horaire,int heure,int minute);
+        void applyTexts(String nom, String dosage,String frequence,List<String> jour,String horaire,int heure,int minute);
     }
     private void toastMessage(String message){
         Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+    }
+    public void onItemsSelected(boolean[] selected){
+        int length=selected.length;
+        for(int i=0;i< items.size();i++){
+           if(selected[i]==true){
+               jour.add(items.get(i));
+
+           }
+        }
+
+        for(int j=0;j< jour.size();j++){
+        toastMessage(jour.get(j).toString()
+        );}
     }
 }

@@ -91,25 +91,40 @@
         android:layout_below="@+id/FreqMedicamentTextView" />
 
 
-
     <TextView
-        android:id="@+id/NombreFoisMedicamentTextView"
-        android:layout_width="350dp"
-        android:layout_height="30dp"
+        android:id="@+id/textView_jour_semaine"
         android:layout_marginTop="15dp"
-        android:text="@string/nombre_de_fois_par_jour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fr_quence"
         android:textColor="@color/black_overlay"
         android:textSize="16sp"
         android:layout_below="@+id/FreqMedicament"/>
     <EditText
-        android:id="@+id/NombreFoisMedicament"
+        android:id="@+id/editText_jour_semaine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginBottom="15dp"
+        android:inputType="none"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textColor="@color/noir"
+        android:textAlignment="textEnd"
+        android:gravity="end"
+        android:layout_below="@+id/textView_jour_semaine" />
+    <com.example.dopapillsgitModel.MultiSpinner
+        android:id="@+id/spinner_jour_semaine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/noir"
+        android:textAlignment="textEnd"
+        android:gravity="end"
+        android:layout_below="@+id/textView_jour_semaine" />
 
-        android:textSize="16sp"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        android:layout_below="@+id/NombreFoisMedicamentTextView" />
 
 
 
@@ -126,7 +141,7 @@
         android:focusableInTouchMode="false"
         android:textSize="16sp"
         android:hint="Horaire(s)"
-        android:layout_below="@id/NombreFoisMedicament" />
+        android:layout_below="@id/spinner_jour_semaine" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -135,7 +150,7 @@
         android:imeOptions="actionNext"
         android:layout_marginTop="15dp"
         android:textSize="20sp"
-        android:layout_below="@id/NombreFoisMedicament"
+        android:layout_below="@id/spinner_jour_semaine"
         android:layout_marginLeft="200dp" />
     <ImageButton
         android:id="@+id/HoraireMedicamentButton"
@@ -147,7 +162,7 @@
         android:layout_marginBottom="25dp"
         android:textColor="@color/noir"
         android:gravity="left"
-        android:layout_below="@+id/NombreFoisMedicament"
+        android:layout_below="@+id/spinner_jour_semaine"
         android:background="@drawable/clock"/>
 
 </RelativeLayout>
