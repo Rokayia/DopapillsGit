@@ -96,7 +96,7 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
         myRef = mFirebaseDatabase.getReference("DonneesDeSante");
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
-        toastMessage(userID+" utilisateur");
+        //toastMessage(userID+" utilisateur");
         myRefC= FirebaseDatabase.getInstance().getReference("ContactUrgence");
 
 
@@ -111,7 +111,7 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
         //afficher les informations déjà entrées par l'utilisateur
         query=myRef.orderByChild("idPatient")
                 .equalTo(userID);
-        toastMessage(userID);
+        //toastMessage(userID);
         query.addListenerForSingleValueEvent(valueEventListener);
 
         queryC=myRefC;
@@ -406,7 +406,7 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            toastMessage(Boolean.toString(dataSnapshot.exists()));
+            //toastMessage(Boolean.toString(dataSnapshot.exists()));
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                    DonneesSante donneesSante = snapshot.getValue(DonneesSante.class);
@@ -448,7 +448,7 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
     ValueEventListener valueEventListenerContact = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                toastMessage(Boolean.toString(dataSnapshot.exists()));
+               // toastMessage(Boolean.toString(dataSnapshot.exists()));
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         if(snapshot.getKey()==userID) {

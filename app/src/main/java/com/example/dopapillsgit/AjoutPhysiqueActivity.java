@@ -36,19 +36,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AjoutPhysiqueActivity extends AppCompatActivity {
+
     //var
-    public static final String TAG = "ajout_activite";
-    public static final String TAG2 = "ajout_activite";
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TextView mDisplayDate2;
     private DatePickerDialog.OnDateSetListener mDateSetListener2;
-
-    public static final String TAG3 = "ajout_activite";
     private TextView mDisplayTime;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
-
-    public static final String TAG4 = "ajout_activite";
     private TextView mDisplayTime2;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener2;
 
@@ -116,7 +111,7 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                Log.d(TAG, "onDateSet : dd/mm/yyyy " + dayOfMonth + "/" + month + "/" + year);
+
                 String date = dayOfMonth + "/" + month + "/" + year;
                 dateDebut=date;
                 mDisplayDate.setText(date);
@@ -138,7 +133,7 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
 
         mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hour, int minute) {
-                Log.d(TAG2, "onTimeSet : hh:mm " + hour + ":" + minute);
+
                 String time = hour + ":" + minute;
                 hDebut=time;
                 mDisplayTime.setText(time);
@@ -171,7 +166,7 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                Log.d(TAG3, "onDateSet : dd/mm/yyyy " + dayOfMonth + "/" + month + "/" + year);
+
                 String date = dayOfMonth + "/" + month + "/" + year;
                 dateFin=date;
                 mDisplayDate2.setText(date);
@@ -195,7 +190,7 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
 
         mTimeSetListener2 = new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hour, int minute) {
-                Log.d(TAG4, "onTimeSet : hh:mm " + hour + ":" + minute);
+
                 String time = hour + ":" + minute;
                 hFin=time;
                 mDisplayTime2.setText(time);
@@ -236,7 +231,6 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
     }
 
     public void ajouterActivite() {
-
 
         String type = spinner_type.getSelectedItem().toString();
         String lieu = editTextLieu.getText().toString();

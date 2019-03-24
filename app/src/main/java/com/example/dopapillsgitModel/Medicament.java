@@ -4,6 +4,8 @@ import android.os.Parcelable;
 
 import com.google.firebase.firestore.IgnoreExtraProperties;
 
+import java.util.List;
+
 @IgnoreExtraProperties
 public class Medicament implements Parcelable{
     private String idMedicament;
@@ -11,16 +13,20 @@ public class Medicament implements Parcelable{
     private String nom;
     private String dosage;
     private String frequence;
-    private String nombreDeFoisParJour;
+    private List<String> jour;
+   // private String mois;
+   // private String annee;
     private String horaires;
-    public Medicament(String idPatient,String idMedicament,String nom,String dosage,String frequence,String nombreDeFoisParJour,String horaires){
+    public Medicament(String idPatient,String idMedicament,String nom,String dosage,String frequence,List<String> jour,String horaires){
         this.setIdMedicament(idMedicament);
         this.setNom(nom);
         this.setDosage(dosage);
         this.setFrequence(frequence);
-        this.setNombreDeFoisParJour(nombreDeFoisParJour);
+        this.setJour(jour);
         this.setHoraires(horaires);
         this.setIdPatient(idPatient);
+       // this.setAnnee(annee);
+     //   this.setMois(mois);
 
     }
     public Medicament() {
@@ -32,8 +38,14 @@ public class Medicament implements Parcelable{
         nom = in.readString();
         dosage = in.readString();
         frequence = in.readString();
-        nombreDeFoisParJour = in.readString();
-        horaires = in.readString();
+
+        for (int i =0;i<jour.size();i++){
+            jour.get(i).equals(in.readString()) ;
+        }
+
+        setHoraires(in.readString());
+       // setMois(in.readString());
+       // setAnnee(in.readString());
     }
     public static final Creator<Medicament> CREATOR = new Creator<Medicament>() {
         @Override
@@ -78,12 +90,12 @@ public class Medicament implements Parcelable{
         this.frequence = frequence;
     }
 
-    public String getNombreDeFoisParJour() {
-        return nombreDeFoisParJour;
+    public List<String> getJour() {
+        return jour;
     }
 
-    public void setNombreDeFoisParJour(String nombreDeFoisParJour) {
-        this.nombreDeFoisParJour = nombreDeFoisParJour;
+    public void setJour(List<String> jour) {
+        this.jour = jour;
     }
 
     public String getHoraires() {
@@ -107,11 +119,15 @@ public class Medicament implements Parcelable{
         parcel.writeString(nom);
         parcel.writeString(dosage);
         parcel.writeString(frequence);
-        parcel.writeString(nombreDeFoisParJour);
-        parcel.writeString(horaires);
-
+        for (int j =0;j<jour.size();j++){
+            parcel.writeString(jour.get(i));
+        }
+        parcel.writeString(getHoraires());
+     //   parcel.writeString(getMois());
+     //   parcel.writeString(getAnnee());
 
     }
+
 
     public String getIdPatient() {
         return idPatient;
@@ -120,4 +136,20 @@ public class Medicament implements Parcelable{
     public void setIdPatient(String idPatient) {
         this.idPatient = idPatient;
     }
+
+    /*public String getAnnee() {
+        return annee;
+    }
+
+    public void setAnnee(String annee) {
+        this.annee = annee;
+    }
+
+    public String getMois() {
+        return mois;
+    }
+
+    public void setMois(String mois) {
+        this.mois = mois;
+    }*/
 }

@@ -74,7 +74,8 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
 
 
     //Var
-    String mNom,mDosage,mFréquence,mNombreFoisJour,mHoraire;
+    String mNom,mDosage,mFréquence,mHoraire;
+    List<String> mJour;
     private  LinearLayout btnSupprimerMed;
     private ListView mListView;
     private LinearLayout btnAjoutMed;
@@ -332,16 +333,16 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
 
     }
 
-    public void applyTexts(String nom, String dosage,String fréquence,String nombreFoisJour,String horaire, int heure,int minute) {
+    public void applyTexts(String nom, String dosage,String fréquence,List<String> jour,String horaire, int heure,int minute) {
         mNom=nom;
         mDosage=dosage;
         mFréquence=fréquence;
-        mNombreFoisJour=nombreFoisJour;
+        mJour=jour;
         mHoraire=horaire;
 
        //ajouter dans firebase
         MedicamentId=myRefMedicament.push().getKey();
-        Medicament medica =new Medicament(userID,MedicamentId,mNom, mDosage,mFréquence,mNombreFoisJour,mHoraire);
+        Medicament medica =new Medicament(userID,MedicamentId,mNom, mDosage,mFréquence,mJour,mHoraire);
 
         childUpdates.put("/Medicament/" + userID+ "/"+ MedicamentId+ "/",medica);
         rootRef.updateChildren(childUpdates);
