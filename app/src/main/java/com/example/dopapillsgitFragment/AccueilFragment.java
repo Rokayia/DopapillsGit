@@ -2,7 +2,13 @@ package com.example.dopapillsgitFragment;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.hardware.SensorEventListener;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +35,8 @@ import com.example.dopapillsgit.R;
 import com.example.dopapillsgitModel.Medecin;
 import com.example.dopapillsgitModel.Medicament;
 import com.example.dopapillsgitModel.RDV;
+import com.example.dopapillsgitModel.StepDetector;
+import com.example.dopapillsgitModel.StepListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -48,7 +56,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
+import static android.content.Context.SENSOR_SERVICE;
+
+public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemClickListener, SensorEventListener, StepListener {
+
     //Var
 
     private ListView mListView,listview_voirEvenement;
@@ -57,6 +68,15 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     private ImageButton ajouterEvenement;
     private  ArrayList<String> array,array2;
     private ArrayAdapter<String> adapter,adapter2;
+
+    //podometre
+    private TextView steps;
+    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
+    private int numSteps;
+    private StepDetector StepDetector;
+    private SensorManager sensorManager;;
+    private Sensor accel;
+
 
     //Firebase
     private FirebaseDatabase mFirebaseDatabase;
@@ -68,16 +88,34 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
     //Query
     private  Query query,query2;
+    private  Sensor sSensor;
+
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_accueil, container, false);
+
+        //this.getActivity().getSystemService(Activity.SENSOR_SERVICE);
+
+        steps =  view.findViewById(R.id.steps);
+        // sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
+        //sSensor= sensorManager .getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);*/
+        sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
+
+        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        Toast.makeText(getActivity(),"bool accel "+Boolean.toString(accel !=null), Toast.LENGTH_SHORT).show();
+
+        StepDetector = new StepDetector();
+        StepDetector.registerListener(this);
+
+
         //var
         cal = view.findViewById(R.id.bouttoncalendrier);
         ajouterEvenement =view.findViewById(R.id.ajouterevenement);
         listview_voirEvenement=view.findViewById(R.id.listview_voirEvenement);
         mListView = (ListView) view.findViewById(R.id.listview_voirMedicament);
+
 
         //Firebase
 
@@ -288,8 +326,8 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
                             RDV rdv = (RDV) dataSnapshot.getValue(RDV.class);
                             if(rdv.gethDebut()!=null &&rdv.gethFin()!=null ){
 
-                            array2.add( rdv.gethDebut()+"h - "+ rdv.gethFin()+"h "+rdv.getNom() + " à "+ rdv.getLieu());
-                            adapter2.notifyDataSetChanged();
+                                array2.add( rdv.gethDebut()+"h - "+ rdv.gethFin()+"h "+rdv.getNom() + " à "+ rdv.getLieu());
+                                adapter2.notifyDataSetChanged();
                             }else{
                                 array2.add( rdv.getDate()+" -  " +rdv.getNom() + " à "+ rdv.getLieu());
                                 adapter2.notifyDataSetChanged();
@@ -329,7 +367,59 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+    @Override
+    public void onResume (){
+        super.onResume();
+        numSteps = 0;
+        steps.setText(TEXT_NUM_STEPS + String.valueOf(numSteps));
+        sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_UI);
+       /*super.onResume();
+        running = true;
+        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        Sensor stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+        Toast.makeText(getActivity(),"bool"+Boolean.toString(countSensor !=null), Toast.LENGTH_SHORT).show();
+        if(countSensor !=null){
+            sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
+        }
+        else {
+            Toast.makeText(getActivity(),"Aucun capteur trouvé !", Toast.LENGTH_SHORT).show();
+        }*/
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+        // running = false;
+        // si on désactive l'enregistrement, le matériel cessera de détecter l'étape.
+        //sensorManager/unregisterListerner(this);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+       /* if (running) {
+            steps.setText(String.valueOf(event.values[0]));
+        }*/
+        // steps.setText(String.valueOf(event.values[0]));
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            StepDetector.updateAccel(
+                    event.timestamp, event.values[0], event.values[1], event.values[2]);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+    public void step(long timeNs) {
+        numSteps++;
+        steps.setText(TEXT_NUM_STEPS + String.valueOf(numSteps));
+
+
+
+    }
 }
 
 
