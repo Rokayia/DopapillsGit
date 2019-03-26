@@ -105,13 +105,8 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
         StepDetector = new StepDetector();
         StepDetector.registerListener(this);
 
-        SharedPreferences settings;
-        settings = getActivity().getSharedPreferences("TWO_INT_SAVING", Context.MODE_PRIVATE);
 
-        //get the sharepref
-        int firstInt = settings.getInt("steps", 0);
 
-        numSteps=firstInt;
         //var
         cal = view.findViewById(R.id.bouttoncalendrier);
         ajouterEvenement =view.findViewById(R.id.ajouterevenement);
@@ -346,7 +341,13 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     @Override
     public void onResume (){
         super.onResume();
-        numSteps = 0;
+
+        //reprendre la valeur deja préservée
+        settings = getActivity().getSharedPreferences("SauvegarderPas", Context.MODE_PRIVATE);
+        //get the sharepref
+        int firstInt = settings.getInt("pas", 0);
+        numSteps=firstInt;
+
         steps.setText( String.valueOf(numSteps));
         sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_UI);
        }
@@ -610,10 +611,10 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     public void onDestroy() {
         super.onDestroy();
 
-        settings = getActivity().getSharedPreferences("TWO_INT_SAVING", Context.MODE_PRIVATE);
+        settings = getActivity().getSharedPreferences("SauvegarderPas", Context.MODE_PRIVATE);
         //set the sharedpref
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("steps", numSteps);
+        editor.putInt("pas", numSteps);
 
         editor.commit();
     }
