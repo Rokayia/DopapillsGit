@@ -71,7 +71,6 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
     //podometre
     private TextView steps;
-    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
     private StepDetector StepDetector;
     private SensorManager sensorManager;;
@@ -84,7 +83,7 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRefMedicament,myRefRDV;
     private DatabaseReference rootRef;
-    private  String userID,MedicamentId;
+    private  String userID,userIdMed;
 
     //Query
     private  Query query,query2;
@@ -96,16 +95,11 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_accueil, container, false);
 
-        //this.getActivity().getSystemService(Activity.SENSOR_SERVICE);
 
         steps =  view.findViewById(R.id.steps);
-        // sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
-        //sSensor= sensorManager .getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);*/
         sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
 
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        Toast.makeText(getActivity(),"bool accel "+Boolean.toString(accel !=null), Toast.LENGTH_SHORT).show();
-
         StepDetector = new StepDetector();
         StepDetector.registerListener(this);
 
@@ -118,7 +112,6 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
 
         //Firebase
-
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRefMedicament=FirebaseDatabase.getInstance().getReference("Medicament");
@@ -140,57 +133,21 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
         query2=myRefRDV.child(userID);
         //  toastMessage(userID);
         query2.addListenerForSingleValueEvent(valueEventListener2);
+
+
         adapter2 = new ArrayAdapter<String>(getActivity(), R.layout.list_item_accueil_medicament, array2);
+
+
         listview_voirEvenement.setAdapter(adapter2);
+
+        adapter2.notifyDataSetChanged();
 
 
         //afficher les informations déjà entrées par l'utilisateur
         array = new ArrayList<>();
         query=myRefMedicament.child(userID);
         //  toastMessage(userID);
-        query.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.d("Data onChildAdded", dataSnapshot.getValue().toString());
-
-                Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-
-                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
-                adapter.notifyDataSetChanged();
-
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Log.d("Data onChildChanged", dataSnapshot.getValue().toString());
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.d("Data onChildRemoved", dataSnapshot.getValue().toString());
-                //Toast.makeText(getBaseContext(), "data=" + dataSnapshot.getValue(), Toast.LENGTH_LONG).show();
-
-
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                Log.d("Data onChildMoved", dataSnapshot.getValue().toString());
-                //Toast.makeText(getBaseContext(), "data=" + dataSnapshot.getValue(), Toast.LENGTH_LONG).show();
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-
-            }
-        });
+        query.addChildEventListener(childEventListener);
 
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_accueil_medicament, array);
         mListView.setAdapter(adapter);
@@ -210,7 +167,6 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
             }
         });
         String date_n = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(new Date());
-
         TextView tv_date = view.findViewById(R.id.date);
         tv_date.setText(date_n);
         return view;
@@ -314,24 +270,32 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String key = snapshot.getKey();
-                    //  toastMessage("child"+key);
+
                     Query query1= myRefRDV.child(userID).child(key);
-//voir si on peut montrer que les rdv du jour + changer les iterfaces
+
 
 
                     query1.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            RDV rdv = (RDV) dataSnapshot.getValue(RDV.class);
-                            if(rdv.gethDebut()!=null &&rdv.gethFin()!=null ){
 
-                                array2.add( rdv.gethDebut()+"h - "+ rdv.gethFin()+"h "+rdv.getNom() + " à "+ rdv.getLieu());
-                                adapter2.notifyDataSetChanged();
-                            }else{
-                                array2.add( rdv.getDate()+" -  " +rdv.getNom() + " à "+ rdv.getLieu());
-                                adapter2.notifyDataSetChanged();
+                            RDV rdv = (RDV) dataSnapshot.getValue(RDV.class);
+                            String date_p = new SimpleDateFormat("dd/M/yyyy", Locale.getDefault()).format(new Date());
+
+                            if (date_p.equals(rdv.getDate())) {
+                                if (rdv.gethDebut() != null && rdv.gethFin() != null) {
+
+                                    array2.add(rdv.gethDebut() + " h - " + rdv.gethFin() + " h " + rdv.getNom() + " à " + rdv.getLieu());
+                                    adapter2.notifyDataSetChanged();
+                                } else {
+                                    array2.add( "Toute la journée : " + rdv.getNom() + " à " + rdv.getLieu());
+                                    adapter2.notifyDataSetChanged();
+                                }
+
                             }
+
+
 
                         }
 
@@ -344,14 +308,16 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
                 }
 
-            }
+                }
         }
+
 
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
             Log.e("error",databaseError.getMessage());
         }
+
     };
 
     @Override
@@ -371,38 +337,21 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     public void onResume (){
         super.onResume();
         numSteps = 0;
-        steps.setText(TEXT_NUM_STEPS + String.valueOf(numSteps));
+        steps.setText( String.valueOf(numSteps));
         sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_UI);
-       /*super.onResume();
-        running = true;
-        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-        Sensor stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-        Toast.makeText(getActivity(),"bool"+Boolean.toString(countSensor !=null), Toast.LENGTH_SHORT).show();
-        if(countSensor !=null){
-            sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
-        }
-        else {
-            Toast.makeText(getActivity(),"Aucun capteur trouvé !", Toast.LENGTH_SHORT).show();
-        }*/
-    }
+       }
 
 
     @Override
     public void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
-        // running = false;
-        // si on désactive l'enregistrement, le matériel cessera de détecter l'étape.
-        //sensorManager/unregisterListerner(this);
+
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-       /* if (running) {
-            steps.setText(String.valueOf(event.values[0]));
-        }*/
-        // steps.setText(String.valueOf(event.values[0]));
+
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             StepDetector.updateAccel(
                     event.timestamp, event.values[0], event.values[1], event.values[2]);
@@ -415,11 +364,240 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     }
     public void step(long timeNs) {
         numSteps++;
-        steps.setText(TEXT_NUM_STEPS + String.valueOf(numSteps));
+        steps.setText( String.valueOf(numSteps));
 
 
 
     }
+    /********************************* ChildEventListener pour récupérer****************************
+     * tous les médicaments en fonction du jour de la semaine
+     */
+
+    ChildEventListener childEventListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            userIdMed=dataSnapshot.getKey();
+
+            final Query queryJour=myRefMedicament.child(userID).child(dataSnapshot.getKey());
+            final Query query1 = myRefMedicament.child(userID).child(dataSnapshot.getKey()).child("jour");
+            query1.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    Calendar calendar = Calendar.getInstance();
+                    int day = calendar.get(Calendar.DAY_OF_WEEK);
+
+                    Calendar cal = Calendar.getInstance();
+                    int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+                    String dayOfMonthStr = String.valueOf(dayOfMonth);
+
+
+                    switch (day) {
+                        case Calendar.MONDAY:
+                            if(dataSnapshot.getValue().equals("lundi")){
+                                queryJour.addValueEventListener(valueEventListenerLundi);
+                            }
+                            break;
+                        case Calendar.TUESDAY:
+                            if(dataSnapshot.getValue().equals("mardi")){
+                                queryJour.addValueEventListener(valueEventListenerMardi);
+                            }
+                            break;
+                        case Calendar.WEDNESDAY:
+                            if(dataSnapshot.getValue().equals("mercredi")){
+                                queryJour.addValueEventListener(valueEventListenerMercredi);
+                            }
+                            break;
+                        case Calendar.THURSDAY:
+                            if(dataSnapshot.getValue().equals("jeudi")){
+                                queryJour.addValueEventListener(valueEventListenerJeudi);
+                            }
+                            break;
+                        case Calendar.FRIDAY:
+                            if(dataSnapshot.getValue().equals("vendredi")){
+                                queryJour.addValueEventListener(valueEventListenerVendredi);
+                            }
+                            break;
+                        case Calendar.SATURDAY:
+                            if(dataSnapshot.getValue().equals("samedi")){
+                                queryJour.addValueEventListener(valueEventListenerSamedi);
+                            }
+                            break;
+                        case Calendar.SUNDAY:
+                            if(dataSnapshot.getValue().equals("dimanche")){
+                                queryJour.addValueEventListener(valueEventListenerDimanche);
+                            }
+                            break;
+                        default:
+
+
+
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+
+
+
+        }
+
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+    /**********************ValueEventListener en fonction des jours de la semaine******************/
+    ValueEventListener valueEventListenerLundi = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            //Pour remplir la listView de medicament
+            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
+                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            adapter.notifyDataSetChanged();
+
+            //Pour remplir la listView de RDV
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    ValueEventListener valueEventListenerMardi = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
+                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    ValueEventListener valueEventListenerMercredi = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
+                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    ValueEventListener valueEventListenerJeudi = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
+                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    ValueEventListener valueEventListenerVendredi= new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
+                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            adapter.notifyDataSetChanged();
+        }
+
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+
+    ValueEventListener valueEventListenerSamedi = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
+                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    ValueEventListener valueEventListenerDimanche = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
+                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+    private void toastMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
 }
 
 
