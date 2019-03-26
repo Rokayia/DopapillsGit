@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.SensorEventListener;
 import android.hardware.Sensor;
@@ -68,6 +69,7 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     private ImageButton ajouterEvenement;
     private  ArrayList<String> array,array2;
     private ArrayAdapter<String> adapter,adapter2;
+    private SharedPreferences settings;
 
     //podometre
     private TextView steps;
@@ -103,7 +105,13 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
         StepDetector = new StepDetector();
         StepDetector.registerListener(this);
 
+        SharedPreferences settings;
+        settings = getActivity().getSharedPreferences("TWO_INT_SAVING", Context.MODE_PRIVATE);
 
+        //get the sharepref
+        int firstInt = settings.getInt("steps", 0);
+
+        numSteps=firstInt;
         //var
         cal = view.findViewById(R.id.bouttoncalendrier);
         ajouterEvenement =view.findViewById(R.id.ajouterevenement);
@@ -169,6 +177,12 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
         String date_n = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(new Date());
         TextView tv_date = view.findViewById(R.id.date);
         tv_date.setText(date_n);
+        SharedPreferences prefs= getActivity().getSharedPreferences("aName", Context.MODE_PRIVATE);
+        //save the value
+        prefs.edit()
+                .putInt("steps", numSteps).apply();
+        // get the data
+        prefs.getInt("steps", numSteps);
         return view;
     }
 
@@ -202,11 +216,7 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
             Intent symptome = new Intent (getActivity(), AjoutSymptomeActivity.class);
             startActivity(symptome);
         }
-        else if(item.getItemId()==R.id.notePersonnelle){
-
-            Intent notePersonnelle = new Intent (getActivity(), AjoutPhysiqueActivity.class);
-            startActivity(notePersonnelle);
-        }
+       
         return false;
     }
 
@@ -596,6 +606,16 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     };
     private void toastMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+    public void onDestroy() {
+        super.onDestroy();
+
+        settings = getActivity().getSharedPreferences("TWO_INT_SAVING", Context.MODE_PRIVATE);
+        //set the sharedpref
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("steps", numSteps);
+
+        editor.commit();
     }
 
 }
