@@ -60,8 +60,6 @@ public class CalendrierActivity extends AppCompatActivity {
         mTextSamedi="";
         mTextDimanche="";
 
-
-
         //Firebase
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -74,7 +72,6 @@ public class CalendrierActivity extends AppCompatActivity {
         query = myRef.child(userID);
         query.addChildEventListener(childEventListener);
 
-       // Toast.makeText(getApplicationContext(), Integer.toString(mNombreDeFoisSemaine), Toast.LENGTH_LONG).show();
 
 
 
@@ -92,35 +89,136 @@ public class CalendrierActivity extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, dayOfMonth);
                 int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-                if (dayOfWeek == 1) {
-                    mTextView.setText(mTextDimanche);
-                    toastMessage("dimanche"+ mTextDimanche);
-                } else if (dayOfWeek == 2) {
-                    mTextView.setText(mTextLundi);
 
 
-                } else if (dayOfWeek == 3) {
-                    mTextView.setText(mTextMardi);
+                switch (dayOfWeek){
+                    case 1:
+                        mTextView.setText(mTextDimanche);//le premier jour de la semaine correspond au dimanche
+                        break;
+                    case 2:
+                        mTextView.setText(mTextLundi);
+                        break;
+                    case 3:
+                        mTextView.setText(mTextMardi);
+                        break;
+                    case 4:
+                        mTextView.setText(mTextMercredi);
+                        break;
+                    case 5:
+                        mTextView.setText(mTextJeudi);
+                        break;
+                    case 6:
+                        mTextView.setText(mTextVendredi);
+                        break;
+                    case 7:
+                        mTextView.setText(mTextSamedi);
+                        break;
+                    default:
 
-                } else if (dayOfWeek == 4) {
-                    mTextView.setText(mTextMercredi);
-                } else if (dayOfWeek == 5) {
-                    mTextView.setText(mTextJeudi);
-                } else if (dayOfWeek == 6) {
-                    mTextView.setText(mTextVendredi);
-                } else if (dayOfWeek == 7) {
-                    mTextView.setText(mTextSamedi);
+
                 }
 
-
-
-
-
-              //  Toast.makeText(getApplicationContext(), Integer.toString(dayOfWeek), Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    /********************************* ChildEventListener pour récupérer****************************
+     * tous les médicaments en fonction du jour de la semaine
+      */
+
+    ChildEventListener childEventListener;
+
+    {
+        childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                userIdMed = dataSnapshot.getKey();
+
+                final Query queryJour = myRef.child(userID).child(dataSnapshot.getKey());
+                final Query query1 = myRef.child(userID).child(dataSnapshot.getKey()).child("jour");
+                query1.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        String jour = dataSnapshot.getValue(String.class);
+                        // choisir un valueEventlistener en fonction du jour de la semaine
+                        switch (jour) {
+                            case "lundi":
+                                queryJour.addValueEventListener(valueEventListenerLundi);
+                                break;
+                            case "mardi" :
+                                queryJour.addValueEventListener(valueEventListenerMardi);
+                                break;
+                            case "mercredi":
+                                queryJour.addValueEventListener(valueEventListenerMercredi);
+                                break;
+                            case "jeudi":
+                                queryJour.addValueEventListener(valueEventListenerJeudi);
+                                break;
+                            case "vendredi":
+                                queryJour.addValueEventListener(valueEventListenerVendredi);
+                                break;
+                            case "samedi":
+                                queryJour.addValueEventListener(valueEventListenerSamedi);
+                                break;
+                            case "dimanche":
+                                queryJour.addValueEventListener(valueEventListenerDimanche);
+                                break;
+                            default:
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+    }
+
+    /**********************ValueEventListener en fonction des jours de la semaine******************/
 ValueEventListener valueEventListenerLundi = new ValueEventListener() {
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -191,92 +289,7 @@ ValueEventListener valueEventListenerLundi = new ValueEventListener() {
 
         }
     };
-    ChildEventListener childEventListener = new ChildEventListener() {
-        @Override
-        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            //Toast.makeText(getApplicationContext(), dataSnapshot.getKey(), Toast.LENGTH_LONG).show();
-            userIdMed=dataSnapshot.getKey();
-            toastMessage(userIdMed);
-            final Query queryJour=myRef.child(userID).child(dataSnapshot.getKey());
-            final Query query1 = myRef.child(userID).child(dataSnapshot.getKey()).child("jour");
-            query1.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    if(dataSnapshot.getValue().equals("lundi")){
-                        queryJour.addValueEventListener(valueEventListenerLundi);
-                    }
-                    else  if(dataSnapshot.getValue().equals("mardi")){
-                        queryJour.addValueEventListener(valueEventListenerMardi);
-                    }
-                    else  if(dataSnapshot.getValue().equals("mercredi")){
-                        queryJour.addValueEventListener(valueEventListenerMercredi);
-                    }
-                    else  if(dataSnapshot.getValue().equals("jeudi")){
-                        queryJour.addValueEventListener(valueEventListenerJeudi);
-                    }
-                    else  if(dataSnapshot.getValue().equals("vendredi")){
-                        queryJour.addValueEventListener(valueEventListenerVendredi);
-                    }
-                    else  if(dataSnapshot.getValue().equals("samedi")){
-                        queryJour.addValueEventListener(valueEventListenerSamedi);
-                    }
-                    else  if(dataSnapshot.getValue().equals("dimanche")){
-                        queryJour.addValueEventListener(valueEventListenerDimanche);
-                    }
 
-
-
-
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            // Toast.makeText(getApplicationContext(), medicament.getNom(), Toast.LENGTH_LONG).show();
-
-        }
-
-        @Override
-        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-            //  Toast.makeText(getApplicationContext(), medicament.getNom(), Toast.LENGTH_LONG).show();
-
-
-        }
-
-        @Override
-        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-        }
-
-        @Override
-        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
-    };
 
     ValueEventListener valueEventListenerSamedi = new ValueEventListener() {
         @Override

@@ -1,12 +1,17 @@
 package com.example.dopapillsgit;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
 
 import com.example.dopapillsgitModel.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,7 +62,13 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
                 .equalTo(userID);
         //toastMessage(userID);
         query.addListenerForSingleValueEvent(valueEventListener);
+
+
+        //Retour au fragment profil
+        //int intentFragment = getIntent().getExtras().getInt("Profil");
+
     }
+
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -83,6 +94,12 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
 
         }
     };
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        getFragmentManager().popBackStackImmediate();
+
+    }
 
     @Override
     public void onStart() {
@@ -100,6 +117,21 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
         private void toastMessage(String message){
             Toast.makeText(IdentifiantsCompteActivity.this,message,Toast.LENGTH_SHORT).show();
         }
+        //afin que lorsque le patient revient à la page d'avant,
+    // ca revient sur ProfilFragment et non AcceuilFragment
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle button click here
+        if (item.getItemId() == android.R.id.home) {
+            Intent intentforBackButton = NavUtils.getParentActivityIntent(this);
+            intentforBackButton.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            NavUtils.navigateUpTo(this, intentforBackButton);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     }
 
 

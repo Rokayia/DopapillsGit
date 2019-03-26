@@ -2,6 +2,7 @@ package com.example.dopapillsgit;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Notification;
@@ -19,10 +20,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -141,7 +145,7 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
         //afficher les informations déjà entrées par l'utilisateur
         array = new ArrayList<>();
         query=myRefMedicament.child(userID);
-        //  toastMessage(userID);
+
 
         //query.addListenerForSingleValueEvent(valueEventListener);
 
@@ -157,7 +161,7 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
                 mFréquence = medicament.getFrequence();
                 mHoraire = medicament.getHoraires();
                 keyList.add(dataSnapshot.getKey());
-                //   toastMessage("nom"+medicament.getNom());
+
 
                 array.add(medicament.getNom()+" "+ medicament.getDosage()+" mg"+ "    "+ medicament.getHoraires()+" h");
                 adapter.notifyDataSetChanged();
@@ -207,14 +211,6 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
             }
         });
 
-        //Rappel médicamenteux
-
-       /* if(!calendars.isEmpty()) {
-            toastMessage("note empty =" +Boolean.toString(!calendars.isEmpty()));
-            for (Calendar cal : calendars) {
-
-            }
-        }*/
 
 
         //Supprimer un médicament
@@ -263,7 +259,7 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
                             mFréquence = medicament.getFrequence();
                             mHoraire = medicament.getHoraires();
                             keyList.add(dataSnapshot.getKey());
-                         //   toastMessage("nom"+medicament.getNom());
+
 
                             array.add(medicament.getNom()+" "+ medicament.getDosage()+" mg"+ "    "+ medicament.getHoraires()+" h");
                             adapter.notifyDataSetChanged();
@@ -349,9 +345,6 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
         childUpdates.put("/Medicament/" + userID+ "/"+ MedicamentId+ "/",medica);
         rootRef.updateChildren(childUpdates);
 
-        //ajouter un item dans la listView
-       // array.add(nom+" "+dosage+" mg" + "    "+ horaire+" h");
-        //adapter.notifyDataSetChanged();
 
         //Ajouter un nouvel rappel médicamenteux
 
@@ -364,8 +357,6 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
         cal.set(Calendar.HOUR, heure);
         cal.set(Calendar.MINUTE,minute);
         cal.set(Calendar.SECOND, 00);
-toastMessage("heur =" + cal.getTime().toString());
-        toastMessage("heur 2 =" + heure+ " "+ minute);
         final int _id = (int) System.currentTimeMillis();
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -394,6 +385,17 @@ toastMessage("heur =" + cal.getTime().toString());
     }
     private void toastMessage(String message){
         Toast.makeText(MedicamentActivity.this,message,Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle button click here
+        if (item.getItemId() == android.R.id.home) {
+            Intent intentforBackButton = NavUtils.getParentActivityIntent(this);
+            intentforBackButton.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            NavUtils.navigateUpTo(this, intentforBackButton);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

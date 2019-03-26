@@ -126,8 +126,13 @@ public class ProfilFragment extends Fragment {
         btnId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i = new Intent(getActivity(), IdentifiantsCompteActivity.class);
+                i.putExtra("Profil", ProfilFragment.class);
 
-                startActivity(new Intent(getActivity(), IdentifiantsCompteActivity.class));
+                // Now start your activity
+                startActivity(i);
+
+                //startActivity(new Intent(getActivity(), IdentifiantsCompteActivity.class));
             }
         });
         //Données de santé
