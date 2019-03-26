@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.example.dopapillsgit.R;
 
 public class DialogPopUpAjoutMedecinFragement extends AppCompatDialogFragment {
-        private EditText editTextNom,editTextPrenom,editTextVille,editTextRPPS,editTextMail;
+        private EditText editTextNom,editTextPrenom,editTextVille,editTextMail;
         private Spinner spinner_specialite;
 
         private DialogPopUpAjoutMedecinFragement.DialogListener listener;
@@ -44,16 +44,16 @@ public class DialogPopUpAjoutMedecinFragement extends AppCompatDialogFragment {
                         String nom = editTextNom.getText().toString();
                         String prenom = editTextPrenom.getText().toString();
                         String ville= editTextVille.getText().toString();
-                        String RPPS = editTextRPPS.getText().toString();
+
                         String mail= editTextMail.getText().toString();
                         String specialite = spinner_specialite.getSelectedItem().toString();
-                        listener.applyTexts(nom, prenom,ville,RPPS,mail,specialite);
+                        listener.applyTexts(nom, prenom,ville,mail,specialite);
                     }
                 });
 
         editTextNom = view.findViewById(R.id.edit_nom_medecin);
         editTextPrenom = view.findViewById(R.id.edit_prenom_medecin);
-        editTextRPPS= view.findViewById(R.id.edit_RPPS_medecin);
+
         editTextMail=view.findViewById(R.id.edit_mail_medecin);
 
         editTextVille=view.findViewById(R.id.edit_ville_medecin);
@@ -83,6 +83,6 @@ public class DialogPopUpAjoutMedecinFragement extends AppCompatDialogFragment {
     }
 
         public interface DialogListener {
-            void applyTexts(String nom, String prenom,String ville,String RPPS, String mail, String specialite);
+            void applyTexts(String nom, String prenom,String ville, String mail, String specialite);
         }
     }

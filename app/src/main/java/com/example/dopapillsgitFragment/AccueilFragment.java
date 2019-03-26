@@ -216,7 +216,7 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
             Intent symptome = new Intent (getActivity(), AjoutSymptomeActivity.class);
             startActivity(symptome);
         }
-       
+
         return false;
     }
 

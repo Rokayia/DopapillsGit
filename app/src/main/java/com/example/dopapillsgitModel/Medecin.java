@@ -10,18 +10,17 @@ public class Medecin implements Parcelable {
     private String prenom;
     private String ville;
     private  String mail;
-    private String RPPS;
     private String specialite;
 
 
-    public Medecin(String idPatient, String idMed, String nom, String prenom, String ville,String mail, String RPPS, String specialite) {
+    public Medecin(String idPatient, String idMed, String nom, String prenom, String ville,String mail, String specialite) {
      this.setIdMed(idMed);
      this.setIdPatient(idPatient);
      this.setNom(nom);
      this.setPrenom(prenom);
      this.setVille(ville);
      this.setMail(mail);
-     this.setRPPS(RPPS);
+
      this.setSpecialite(specialite);
 
 
@@ -39,7 +38,6 @@ public class Medecin implements Parcelable {
         setPrenom(in.readString());
         setVille(in.readString());
         setMail(in.readString());
-        setRPPS(in.readString());
         setSpecialite(in.readString());
     }
 
@@ -68,7 +66,6 @@ public class Medecin implements Parcelable {
         parcel.writeString(getPrenom());
         parcel.writeString(getVille());
         parcel.writeString(getMail());
-        parcel.writeString(getRPPS());
         parcel.writeString(getSpecialite());
 
     }
@@ -121,13 +118,6 @@ public class Medecin implements Parcelable {
         this.mail = mail;
     }
 
-    public String getRPPS() {
-        return RPPS;
-    }
-
-    public void setRPPS(String RPPS) {
-        this.RPPS = RPPS;
-    }
 
     public String getSpecialite() {
         return specialite;

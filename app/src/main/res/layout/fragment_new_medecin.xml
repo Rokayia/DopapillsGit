@@ -28,20 +28,12 @@
         android:hint="@string/ville"
         android:singleLine="true"
         android:layout_marginBottom="20dp" />
-    <EditText
-        android:id="@+id/edit_RPPS_medecin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edit_ville_medecin"
-        android:hint="N° RPPPS"
-        android:inputType="number"
-        android:singleLine="true"
-        android:layout_marginBottom="20dp" />
+
     <EditText
         android:id="@+id/edit_mail_medecin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edit_RPPS_medecin"
+        android:layout_below="@id/edit_ville_medecin"
         android:hint="Adresse e-mail"
         android:singleLine="true"
         android:inputType="textEmailAddress"
