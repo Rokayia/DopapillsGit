@@ -36,6 +36,12 @@ import java.util.Calendar;
 public class DonnesSanteActivity extends AppCompatActivity implements DialogPopUpFragment.DialogListener{
     private static final String TAG = "DonnesSanteActivity";
 
+
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
+
     private Spinner spinner_allergies,spinner_contreIndications,spinner_groupeSanguin;
     private ContactUrgence contactUrgence;
 
@@ -46,6 +52,7 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
     private String dateDeNaissance,taille,poids,anneeDiagnostic,groupeSanguin,allergie,contreIndication;
     private String nomC,prenomC,numeroTelC, userC;
 
+    /**********************************Firebase****************************************/
 
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
@@ -53,6 +60,8 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
     private DatabaseReference myRef,myRefC;
     private  String userID;
 
+
+    /**********************************Query****************************************/
     private  Query query,queryC;
 
 
@@ -61,6 +70,10 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
         setContentView(R.layout.activity_donnees_de_sante);
 
 
+        /********************************** Initiation des attributs*************************************/
+
+
+        /**********************************Variables****************************************/
         spinner_allergies = (Spinner) findViewById(R.id.allergie_spinner);
         spinner_contreIndications = (Spinner) findViewById(R.id.contreIndication_spinner);
         spinner_groupeSanguin= (Spinner) findViewById(R.id.groupe_sanguin_donnesSante);
@@ -94,6 +107,8 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
         spinner_groupeSanguin.setAdapter(adapterGroupeSanguin);
         spinner_groupeSanguin.setEnabled(false);
 
+
+        /**********************************Firebase****************************************/
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("DonneesDeSante");
@@ -111,21 +126,28 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
             }
         };
 
-        //afficher les informations déjà entrées par l'utilisateur
+        /********************************** Affichafe des informations*************************************/
+
+
+            //afficher les informations personnelles déjà entrées par l'utilisateur
         query=myRef.orderByChild("idPatient")
                 .equalTo(userID);
-        //toastMessage(userID);
         query.addListenerForSingleValueEvent(valueEventListener);
 
+        //affichage de son contact d'urgence
         queryC=myRefC;
         queryC.addListenerForSingleValueEvent(valueEventListenerContact);
 
-        //modifier les informations
+
+
+        /**********************************Modification************************************/
+
         btnModifierDonnees.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btnAjoutDispositif.setVisibility(View.GONE);
                 btnMoficationTerminee.setVisibility(View.VISIBLE);
+
 //modification date de naissance
                 editTextDateDeNaissance.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -251,8 +273,7 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
 
 
 
-
-        //modification terminée
+        /**********************************Modification terminée****************************************/
 
         btnMoficationTerminee.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -346,11 +367,15 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
 
 
     }
-    //modification des données dans la base de données
+
+
+
+    /**********************************Modification dans la base de données********************************/
+
+    //changer les données dans la base de données
     private void changeData() {
 
-            //changer les données dans la base de données
-            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("DonneesDeSante");
+             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("DonneesDeSante");
             DatabaseReference mDatabaseContact = FirebaseDatabase.getInstance().getReference("ContactUrgence");
             mDatabase.child(userID).child("dateDeNaissance").setValue(editTextDateDeNaissance.getText().toString());
             mDatabase.child(userID).child("taille").setValue(editTextTaille.getText().toString());
@@ -359,15 +384,9 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
             mDatabase.child(userID).child("groupeSanguin").setValue(spinner_groupeSanguin.getSelectedItem().toString());
             mDatabaseContact.child(userID).child("nom").setValue(nomC);
             mDatabaseContact.child(userID).child("idContact").setValue(userC);
-          //  toastMessage("bool"+" "+ Boolean.toString(mDatabaseContact.child(userID).e));
-         /*   if(!mDatabaseContact.child(userID).child("idContact").equals(userC)){
-                mDatabaseContact.child(userID).child("idContact").setValue(userC);
-            }*/
-        //mDatabaseContact.push id pour avoir un id pour contact if (contact.id=="") donc push
             mDatabaseContact.child(userID).child("prenom").setValue(prenomC);
             mDatabaseContact.child(userID).child("numeroTel").setValue(numeroTelC);
             mDatabase.child(userID).child("contactUrgence").setValue(userC);
-
             mDatabase.child(userID).child("allergies").setValue(spinner_allergies.getSelectedItem().toString());
             mDatabase.child(userID).child("contreIndication").setValue(spinner_contreIndications.getSelectedItem().toString());
 
@@ -375,13 +394,15 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
             mDatabaseContact.addListenerForSingleValueEvent(valueEventListenerContact);
 
     }
+
+
     ValueEventListener valueEventListenermodif = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
 
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                   // toastMessage(snapshot.getValue(DonneesSante.class).toString());
+
                    DonneesSante donneesSante = (DonneesSante)snapshot.getValue(DonneesSante.class);
                     donneesSante.setDateDeNaissance(editTextDateDeNaissance.getText().toString());
                     donneesSante.setTaille(editTextTaille.getText().toString());
@@ -405,11 +426,11 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
 
         }
     };
-
+//Lecture des données pour récupérer à chaque fois malgré les changements
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            //toastMessage(Boolean.toString(dataSnapshot.exists()));
+
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                    DonneesSante donneesSante = snapshot.getValue(DonneesSante.class);
@@ -419,14 +440,6 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
                     String poids = donneesSante.getPoids();
                     String anneeDeDiagnostic= donneesSante.getAnneeDiagnostic();
                     String contactU=donneesSante.getContactUrgence();
-                    //String groupeSanguin= snapshot.child("groupeSanguin").getValue(DonneesSante.class).getGroupeSanguin();
-                   /*nom=snapshot.child("contactUrgence").child("nom").getValue(String.class);
-                    prenom=snapshot.child("contactUrgence").child("prenom").getValue(String.class);
-                    numeroTel=snapshot.child("contactUrgence").child("numTel").getValue(String.class);
-                    contactUrgence= new ContactUrgence(nom,prenom,numeroTel);
-                    String contactUrg= nom+ " "
-                            +prenom
-                            + '\n'+ numeroTel;*/
 
                     editTextDateDeNaissance.setText(dateDeNaissance);
                     editTextPoids.setText(taille);
@@ -448,6 +461,7 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
         }
     };
 
+    //Lecture sur la base de données des contacts d'urgence
     ValueEventListener valueEventListenerContact = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -460,7 +474,7 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
                             nomC = contact.getNom();
                             prenomC = contact.getPrenom();
                             numeroTelC = contact.getNumeroTel();
-                            toastMessage("num" + numeroTelC);
+
                             contactUrgence = new ContactUrgence(nomC, prenomC, numeroTelC, userC);
 
 
@@ -480,13 +494,14 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
     };
 
 
-
+//se connecter de firebase auth
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+    //se déconnecter de firebase auth
     @Override
     public void onStop() {
         super.onStop();
@@ -494,25 +509,26 @@ public class DonnesSanteActivity extends AppCompatActivity implements DialogPopU
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    private void toastMessage(String message){
-        Toast.makeText(DonnesSanteActivity.this,message,Toast.LENGTH_SHORT).show();
-    }
+
+    //ouvrir le pop up pour entrer un contact d'urgence
     public void openDialog() {
         DialogPopUpFragment exampleDialog = new DialogPopUpFragment();
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
+    //récupération des données entrées dans le pop up
     public void applyTexts(String nom, String prenom,String numeroTel) {
-       // contactUrgence= new ContactUrgence(nom,prenom,numeroTel);
         nomC=nom;
         prenomC=prenom;
         numeroTelC=numeroTel;
         editTextContactUrgence.setText(nom + " "+prenom+" "+ '\n'+ numeroTel);
 
     }
+
+    //revenir sur le fragment profil et non sur la page d'accueil
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // handle button click here
+
         if (item.getItemId() == android.R.id.home) {
             Intent intentforBackButton = NavUtils.getParentActivityIntent(this);
             intentforBackButton.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

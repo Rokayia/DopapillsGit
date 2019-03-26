@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.example.dopapillsgit.R;
 
 public class DialogPopUpRemoveFragment extends AppCompatDialogFragment {
+    /********************************** Attributs de la classe*************************/
+
+
+    /**********************************Variables****************************************/
     private TextView textView;
     private DialogPopUpRemoveFragment.DialogListener listener;
     private  AlertDialog.Builder builder;
@@ -39,6 +43,12 @@ public class DialogPopUpRemoveFragment extends AppCompatDialogFragment {
                         listener.onPositiveButtonClicked();
                     }
                 });
+
+
+        /********************************** Initialisation des  attributs *************************/
+
+
+        /**********************************Variables****************************************/
 
         textView = view.findViewById(R.id.textView_remove);
         String s= listener.getTxt();

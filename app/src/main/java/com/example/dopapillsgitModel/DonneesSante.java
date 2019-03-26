@@ -1,6 +1,10 @@
 package com.example.dopapillsgitModel;
 
 public class DonneesSante {
+
+
+    /********************************** Attributs de la classe*************************************/
+
     private String idPatient;
     private String groupeSanguin;
     private String contactUrgence;
@@ -10,10 +14,12 @@ public class DonneesSante {
     private String dateDeNaissance;
     private String anneeDiagnostic;
     private String contreIndication;
+
+
+    /********************************** Constructeurs**********************************************/
     public DonneesSante(){
 
     }
-
     public DonneesSante(String idPatient, String groupeSanguin, String contactUrgence, String allergies, String taille, String poids, String dateDeNaissance, String anneeDiagnostic,String contreIndication){
         this.setIdPatient(idPatient);
         this.setGroupeSanguin(groupeSanguin);
@@ -26,7 +32,7 @@ public class DonneesSante {
         this.setContreIndication(contreIndication);
     }
 
-
+    /******************************************* Accesseurs ***************************************/
     public String getIdPatient() {
         return idPatient;
     }

@@ -1,11 +1,16 @@
 package com.example.dopapillsgitModel;
 
 public class ContactUrgence {
+
+
+    /********************************** Attributs de la classe*************************************/
+
     private String nom;
     private String prenom;
     private String numeroTel;
     private String idContact;
 
+    /********************************** Constructeurs**********************************************/
     public ContactUrgence(){
 
     }
@@ -21,7 +26,7 @@ public class ContactUrgence {
         this.setIdContact(idContact);
     }
 
-
+    /******************************************* Accesseurs ***************************************/
     public String getNom() {
         return nom;
     }

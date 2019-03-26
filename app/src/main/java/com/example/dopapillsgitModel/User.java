@@ -1,6 +1,8 @@
 package com.example.dopapillsgitModel;
 
 public class User {
+
+    /********************************** Attributs de la classe*************************************/
     private String nom;
     private String prenom;
     private String sexe;
@@ -10,14 +12,18 @@ public class User {
     private String pseudo;
     private String email;
     private String id;
-    public User(){
+
+    /********************************** Constructeurs**********************************************/
+    public User() {
 
     }
+
     public User(String nom, String prenom) {
         this.setNom(nom);
         this.setPrenom(prenom);
 
     }
+
     public User(String nom, String prenom, String sexe, String age, String poids, String taille) {
         this.setNom(nom);
         this.setPrenom(prenom);
@@ -29,7 +35,7 @@ public class User {
     }
 
 
-    public User(String nom, String prenom,String sexe,String age,String poids,String taille,String pseudo, String email,String id) {
+    public User(String nom, String prenom, String sexe, String age, String poids, String taille, String pseudo, String email, String id) {
         this.setNom(nom);
         this.setPrenom(prenom);
         this.setSexe(sexe);
@@ -42,6 +48,7 @@ public class User {
 
     }
 
+    /******************************************* Accesseurs ***************************************/
     public String getNom() {
         return nom;
     }
@@ -105,6 +112,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getId() {
         return id;
     }

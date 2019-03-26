@@ -28,6 +28,11 @@ import java.util.Map;
 
 public class AjoutSymptomeActivity extends AppCompatActivity {
 
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
+
     private RadioGroup radioGroupMvmAnormaux,radioGroupMobilite,radioGroupTremblements;
     private Button btnAjoutSymptome;
     private Map<String, Object> childUpdates;
@@ -35,7 +40,7 @@ public class AjoutSymptomeActivity extends AppCompatActivity {
     String mobilite,mvmAnormaux,tremblement,dateAjout,hAjout;
 
 
-    //Firebase
+    /**********************************Firebase****************************************/
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -48,12 +53,16 @@ public class AjoutSymptomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajout_symptome);
+        /********************************** Initiation de la classe*************************************/
+
+
+        /**********************************Variables****************************************/
         radioGroupMobilite=findViewById(R.id.radiogroupMobilite);
         radioGroupMvmAnormaux=findViewById(R.id.radiogrupMvmAnormaux);
         radioGroupTremblements=findViewById(R.id.radiogroupTremblements);
         btnAjoutSymptome=findViewById(R.id.ajoutsymptome);
 
-
+//Sauvegarder l'ajout du symptôme au jour d'ajout par le patient
         String date_n = new SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault()).format(new Date());
 
         TextView tv_date = findViewById(R.id.date);
@@ -68,7 +77,8 @@ public class AjoutSymptomeActivity extends AppCompatActivity {
         textView.setText(heure);
 
 
-        //Firebase
+
+        /**********************************Firebase****************************************/
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -87,8 +97,8 @@ public class AjoutSymptomeActivity extends AppCompatActivity {
         };
 
 
-        //ajouter une activite physique
-        //medecin
+        //ajouter une activite symptôme
+
         btnAjoutSymptome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,12 +108,14 @@ public class AjoutSymptomeActivity extends AppCompatActivity {
         });
 
     }
+    /********************************** Méthode *************************************/
 
+
+    /**********************************Ajout symptôme****************************************/
     public void ajouterSymptome() {
 
 
-
-        if(radioGroupTremblements.getCheckedRadioButtonId()!=-1) {
+       if(radioGroupTremblements.getCheckedRadioButtonId()!=-1) {
             int idt = radioGroupTremblements.getCheckedRadioButtonId();
             View radioButtont = radioGroupTremblements.findViewById(idt);
             int radioButtonIdt = radioGroupTremblements.indexOfChild(radioButtont);

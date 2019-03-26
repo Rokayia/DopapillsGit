@@ -11,20 +11,27 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 
 public class BienvenueActivity extends AppCompatActivity {
+    /********************************** Attributs de la classe*************************************/
 
+
+    /**********************************Variables****************************************/
     public EditText editTextNomId,editTextPrenomId;
     Button btnSuivant;
-    private DatabaseReference mDatabase;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /********************************** Initiation des attributs*************************************/
 
+
+        /**********************************Variables****************************************/
         setContentView(R.layout.activity_bienvenue);
         editTextNomId = findViewById(R.id.nom);
         editTextPrenomId= findViewById(R.id.prenom);
         btnSuivant = findViewById(R.id.boutonsuivantBienvenue);
 
-
+//aller à l'activité suivante après avoir sauvegarder les données récupérées dans cette page
         btnSuivant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,7 +49,8 @@ public class BienvenueActivity extends AppCompatActivity {
                 } else if (!(userNom.isEmpty() && userPrenom.isEmpty())) {
 
                     Intent intent =new Intent(BienvenueActivity.this, VousEtesActivity.class);
-                   //on récupère le nom et le prénom de l'utilisateur
+
+                    //on récupère le nom et le prénom de l'utilisateur
                     intent.putExtra("edittextnom", userNom);
                     intent.putExtra("edittextprenom", userPrenom);
                     startActivity(intent);

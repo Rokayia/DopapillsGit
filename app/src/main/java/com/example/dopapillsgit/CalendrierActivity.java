@@ -27,14 +27,17 @@ import java.util.Map;
 
 public class CalendrierActivity extends AppCompatActivity {
 
-    //var
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     private CalendarView mCalendar;
     private TextView mTextView;
     private String mJourSemaine;
     private String mTextLundi,mTextMardi,mTextMercredi,mTextJeudi,mTextVendredi,mTextSamedi,mTextDimanche ;
 
 
-    //Firebase
+    /**********************************Firebase****************************************/
 
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
@@ -42,14 +45,17 @@ public class CalendrierActivity extends AppCompatActivity {
     private DatabaseReference myRef, myRefC;
     private String userID,userIdMed;
 
-    //query
+    /**********************************Query****************************************/
     Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendrier_activity);
-//var
+        /********************************** Initiation des attributs*************************************/
+
+
+        /**********************************Variables****************************************/
         mCalendar = (CalendarView) findViewById(R.id.calendrier);
         mTextView = (TextView) findViewById(R.id.textView_evenement_journee);
         mTextLundi="";
@@ -60,14 +66,15 @@ public class CalendrierActivity extends AppCompatActivity {
         mTextSamedi="";
         mTextDimanche="";
 
-        //Firebase
+           /**********************************Firebase****************************************/
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = FirebaseDatabase.getInstance().getReference("Medicament");
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
 
-        //query
+
+        /**********************************Query****************************************/
 
         query = myRef.child(userID);
         query.addChildEventListener(childEventListener);
@@ -82,6 +89,9 @@ public class CalendrierActivity extends AppCompatActivity {
 
             }
         };
+
+        // En fonction du jour de la semaine, affichage des médicaments que le patient doit prendre
+
         mCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
             @Override
@@ -141,6 +151,7 @@ public class CalendrierActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         String jour = dataSnapshot.getValue(String.class);
+
                         // choisir un valueEventlistener en fonction du jour de la semaine
                         switch (jour) {
                             case "lundi":
@@ -219,6 +230,9 @@ public class CalendrierActivity extends AppCompatActivity {
     }
 
     /**********************ValueEventListener en fonction des jours de la semaine******************/
+
+
+    /**********************************Lundi****************************************/
 ValueEventListener valueEventListenerLundi = new ValueEventListener() {
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -232,6 +246,7 @@ ValueEventListener valueEventListenerLundi = new ValueEventListener() {
 
     }
 };
+    /**********************************Mardi****************************************/
 
     ValueEventListener valueEventListenerMardi = new ValueEventListener() {
         @Override
@@ -246,7 +261,7 @@ ValueEventListener valueEventListenerLundi = new ValueEventListener() {
 
         }
     };
-
+    /**********************************Mercredi****************************************/
     ValueEventListener valueEventListenerMercredi = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -260,7 +275,7 @@ ValueEventListener valueEventListenerLundi = new ValueEventListener() {
 
         }
     };
-
+    /**********************************Jeudi****************************************/
     ValueEventListener valueEventListenerJeudi = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -274,7 +289,7 @@ ValueEventListener valueEventListenerLundi = new ValueEventListener() {
 
         }
     };
-
+    /**********************************Vendredi****************************************/
     ValueEventListener valueEventListenerVendredi= new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -290,7 +305,7 @@ ValueEventListener valueEventListenerLundi = new ValueEventListener() {
         }
     };
 
-
+    /**********************************Samedi****************************************/
     ValueEventListener valueEventListenerSamedi = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -304,7 +319,7 @@ ValueEventListener valueEventListenerLundi = new ValueEventListener() {
 
         }
     };
-
+    /**********************************Dimanche****************************************/
     ValueEventListener valueEventListenerDimanche = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -318,7 +333,5 @@ ValueEventListener valueEventListenerLundi = new ValueEventListener() {
 
         }
     };
-    private void toastMessage(String message) {
-        Toast.makeText(CalendrierActivity.this, message, Toast.LENGTH_SHORT).show();
-    }
+
 }

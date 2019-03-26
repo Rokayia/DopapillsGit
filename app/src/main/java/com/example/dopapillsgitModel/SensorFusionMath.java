@@ -3,9 +3,11 @@ package com.example.dopapillsgitModel;
 
 public class SensorFusionMath {
 
+    /********************************** Constructeurs**********************************************/
     private SensorFusionMath() {
     }
 
+    /********************************** Méthodes **************************************************/
     public static float sum(float[] array) {
         float retval = 0;
         for (int i = 0; i < array.length; i++) {

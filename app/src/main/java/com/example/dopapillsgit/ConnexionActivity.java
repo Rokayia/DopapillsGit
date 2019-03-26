@@ -16,8 +16,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ConnexionActivity extends AppCompatActivity {
+
+
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
+
     public EditText loginEmailId, logInpasswd;
     Button btnLogIn;
+
+    /**********************************Firebase****************************************/
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -26,11 +35,17 @@ public class ConnexionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+
+        /********************************** Initiation attributs*************************************/
+
+
+        /**********************************Variables****************************************/
         loginEmailId = findViewById(R.id.email);
         logInpasswd = findViewById(R.id.mdppatient);
         btnLogIn = findViewById(R.id.boutonseconnecter);
 
+        /**********************************Firebase****************************************/
+        firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -45,6 +60,8 @@ public class ConnexionActivity extends AppCompatActivity {
             }
         };
 
+
+        //Se connecter avec des identifiants présents dans la base de données
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +94,7 @@ public class ConnexionActivity extends AppCompatActivity {
 
     }
 
+    //se connecter
     @Override
     protected void onStart() {
         super.onStart();

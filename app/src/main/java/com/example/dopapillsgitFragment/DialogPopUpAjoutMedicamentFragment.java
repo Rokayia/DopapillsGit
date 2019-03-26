@@ -32,7 +32,10 @@ import java.util.List;
 public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment implements MultiSpinner.MultiSpinnerListener {
 
 
-    //var
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     private EditText mDosage;
     private TextView horaireTextView;
     private Spinner spinner_medicament,spinner_fréquence;
@@ -41,9 +44,12 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     private String horaire;
     int heure,min;
-
     List<String> items;
     List<String> jour;
+
+
+
+    /**********************************Listener****************************************/
 
     private DialogPopUpAjoutMedicamentFragment.DialogListener listener;
 
@@ -52,7 +58,10 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 
+        /********************************** Initialisation des  attributs *************************/
 
+
+        /**********************************Variables****************************************/
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_new_medicament, null);
         //var
@@ -75,7 +84,6 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
         multiSpinner = (MultiSpinner) view.findViewById(R.id.spinner_jour_semaine);
         multiSpinner.setItems(items,  "lundi", this);
 
-      //  mNombreFoisParJour= (EditText) view.findViewById(R.id.NombreFoisMedicament);
 
         //Remplir les cases du Spinner des noms de médicament
         ArrayAdapter<CharSequence> adapterMedicamentNom = ArrayAdapter.createFromResource(getActivity(), R.array.medicaments, android.R.layout.simple_spinner_item);
@@ -114,7 +122,6 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
 
 
                         spinner_medicament.setSelection(((ArrayAdapter)spinner_medicament.getAdapter()).getPosition(nom));
-                        toastMessage(nom);
                         spinner_fréquence.setSelection(((ArrayAdapter)spinner_fréquence.getAdapter()).getPosition(frequence));
 
 
@@ -173,23 +180,23 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
         }
     }
 
-    public interface DialogListener {
-        void applyTexts(String nom, String dosage,String frequence,List<String> jour,String horaire,int heure,int minute);
-    }
     private void toastMessage(String message){
         Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
     }
+
     public void onItemsSelected(boolean[] selected){
-        int length=selected.length;
-        for(int i=0;i< items.size();i++){
+            for(int i=0;i< items.size();i++){
            if(selected[i]==true){
                jour.add(items.get(i));
 
            }
         }
 
-        for(int j=0;j< jour.size();j++){
-        toastMessage(jour.get(j).toString()
-        );}
+    }
+
+
+    /**********************************Interface****************************************/
+    public interface DialogListener {
+        void applyTexts(String nom, String dosage,String frequence,List<String> jour,String horaire,int heure,int minute);
     }
 }

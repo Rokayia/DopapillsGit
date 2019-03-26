@@ -143,11 +143,9 @@
     </string-array>
     <string-array name="contreIndication">
         <item>IRM1</item>
-        <item>IRM2</item>
-        <item>IRM3</item>
-        <item>IRM4</item>
-        <item>IRM5</item>
-        <item>IRM6</item>
+        <item>Pesticide</item>
+        <item>Allergies</item>
+
     </string-array>
     <string-array name="momentRepas">
         <item>Petit-dejeuner</item>

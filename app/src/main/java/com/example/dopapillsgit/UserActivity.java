@@ -14,6 +14,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class UserActivity extends AppCompatActivity {
+
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
         Button btnSignOut;
         FirebaseAuth firebaseAuth;
         FirebaseUser user;
@@ -26,9 +31,14 @@ public class UserActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_page_acceuil);
+
+            /**********************************  de la classe*************************************/
+
+
+            /**********************************Variables et Firebase****************************************/
             firebaseAuth = FirebaseAuth.getInstance();
             user = firebaseAuth.getCurrentUser();
-           // btnSignOut = (Button) findViewById(R.id.sign_out_button);
+
 
             bottomNav = findViewById(R.id.bottom_navigation);
             bottomNav.setOnNavigationItemSelectedListener(navListener);

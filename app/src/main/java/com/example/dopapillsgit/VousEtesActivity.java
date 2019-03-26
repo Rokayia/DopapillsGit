@@ -14,6 +14,11 @@ import android.widget.ToggleButton;
 import com.google.firebase.database.DatabaseReference;
 
 public class VousEtesActivity extends AppCompatActivity {
+
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     public EditText editTextAgeId,editTextPoidsId,editTextTailleId;
     Button btnSuivant,btnSexe;
     ToggleButton toggleHomme,toggleFemme;
@@ -22,6 +27,11 @@ public class VousEtesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vousetes);
+
+        /********************************** Initialisation des attributs*************************************/
+
+
+        /**********************************Variables****************************************/
         editTextAgeId = findViewById(R.id.age);
         editTextPoidsId= findViewById(R.id.poids);
         editTextTailleId= findViewById(R.id.taille);
@@ -44,7 +54,7 @@ public class VousEtesActivity extends AppCompatActivity {
                 if (isChecked) {
                     btnSexe= findViewById(R.id.button_femme);
                 } else {
-                    // The toggle is disabled
+
                 }
             }
         });

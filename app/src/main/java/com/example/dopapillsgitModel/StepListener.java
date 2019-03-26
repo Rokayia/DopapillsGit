@@ -3,8 +3,7 @@ package com.example.dopapillsgitModel;
 public interface StepListener {
 
     /**
-     * Called when a step has been detected.  Given the time in nanoseconds at
-     * which the step was detected.
+     * Appelé lorsqu'un pas est détecté
      */
     public void step(long timeNs);
 

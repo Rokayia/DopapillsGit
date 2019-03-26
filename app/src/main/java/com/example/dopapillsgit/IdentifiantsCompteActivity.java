@@ -25,9 +25,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class IdentifiantsCompteActivity extends AppCompatActivity {
     private static final String TAG = "ViewDatabase";
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     public EditText editTextNom,editTextPrenom,editTextEmail;
 
 
+    /**********************************Firebase****************************************/
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -37,11 +42,17 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identifiant_compte);
+
+        /********************************** Initialisation des attributs*************************************/
+
+
+        /**********************************Variables****************************************/
         editTextNom = findViewById(R.id.editTextNomIdentifiantCompte);
         editTextPrenom= findViewById(R.id.editTextPrenomIdentifiant);
         editTextEmail= findViewById(R.id.editTextEmailIdentifiant);
 
 
+        /**********************************Firebase****************************************/
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("Patient");
@@ -55,24 +66,23 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
 
             }
         };
+
 //afficher le nom,prenom et mail de l'utilisateur
 
         Query query=myRef
                 .orderByChild("id")
                 .equalTo(userID);
-        //toastMessage(userID);
+
         query.addListenerForSingleValueEvent(valueEventListener);
 
 
-        //Retour au fragment profil
-        //int intentFragment = getIntent().getExtras().getInt("Profil");
-
     }
 
+    /**********************************Listener****************************************/
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-           // toastMessage(Boolean.toString(dataSnapshot.exists()));
+
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
@@ -100,13 +110,13 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
         getFragmentManager().popBackStackImmediate();
 
     }
-
+//se connecter de firebase auth
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
+//se déconnecter de firebase auth
     @Override
     public void onStop() {
         super.onStop();
@@ -114,12 +124,8 @@ public class IdentifiantsCompteActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-        private void toastMessage(String message){
-            Toast.makeText(IdentifiantsCompteActivity.this,message,Toast.LENGTH_SHORT).show();
-        }
-        //afin que lorsque le patient revient à la page d'avant,
-    // ca revient sur ProfilFragment et non AcceuilFragment
 
+//revenir au ProfilFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle button click here

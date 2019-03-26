@@ -4,6 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ActivitePhysique implements Parcelable {
+/*
+ ** Implémenter Parceble permet de passer un object de type ActivitePhysique d'une activité à une autre
+ */
+
+    /********************************** Attributs de la classe*************************************/
+
     private String idActivite;
     private String idPatient;
     private String type;
@@ -14,6 +20,8 @@ public class ActivitePhysique implements Parcelable {
     private String hFin;
     private String intensité;
     private String remarque;
+
+    /********************************** Constructeurs**********************************************/
     public ActivitePhysique(String idPatient,String idActivite,String type,String lieu,String dateDebut,String dateFin,String hDebut,String hFin,String intensite,String remarque){
     this.setIdPatient(idPatient);
     this.setIdActivite(idActivite);
@@ -30,6 +38,8 @@ public class ActivitePhysique implements Parcelable {
     public ActivitePhysique() {
 
     }
+
+
     protected ActivitePhysique(Parcel in) {
         setIdPatient(in.readString());
         setIdActivite(in.readString());
@@ -43,6 +53,7 @@ public class ActivitePhysique implements Parcelable {
         setRemarque(in.readString());
 
     }
+    /********************************** Méthodes **************************************************/
     public static final Creator<ActivitePhysique> CREATOR = new Creator<ActivitePhysique>() {
         @Override
         public ActivitePhysique createFromParcel(Parcel in) {
@@ -78,7 +89,7 @@ public class ActivitePhysique implements Parcelable {
 
     }
 
-
+    /******************************************* Accesseurs ***************************************/
     public String getIdActivite() {
         return idActivite;
     }

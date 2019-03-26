@@ -41,15 +41,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ProfilFragment extends Fragment {
+
+
     View view;
-    //Interface utilisateur
+
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     private TextView editTextNomPrenomProfil;
     private LinearLayout btnId, btnDonnes, btnMedicaments, btnMed;
     private LinearLayout btnSignOut, btnRecapitulatif;
     private ImageView imageViewAvatar;
     private static final String TAG = "ProfilFragment";
 
-    //Firebase
+    /********************************Firebase****************************************/
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -59,7 +65,11 @@ public class ProfilFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profil, container, false);
-//Interface Utilisateur
+
+        /********************************** Initialisation des attributs***************************/
+
+
+        /**********************************Variables****************************************/
         editTextNomPrenomProfil = view.findViewById(R.id.nom_prenom_profil);
         btnSignOut = (LinearLayout) view.findViewById(R.id.sign_out_button);
         btnId = (LinearLayout) view.findViewById(R.id.button_identifiants);
@@ -69,9 +79,8 @@ public class ProfilFragment extends Fragment {
         btnRecapitulatif=view.findViewById(R.id.button_genererFicheNeurologue);
         imageViewAvatar = view.findViewById(R.id.imageView_avatarProfil);
 
-        // btnMedicaments = (LinearLayout) view.findViewById(R.id.button_medicaments);
-        //    btnMedecin = (LinearLayout) view.findViewById(R.id.button_medecin);
-//Firebase
+
+/********************************Firebase****************************************/
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("Patient");
@@ -86,8 +95,10 @@ public class ProfilFragment extends Fragment {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
             }
         };
+/********************************Affichage sur la page ****************************************/
 
-//afficher le nom,prenoom et mail de l'utiilisateur
+
+        //afficher le nom,prenoom et mail de l'utiilisateur
         Query query = myRef
                 .orderByChild("id")
                 .equalTo(userID);
@@ -98,7 +109,8 @@ public class ProfilFragment extends Fragment {
         //afficher le nom et le prenom de l'utilisateur
         query.addListenerForSingleValueEvent(valueEventListener);
 
-// Déconnection
+/********************************Passer à une autre activité****************************************/
+        // Déconnection
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -109,7 +121,7 @@ public class ProfilFragment extends Fragment {
             }
         });
 
-// Génerer un récapitulatif pdf pour le neurologue du patient
+        // Génerer un récapitulatif pdf pour le neurologue du patient
         btnRecapitulatif.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -122,7 +134,7 @@ public class ProfilFragment extends Fragment {
         });
 
 
-// Voir  ses identifiants
+        // Voir  ses identifiants
         btnId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,6 +147,7 @@ public class ProfilFragment extends Fragment {
                 //startActivity(new Intent(getActivity(), IdentifiantsCompteActivity.class));
             }
         });
+
         //Données de santé
         btnDonnes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,8 +156,9 @@ public class ProfilFragment extends Fragment {
                 startActivity(new Intent(getActivity(), DonnesSanteActivity.class));
             }
         });
-        //medicament
 
+
+        //medicament
         btnMedicaments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,6 +166,7 @@ public class ProfilFragment extends Fragment {
                 startActivity(new Intent(getActivity(), MedicamentActivity.class));
             }
         });
+
         //medecin
         btnMed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,10 +178,13 @@ public class ProfilFragment extends Fragment {
         return view;
     }
 
+    /********************************Listener****************************************/
+
+    // Afficher le nom et le prenom de la personne
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-//toastMessage(Boolean.toString(dataSnapshot.exists()));
+
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
@@ -184,10 +202,12 @@ public class ProfilFragment extends Fragment {
 
         }
     };
+
+    //Afficher un avatar en fonction du sexe et de l'âge de la personne
     ValueEventListener valueEventListenerAvatar = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-//toastMessage(Boolean.toString(dataSnapshot.exists()));
+
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
@@ -216,12 +236,15 @@ public class ProfilFragment extends Fragment {
         }
     };
 
+    // se connecter à la base de données d'identification avec mail à l'ouverture de la page
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+
+    // se déconnecter à la base de données d'identification avec mail à la fermeture de la page
     @Override
     public void onStop() {
         super.onStop();
@@ -230,9 +253,7 @@ public class ProfilFragment extends Fragment {
         }
     }
 
-    private void toastMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
+
 
 
 

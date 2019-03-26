@@ -1,12 +1,15 @@
 package com.example.dopapillsgitModel;
 
 public class Repas {
+
+    /********************************** Attributs de la classe*************************************/
     private String idRepas;
     private String idPatient;
     private String moment;
     private String date;
     private String info;
 
+    /********************************** Constructeurs**********************************************/
     public Repas(String idRepas, String idPatient, String moment, String date, String info) {
         this.setIdRepas(idRepas);
         this.setIdPatient(idPatient);
@@ -15,6 +18,8 @@ public class Repas {
         this.setInfo(info);
     }
 
+
+    /******************************************* Accesseurs ***************************************/
     public String getIdRepas() {
         return idRepas;
     }

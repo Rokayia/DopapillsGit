@@ -12,11 +12,13 @@ import java.util.List;
 public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner implements
         DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnCancelListener {
 
+    /********************************** Attributs de la classe*************************************/
     private List<String> items;
     private boolean[] selected;
     private String defaultText;
     private MultiSpinnerListener listener;
 
+    /********************************** Attributs de la classe*************************************/
     public MultiSpinner(Context context) {
         super(context);
     }
@@ -29,6 +31,7 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner imp
         super(arg0, arg1, arg2);
     }
 
+    /********************************** Méthodes **************************************************/
     @Override
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
         if (isChecked)
@@ -60,7 +63,7 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner imp
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_spinner_item,
-                new String[] { spinnerText });
+                new String[]{spinnerText});
         setAdapter(adapter);
 
         listener.onItemsSelected(getSelected());
@@ -86,20 +89,23 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner imp
 
     public void setItems(List<String> items, String allText,
                          MultiSpinnerListener listener) {
+
         this.setItems(items);
         this.defaultText = allText;
         this.listener = listener;
 
-        // all selected by default
+        // tous sélectioner par défaut
         setSelected(new boolean[items.size()]);
         for (int i = 0; i < getSelected().length; i++)
             getSelected()[i] = true;
 
-        // all text on the spinner
+        // on introduit tous le texte dans le spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_spinner_item, new String[] { allText });
+                android.R.layout.simple_spinner_item, new String[]{allText});
         setAdapter(adapter);
     }
+
+    /******************************************* Accesseurs ***************************************/
 
     public List<String> getItems() {
         return items;
@@ -117,6 +123,8 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner imp
         this.selected = selected;
     }
 
+
+    /**************************************** Interface *******************************************/
     public interface MultiSpinnerListener {
         public void onItemsSelected(boolean[] selected);
     }

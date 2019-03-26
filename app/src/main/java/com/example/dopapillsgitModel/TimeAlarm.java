@@ -13,12 +13,12 @@ import com.example.dopapillsgit.R;
 
 public class TimeAlarm extends BroadcastReceiver {
 
+    /********************************** Attribut de la classe*************************************/
     NotificationManager nm;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onReceive(Context context, Intent intent)
-    {
+    public void onReceive(Context context, Intent intent) {
         nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         CharSequence from = "developpez.et";
         CharSequence message = "message de notif";
