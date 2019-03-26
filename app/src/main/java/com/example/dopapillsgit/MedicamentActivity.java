@@ -333,13 +333,15 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
 
     }
 
-    public void applyTexts(String nom, String dosage,String fréquence,List<String> jour,String horaire, int heure,int minute) {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void applyTexts(String nom, String dosage, String fréquence, List<String> jour, String horaire, int heure, int minute) {
         mNom=nom;
         mDosage=dosage;
         mFréquence=fréquence;
         mJour=jour;
         mHoraire=horaire;
-
+        toastMessage(horaire);
+        toastMessage("heur 3 =" + heure+ " "+ minute);
        //ajouter dans firebase
         MedicamentId=myRefMedicament.push().getKey();
         Medicament medica =new Medicament(userID,MedicamentId,mNom, mDosage,mFréquence,mJour,mHoraire);
@@ -355,14 +357,16 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
 
 
 
-/*
+
         Calendar cal = Calendar.getInstance();//
         // cal.set(Calendar.AM_PM,1);
         cal.setTimeInMillis(System.currentTimeMillis());
         cal.set(Calendar.HOUR, heure);
         cal.set(Calendar.MINUTE,minute);
         cal.set(Calendar.SECOND, 00);
-toastMessage("heur =" + Integer.toString(cal.getTime().getHours()));
+toastMessage("heur =" + cal.getTime().toString());
+        toastMessage("heur 2 =" + heure+ " "+ minute);
+        final int _id = (int) System.currentTimeMillis();
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         intentArray = new ArrayList<PendingIntent>();
@@ -370,16 +374,18 @@ toastMessage("heur =" + Integer.toString(cal.getTime().getHours()));
         {
             Intent notificationIntent = new Intent(this, AlarmReceiver.class);
 
-            PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, cal.getTimeInMillis(),  broadcast);
+            PendingIntent broadcast = PendingIntent.getBroadcast(this, _id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),  broadcast);
+            //alarmManager.setExact(AlarmManager.ELAPSED_REALTIME,
+                    //cal.getTimeInMillis(), PendingIntent.getBroadcast(this, 1,
+                           // notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT));
             intentArray.add(broadcast);
         }
 
 
 
 
-        calendars.add(cal);*/
+        calendars.add(cal);
 
 
 
