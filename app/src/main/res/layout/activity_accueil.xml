@@ -63,7 +63,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/suivez_votre_m_dicamention"
+            android:text="Vos médicaments du jour : "
             android:textSize="15sp"
             android:layout_marginLeft="30dp"
             android:textStyle="bold"

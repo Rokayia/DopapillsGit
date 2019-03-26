@@ -341,6 +341,15 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     @Override
     public void onResume (){
         super.onResume();
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int min = calendar.get(Calendar.MINUTE);
+        if(hour==19 && min==56){
+           
+
+        }
+        toastMessage("hour" + Integer.toString(hour)+Integer.toString(min
+        ));
 
         //reprendre la valeur deja préservée
         settings = getActivity().getSharedPreferences("SauvegarderPas", Context.MODE_PRIVATE);
