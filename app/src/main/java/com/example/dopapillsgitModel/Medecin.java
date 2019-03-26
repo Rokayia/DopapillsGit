@@ -4,6 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Medecin implements Parcelable {
+    /*
+     ** Implémenter Parceble permet de passer un object de type Medecin d'une activité à une autre
+     */
+
+    /********************************** Attributs de la classe*************************************/
     private String idMed;
     private String idPatient;
     private String nom;
@@ -12,7 +17,7 @@ public class Medecin implements Parcelable {
     private  String mail;
     private String specialite;
 
-
+    /********************************** Constructeurs**********************************************/
     public Medecin(String idPatient, String idMed, String nom, String prenom, String ville,String mail, String specialite) {
      this.setIdMed(idMed);
      this.setIdPatient(idPatient);
@@ -20,11 +25,7 @@ public class Medecin implements Parcelable {
      this.setPrenom(prenom);
      this.setVille(ville);
      this.setMail(mail);
-
      this.setSpecialite(specialite);
-
-
-
     }
 
     public Medecin() {
@@ -41,6 +42,7 @@ public class Medecin implements Parcelable {
         setSpecialite(in.readString());
     }
 
+    /********************************** Méthodes **************************************************/
     public static final Parcelable.Creator<Medecin> CREATOR = new Parcelable.Creator<Medecin>() {
         @Override
         public Medecin createFromParcel(Parcel in) {
@@ -69,7 +71,7 @@ public class Medecin implements Parcelable {
         parcel.writeString(getSpecialite());
 
     }
-
+    /******************************************* Accesseurs ***************************************/
     public String getIdMed() {
         return idMed;
     }

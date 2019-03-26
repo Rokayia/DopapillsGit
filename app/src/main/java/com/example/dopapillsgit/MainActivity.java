@@ -7,15 +7,21 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     private Button btn_seconnecter, btn_sinscrire;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /********************************** Initialisation de la classe*************************************/
+
         btn_seconnecter = (Button) findViewById(R.id.boutonseconnecter);
         btn_sinscrire = (Button) findViewById(R.id.boutonsinscrire);
 
-
+        //s'inscrire
         btn_sinscrire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //se connecter
         btn_seconnecter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

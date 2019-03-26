@@ -13,8 +13,11 @@ import android.os.Build;
 import static android.app.NotificationManager.IMPORTANCE_DEFAULT;
 
 public class AlarmReceiver extends BroadcastReceiver{
+
     private static final String CHANNEL_ID = "com.singhajit.notificationDemo.channelId";
 
+
+    //Faire apparaître une alerte
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent notificationIntent = new Intent(context, NotificationActivity.class);
@@ -27,9 +30,9 @@ public class AlarmReceiver extends BroadcastReceiver{
 
         Notification.Builder builder = new Notification.Builder(context);
 
-        Notification notification = builder.setContentTitle("Demo App Notification")
-                .setContentText("New Notification From Demo App..")
-                .setTicker("New Message Alert!")
+        Notification notification = builder.setContentTitle("Notification")
+                .setContentText("Vous avez une nouvelle notification de Dopa'pills")
+                .setTicker("Nouvelle Alerte!")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent).build();
 

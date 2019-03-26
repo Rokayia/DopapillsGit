@@ -22,6 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class InscriptionActivity extends AppCompatActivity {
+
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     public EditText emailId, passwd,passwd2,editTextPseudo;
     Button btnSignUp;
     TextView signIn;
@@ -37,6 +42,9 @@ public class InscriptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inscription);
+
+        /********************************** Initialisation des attributs*************************************/
+
         firebaseAuth = FirebaseAuth.getInstance();
         editTextPseudo=findViewById(R.id.pseudo);
         emailId = findViewById(R.id.mail);
@@ -44,6 +52,7 @@ public class InscriptionActivity extends AppCompatActivity {
         passwd2 = findViewById(R.id.mdppatient2);
         btnSignUp = findViewById(R.id.boutonsuivantvalider);
 
+        //S'inscrire en entrant deux mots de passe identique d'au moins 6 charactéres
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,10 +78,11 @@ public class InscriptionActivity extends AppCompatActivity {
 
                             if (task.isSuccessful()) {
                                 FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+                                //créer les bases de données Patient DonneesDeSante et ContactUrgence
                                 DatabaseReference myRefu = mDatabase.getReference("Patient");
                                 DatabaseReference myRefd = mDatabase.getReference("DonneesDeSante");
                                 DatabaseReference myRefc = mDatabase.getReference("ContactUrgence");
-                                DatabaseReference myRefmedicament = mDatabase.getReference("Medicament");
+
                                 String userId = myRefu.push().getKey();
                                 String ContactId=myRefc.push().getKey();
 
@@ -112,6 +122,7 @@ public class InscriptionActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
+
                                 //Création de la base de données DonnéesDeSanté
                                 String groupeSanguin="";
                                 String contactUrgence="";
@@ -132,6 +143,7 @@ public class InscriptionActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
+
                                 //Création de la base de données ContactUrgence
                                 String nomC="";
                                 String prenomC="";

@@ -2,7 +2,7 @@ package com.example.dopapillsgitModel;
 
 
 public class StepDetector {
-
+    /****************************Attributs et constante de la classe*******************************/
     private static final int ACCEL_RING_SIZE = 50;
     private static final int VEL_RING_SIZE = 10;
     private static final float STEP_THRESHOLD = 4f;
@@ -19,12 +19,13 @@ public class StepDetector {
 
     private StepListener listener;
 
+    /********************************** Méthodes **************************************************/
     public void registerListener(StepListener listener) {
         this.listener = listener;
     }
 
     /**
-     * Accepts updates from the accelerometer.
+     * Accepter les mises à jour provenat de l'acceloromètre.
      */
     public void updateAccel(long timeNs, float x, float y, float z) {
         float[] currentAccel = new float[3];
@@ -32,7 +33,7 @@ public class StepDetector {
         currentAccel[1] = y;
         currentAccel[2] = z;
 
-        // First step is to update our guess of where the global z vector is.
+        // On veut retrouver l'emplacement du vecteur z
         accelRingCounter++;
         accelRingX[accelRingCounter % ACCEL_RING_SIZE] = currentAccel[0];
         accelRingY[accelRingCounter % ACCEL_RING_SIZE] = currentAccel[1];
@@ -49,8 +50,7 @@ public class StepDetector {
         worldZ[1] = worldZ[1] / normalization_factor;
         worldZ[2] = worldZ[2] / normalization_factor;
 
-        // Next step is to figure out the component of the current acceleration
-        // in the direction of world_z and subtract gravity's contribution
+
         float currentZ = SensorFusionMath.dot(worldZ, currentAccel) - normalization_factor;
         velRingCounter++;
         velRing[velRingCounter % VEL_RING_SIZE] = currentZ;

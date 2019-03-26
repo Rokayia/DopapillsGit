@@ -4,6 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class RDV implements Parcelable {
+    /*
+     ** Implémenter Parceble permet de passer un object de type RDV d'une activité à une autre
+     */
+
+    /********************************** Attributs de la classe*************************************/
     private String idRdv;
     private String idPatient;
     private String nom;
@@ -11,6 +16,8 @@ public class RDV implements Parcelable {
     private String hDebut;
     private String hFin;
     private String date;
+
+    /********************************** Constructeurs**********************************************/
     public  RDV(){
 
     }
@@ -24,7 +31,7 @@ public class RDV implements Parcelable {
         this.setDate(date);
     }
 
-
+    /******************************************* Accesseurs ***************************************/
     public String getIdRdv() {
         return idRdv;
     }
@@ -76,6 +83,8 @@ public class RDV implements Parcelable {
     public String getDate() {
         return date;
     }
+
+    /********************************** Méthodes **************************************************/
 
     public void setDate(String date) {
         this.date = date;

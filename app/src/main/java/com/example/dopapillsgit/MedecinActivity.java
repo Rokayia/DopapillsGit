@@ -43,7 +43,10 @@ import java.util.Map;
 
 public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjoutMedecinFragement.DialogListener, DialogPopUpRemoveFragment.DialogListener {
 
-    //Var
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     String mNom, mPrenom, mVille,  mMail, mSpecialite;
     private ListView mListView;
     private LinearLayout btnAjoutMed, btnSupprimerMed;
@@ -54,8 +57,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
     private ArrayList<String> keyList;
     private int positionItem;
 
-
-    //Firebase
+    /**********************************Firebase****************************************/
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -63,8 +65,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
     private DatabaseReference rootRef;
     private String userID, MedId;
 
-
-    //Query
+    /**********************************Query****************************************/
     private Query query;
 
 
@@ -73,14 +74,15 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medecin);
 
+        /**********************************Initialisation des attributs*************************************/
 
-        //var
+
+        /**********************************Variables****************************************/
         btnAjoutMed = (LinearLayout) findViewById(R.id.ajouter_medecin);
         btnSupprimerMed = findViewById(R.id.supprimer_medecin);
         childUpdates = new HashMap<>();
 
-
-        //Firebase
+        /**********************************Firebase****************************************/
         mListView = (ListView) findViewById(R.id.listviewmedecin);
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -101,11 +103,10 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
         //afficher les informations déjà entrées par l'utilisateur
         array = new ArrayList<>();
         query = myRefMedecin.child(userID);
-        //  toastMessage(userID);
-        // query.addListenerForSingleValueEvent(valueEventListener);
         adapter = new ArrayAdapter<String>(this, R.layout.list_item_layout, array);
         mListView.setAdapter(adapter);
         keyList = new ArrayList<>();
+
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -124,7 +125,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
                 array.add(medecin.getNom() + " " + medecin.getPrenom()
                         + "         " + medecin.getSpecialite());
                 adapter.notifyDataSetChanged();
-                //Toast.makeText(getBaseContext(), "data=" + dataSnapshot.getValue(), Toast.LENGTH_LONG).show();
+
             }
 
             @Override
@@ -136,7 +137,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Log.d("Data onChildRemoved", dataSnapshot.getValue().toString());
-                //Toast.makeText(getBaseContext(), "data=" + dataSnapshot.getValue(), Toast.LENGTH_LONG).show();
+
 
 
                 adapter.notifyDataSetChanged();
@@ -146,7 +147,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
                 Log.d("Data onChildMoved", dataSnapshot.getValue().toString());
-                //Toast.makeText(getBaseContext(), "data=" + dataSnapshot.getValue(), Toast.LENGTH_LONG).show();
+
 
 
             }
@@ -172,18 +173,18 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
             }
         });
 
-        //Rappel médicamenteux
+
+        //supprimer medicament
         btnSupprimerMed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toastMessage("Veuillez choisir le médecin que vous voulez supprimer");
-                //supprimer medicament
+
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                         positionItem = position;
-                        //toastMessage( myRefMedecin.child(userID).child(keyList.get(positionItem)).getKey());
                         openDialogRemove();
                     }
                 });
@@ -194,15 +195,17 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
     }
 
 
+   /**********************************Méthode****************************************/
 
 
-
+   //se connecter de firebase auth
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+    //se déconnecter de firebase auth
     @Override
     public void onStop() {
         super.onStop();
@@ -211,6 +214,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
         }
     }
 
+    //dialog pour ajouter un medecin
     public void openDialog() {
         DialogPopUpAjoutMedecinFragement exampleDialog = new DialogPopUpAjoutMedecinFragement();
 
@@ -218,6 +222,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
 
     }
 
+    //dialog pour supprimer un medecin
     public void openDialogRemove() {
 
         DialogPopUpRemoveFragment exampleDialog = new DialogPopUpRemoveFragment();
@@ -226,6 +231,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
 
     }
 
+    //récupération des informations du médecin
     public void applyTexts(String nom, String prenom, String ville,  String mail, String specialite) {
 
         mNom = nom;
@@ -242,9 +248,6 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
         childUpdates.put("/Medecin/" + userID + "/" + MedId + "/", medica);
         rootRef.updateChildren(childUpdates);
 
-        //ajouter un item dans la listView
-        //  array.add(nom+" "+prenom+ "         "+ specialite);
-        //adapter.notifyDataSetChanged();
 
 
     }
@@ -254,7 +257,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
     }
 
     public void onPositiveButtonClicked() {
-        //suprimer medicament
+
 
         myRefMedecin.child(userID).child(keyList.get(positionItem)).removeValue();
         keyList.remove(positionItem);

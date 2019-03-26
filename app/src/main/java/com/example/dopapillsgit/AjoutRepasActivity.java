@@ -34,7 +34,10 @@ import java.util.Map;
 
 public class AjoutRepasActivity extends AppCompatActivity {
 
-    //var
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     private EditText editTextTAjoutInfoRepas;
     private Button btnAjoutRepas;
     private Spinner spinner_RepasMomentJournee;
@@ -48,8 +51,7 @@ public class AjoutRepasActivity extends AppCompatActivity {
 
 
 
-
-    //Firebase
+   /**********************************Firebase****************************************/
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -63,7 +65,10 @@ public class AjoutRepasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajout_repas);
 
-        //var
+        /**********************************Initiation des attributs*************************************/
+
+
+        /**********************************Variables****************************************/
 
         editTextTAjoutInfoRepas= findViewById(R.id.ajoutInfoRepas);
 
@@ -107,15 +112,7 @@ public class AjoutRepasActivity extends AppCompatActivity {
             }
         };
 
-
-
-
-
-
-
-
-        //Firebase
-
+        /**********************************Firebase****************************************/
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRefActivite = FirebaseDatabase.getInstance().getReference("Repas");
@@ -134,19 +131,22 @@ public class AjoutRepasActivity extends AppCompatActivity {
 
 
 
-        //ajouter un rdv
-
+        //ajouter un repas
         btnAjoutRepas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ajouterRDV();
+                ajouterRepas();
                 startActivity(new Intent(AjoutRepasActivity.this, UserActivity.class));
             }
         });
 
     }
+    /********************************** Méthode*************************************/
 
-    public void ajouterRDV() {
+
+    /**********************************Ajout Repas****************************************/
+
+    public void ajouterRepas() {
 
         moment =spinner_RepasMomentJournee.getSelectedItem().toString();
         info= editTextTAjoutInfoRepas.getText().toString();

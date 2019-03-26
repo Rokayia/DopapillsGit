@@ -38,7 +38,10 @@ import java.util.Map;
 
 public class AjoutRdvActivity extends AppCompatActivity {
 
-    //var
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     private EditText editTextTypeDActivite,editTextLieu;
     private Button btnAjoutRDV;
     private Switch switch_journeeEntiere;
@@ -58,7 +61,8 @@ public class AjoutRdvActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener2;
 
 
-    //Firebase
+
+    /**********************************Firebase****************************************/
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -72,7 +76,10 @@ public class AjoutRdvActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajout_rdv);
 
-        //var
+        /********************************** Initiation des attributs*************************************/
+
+
+        /**********************************Variables****************************************/
         editTextTypeDActivite= findViewById(R.id.editTextTypeDActivite);
         editTextLieu=findViewById(R.id.editTextLieu);
         btnAjoutRDV=findViewById(R.id.ajoutrdv);
@@ -164,7 +171,7 @@ public class AjoutRdvActivity extends AppCompatActivity {
 
 
 
-        //Firebase
+       /**********************************Firebase****************************************/
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -181,11 +188,12 @@ public class AjoutRdvActivity extends AppCompatActivity {
 
             }
         };
+
         //gestion du switch
         switch_journeeEntiere.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    toastMessage("dans le on click"+ Boolean.toString(isChecked));
+
                     mDisplayTime2.setVisibility(View.GONE);
                     mDisplayTime.setVisibility(View.GONE);
                     imageViewDate.setVisibility(View.GONE);
@@ -202,7 +210,6 @@ public class AjoutRdvActivity extends AppCompatActivity {
 
 
         //ajouter un rdv
-
         btnAjoutRDV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -212,6 +219,10 @@ public class AjoutRdvActivity extends AppCompatActivity {
         });
 
     }
+    /********************************** Méthode*************************************/
+
+
+    /**********************************Ajout d'un RDV****************************************/
 
     public void ajouterRDV() {
 

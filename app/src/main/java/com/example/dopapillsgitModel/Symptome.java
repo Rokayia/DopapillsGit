@@ -4,6 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Symptome implements Parcelable  {
+/*
+ ** Implémenter Parceble permet de passer un object de type Symptome d'une activité à une autre
+ */
+
+    /********************************** Attributs de la classe*************************************/
     private String idSymptome;
     private String idPatient;
     private String dateAjout;
@@ -12,6 +17,7 @@ public class Symptome implements Parcelable  {
     private String mvmAnormaux;
     private String tremblement;
 
+    /********************************** Constructeurs**********************************************/
     public Symptome(String idSymptome, String idPatient, String dateAjout, String hAjout, String mobilite, String mvmAnormaux, String tremblement) {
         this.setIdSymptome(idSymptome);
         this.setIdPatient(idPatient);
@@ -25,6 +31,7 @@ public class Symptome implements Parcelable  {
     public Symptome() {
     }
 
+    /******************************************* Accesseurs ***************************************/
     public String getIdSymptome() {
         return idSymptome;
     }
@@ -80,6 +87,8 @@ public class Symptome implements Parcelable  {
     public void setTremblement(String tremblement) {
         this.tremblement = tremblement;
     }
+
+    /********************************** Méthodes **************************************************/
     protected Symptome(Parcel in) {
         setIdPatient(in.readString());
         setIdSymptome(in.readString());

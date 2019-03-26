@@ -1,4 +1,5 @@
 package com.example.dopapillsgitModel;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,17 +8,22 @@ import com.google.firebase.firestore.IgnoreExtraProperties;
 import java.util.List;
 
 @IgnoreExtraProperties
-public class Medicament implements Parcelable{
+public class Medicament implements Parcelable {
+    /*
+     ** Implémenter Parceble permet de passer un object de type Medicament d'une activité à une autre
+     */
+
+    /********************************** Attributs de la classe*************************************/
     private String idMedicament;
     private String idPatient;
     private String nom;
     private String dosage;
     private String frequence;
     private List<String> jour;
-   // private String mois;
-   // private String annee;
     private String horaires;
-    public Medicament(String idPatient,String idMedicament,String nom,String dosage,String frequence,List<String> jour,String horaires){
+
+    /********************************** Constructeurs**********************************************/
+    public Medicament(String idPatient, String idMedicament, String nom, String dosage, String frequence, List<String> jour, String horaires) {
         this.setIdMedicament(idMedicament);
         this.setNom(nom);
         this.setDosage(dosage);
@@ -25,28 +31,26 @@ public class Medicament implements Parcelable{
         this.setJour(jour);
         this.setHoraires(horaires);
         this.setIdPatient(idPatient);
-       // this.setAnnee(annee);
-     //   this.setMois(mois);
-
     }
+
     public Medicament() {
 
     }
+
     protected Medicament(Parcel in) {
         idMedicament = in.readString();
         idPatient = in.readString();
         nom = in.readString();
         dosage = in.readString();
         frequence = in.readString();
-
-        for (int i =0;i<jour.size();i++){
-            jour.get(i).equals(in.readString()) ;
+        for (int i = 0; i < jour.size(); i++) {
+            jour.get(i).equals(in.readString());
         }
-
         setHoraires(in.readString());
-       // setMois(in.readString());
-       // setAnnee(in.readString());
+
     }
+
+    /********************************** Méthodes **************************************************/
     public static final Creator<Medicament> CREATOR = new Creator<Medicament>() {
         @Override
         public Medicament createFromParcel(Parcel in) {
@@ -58,6 +62,28 @@ public class Medicament implements Parcelable{
             return new Medicament[size];
         }
     };
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeString(idMedicament);
+        parcel.writeString(idPatient);
+        parcel.writeString(nom);
+        parcel.writeString(dosage);
+        parcel.writeString(frequence);
+        for (int j = 0; j < jour.size(); j++) {
+            parcel.writeString(jour.get(i));
+        }
+        parcel.writeString(getHoraires());
+    }
+
+    /******************************************* Accesseurs ***************************************/
     public String getIdMedicament() {
         return idMedicament;
     }
@@ -106,28 +132,6 @@ public class Medicament implements Parcelable{
         this.horaires = horaires;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-        parcel.writeString(idMedicament);
-        parcel.writeString(idPatient);
-        parcel.writeString(nom);
-        parcel.writeString(dosage);
-        parcel.writeString(frequence);
-        for (int j =0;j<jour.size();j++){
-            parcel.writeString(jour.get(i));
-        }
-        parcel.writeString(getHoraires());
-     //   parcel.writeString(getMois());
-     //   parcel.writeString(getAnnee());
-
-    }
-
 
     public String getIdPatient() {
         return idPatient;
@@ -137,19 +141,5 @@ public class Medicament implements Parcelable{
         this.idPatient = idPatient;
     }
 
-    /*public String getAnnee() {
-        return annee;
-    }
 
-    public void setAnnee(String annee) {
-        this.annee = annee;
-    }
-
-    public String getMois() {
-        return mois;
-    }
-
-    public void setMois(String mois) {
-        this.mois = mois;
-    }*/
 }

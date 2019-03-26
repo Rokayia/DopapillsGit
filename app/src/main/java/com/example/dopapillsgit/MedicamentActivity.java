@@ -74,10 +74,11 @@ import java.util.TimeZone;
 
 public class MedicamentActivity  extends AppCompatActivity implements DialogPopUpAjoutMedicamentFragment.DialogListener, DialogPopUpRemoveFragment.DialogListener {
     private static final String TAG = "MedicamentActivity";
-  //  private static final TimeZone Locale = ;
+
+    /********************************** Attributs de la classe*************************************/
 
 
-    //Var
+    /**********************************Variables****************************************/
     String mNom,mDosage,mFréquence,mHoraire;
     List<String> mJour;
     private  LinearLayout btnSupprimerMed;
@@ -92,7 +93,7 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
     private int positionItem;
 
 
-    //Firebase
+    /**********************************Firebase****************************************/
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -103,7 +104,7 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
 
 
 
-    //Query
+    /**********************************Query****************************************/
     private  Query query;
 
     private Context context;
@@ -117,14 +118,15 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
         context=this;
 
 
+        /**********************************Initialisation attributs************************************/
 
-        //var
+
         btnAjoutMed=(LinearLayout) findViewById(R.id.ajouter_medicament);
         btnSupprimerMed = (LinearLayout) findViewById(R.id.linear_supprimer_medicament);
         childUpdates = new HashMap<>();
 
 
-        //Firebase
+        /**********************************Firebase****************************************/
         mListView = (ListView) findViewById(R.id.listview);
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -146,8 +148,6 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
         array = new ArrayList<>();
         query=myRefMedicament.child(userID);
 
-
-        //query.addListenerForSingleValueEvent(valueEventListener);
 
         adapter = new ArrayAdapter<String>(this, R.layout.list_item_layout,R.id.textView_listView, array);
         mListView.setAdapter(adapter);
@@ -197,8 +197,6 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
 
 
 
-       // Context context=null;
-      //  scheduleNotification(context.getApplicationContext(),30,1);
 
         //Ajout medicament
         btnAjoutMed.setOnClickListener(new View.OnClickListener() {
@@ -224,7 +222,6 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                         positionItem = position;
-                        //toastMessage( myRefMedecin.child(userID).child(keyList.get(positionItem)).getKey());
                         openDialogRemove();
 
                     }
@@ -234,56 +231,6 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
 
     }
 
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-            if (dataSnapshot.exists()) {
-                //  toastMessage("exist");
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String key = snapshot.getKey();
-                  //  toastMessage("child"+key);
-                    Query query1= myRefMedicament.child(userID).child(key);
-
-
-                    query1.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-                            mNom = medicament.getNom();
-                            mDosage = medicament.getDosage();
-                            mFréquence = medicament.getFrequence();
-                            mHoraire = medicament.getHoraires();
-                            keyList.add(dataSnapshot.getKey());
-
-
-                            array.add(medicament.getNom()+" "+ medicament.getDosage()+" mg"+ "    "+ medicament.getHoraires()+" h");
-                            adapter.notifyDataSetChanged();
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-                    }
-
-                }
-            }
-
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            Log.e("error",databaseError.getMessage());
-        }
-    };
 
 
 
@@ -320,7 +267,6 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
 
     public void onPositiveButtonClicked() {
         //suprimer medicament
-
         myRefMedicament.child(userID).child(keyList.get(positionItem)).removeValue();
         keyList.remove(positionItem);
         array.remove(positionItem);
@@ -336,8 +282,8 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
         mFréquence=fréquence;
         mJour=jour;
         mHoraire=horaire;
-        toastMessage(horaire);
-        toastMessage("heur 3 =" + heure+ " "+ minute);
+
+
        //ajouter dans firebase
         MedicamentId=myRefMedicament.push().getKey();
         Medicament medica =new Medicament(userID,MedicamentId,mNom, mDosage,mFréquence,mJour,mHoraire);
@@ -352,7 +298,7 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
 
 
         Calendar cal = Calendar.getInstance();//
-        // cal.set(Calendar.AM_PM,1);
+
         cal.setTimeInMillis(System.currentTimeMillis());
         cal.set(Calendar.HOUR, heure);
         cal.set(Calendar.MINUTE,minute);
@@ -367,15 +313,8 @@ public class MedicamentActivity  extends AppCompatActivity implements DialogPopU
 
             PendingIntent broadcast = PendingIntent.getBroadcast(this, _id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),  broadcast);
-            //alarmManager.setExact(AlarmManager.ELAPSED_REALTIME,
-                    //cal.getTimeInMillis(), PendingIntent.getBroadcast(this, 1,
-                           // notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT));
             intentArray.add(broadcast);
         }
-
-
-
-
         calendars.add(cal);
 
 

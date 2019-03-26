@@ -37,7 +37,10 @@ import java.util.Map;
 
 public class AjoutPhysiqueActivity extends AppCompatActivity {
 
-    //var
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TextView mDisplayDate2;
@@ -56,7 +59,7 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
     String intensite,hDebut,hFin,dateDebut,dateFin;
 
 
-    //Firebase
+    /**********************************Firebase****************************************/
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -72,8 +75,10 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajout_activite_physique);
 
+        /********************************** Initiation des attributs*************************************/
 
-        //var
+
+        /**********************************Variables****************************************/
         spinner_type = findViewById(R.id.spinner_typeActivite);
         editTextLieu = findViewById(R.id.editTextLieu);
         editTextRemarque = findViewById(R.id.ajoutremarque);
@@ -199,7 +204,7 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
         };
 
 
-        //Firebase
+              /**********************************Firebase****************************************/
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -219,7 +224,6 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
 
 
         //ajouter une activite physique
-        //medecin
         btnAjoutActivte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -229,7 +233,10 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
         });
 
     }
+    /**********************************Méthode *************************************/
 
+
+    /**********************************Ajout d'une activité****************************************/
     public void ajouterActivite() {
 
         String type = spinner_type.getSelectedItem().toString();
@@ -245,8 +252,7 @@ public class AjoutPhysiqueActivity extends AppCompatActivity {
         }
 
 
-
-        //ajouter dans firebase
+       //ajouter dans firebase
         ActiviteId = myRefActivite.push().getKey();
         ActivitePhysique activitePhysique = new ActivitePhysique(userID, ActiviteId, type, lieu, dateDebut, dateFin, hDebut, hFin, intensite, remarque);
 

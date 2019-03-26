@@ -1,11 +1,9 @@
 package com.example.dopapillsgitFragment;
 
-import android.app.Activity;
-import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.hardware.SensorEventListener;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -21,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -33,7 +30,6 @@ import com.example.dopapillsgit.AjoutRepasActivity;
 import com.example.dopapillsgit.AjoutSymptomeActivity;
 import com.example.dopapillsgit.CalendrierActivity;
 import com.example.dopapillsgit.R;
-import com.example.dopapillsgitModel.Medecin;
 import com.example.dopapillsgitModel.Medicament;
 import com.example.dopapillsgitModel.RDV;
 import com.example.dopapillsgitModel.StepDetector;
@@ -48,77 +44,79 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import android.support.v7.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
 import static android.content.Context.SENSOR_SERVICE;
 
-public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemClickListener, SensorEventListener, StepListener {
+public class AccueilFragment extends Fragment
+        implements PopupMenu.OnMenuItemClickListener, SensorEventListener, StepListener {
 
-    //Var
 
-    private ListView mListView,listview_voirEvenement;
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
+    private ListView mListView, mListview_voirEvenement;
     private View view;
-    private ImageButton cal;
-    private ImageButton ajouterEvenement;
-    private  ArrayList<String> array,array2;
-    private ArrayAdapter<String> adapter,adapter2;
+    private ImageButton mCalendrier;
+    private ImageButton mAjouterEvenement;
+    private ArrayList<String> array, array2;
+    private ArrayAdapter<String> adapter, adapter2;
     private SharedPreferences settings;
 
-    //podometre
-    private TextView steps;
+    /**********************************Podometre****************************************/
+    private TextView mPas;
     private int numSteps;
     private StepDetector StepDetector;
-    private SensorManager sensorManager;;
+    private SensorManager sensorManager;
+    ;
     private Sensor accel;
 
+    /********************************Firebase****************************************/
 
-    //Firebase
     private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference rootRef;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference myRefMedicament,myRefRDV;
-    private DatabaseReference rootRef;
-    private  String userID,userIdMed;
+    private DatabaseReference myRefMedicament, myRefRDV;
+    private String userID, userIdMed;
 
-    //Query
-    private  Query query,query2;
-    private  Sensor sSensor;
-
+    /********************************Query****************************************/
+    private Query query, query2;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.activity_accueil, container, false);
 
+        /********************************** Initialisation des attributs *****************************/
 
-        steps =  view.findViewById(R.id.steps);
+
+        /**********************************Variables****************************************/
+        mCalendrier = view.findViewById(R.id.bouttoncalendrier);
+        mAjouterEvenement = view.findViewById(R.id.ajouterevenement);
+        mListview_voirEvenement = view.findViewById(R.id.listview_voirEvenement);
+        mListView = (ListView) view.findViewById(R.id.listview_voirMedicament);
+
+        /**********************************Podometre****************************************/
+
+        mPas = view.findViewById(R.id.steps);
         sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
-
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         StepDetector = new StepDetector();
         StepDetector.registerListener(this);
 
-
-
-        //var
-        cal = view.findViewById(R.id.bouttoncalendrier);
-        ajouterEvenement =view.findViewById(R.id.ajouterevenement);
-        listview_voirEvenement=view.findViewById(R.id.listview_voirEvenement);
-        mListView = (ListView) view.findViewById(R.id.listview_voirMedicament);
-
-
-        //Firebase
+        /********************************Firebase****************************************/
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRefMedicament=FirebaseDatabase.getInstance().getReference("Medicament");
-        myRefRDV=FirebaseDatabase.getInstance().getReference("RDV");
+        myRefMedicament = FirebaseDatabase.getInstance().getReference("Medicament");
+        myRefRDV = FirebaseDatabase.getInstance().getReference("RDV");
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
         rootRef = FirebaseDatabase.getInstance().getReference();
@@ -131,56 +129,58 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
             }
         };
 
-        //afficher les evenements déjà entrées par l'utilisateur
+
+        /********************************** Affichage d'information*****************************/
+
+        // Afficher les événements déjà entrées par l'utilisateur
+
         array2 = new ArrayList<>();
-        query2=myRefRDV.child(userID);
-        //  toastMessage(userID);
+        query2 = myRefRDV.child(userID);
         query2.addListenerForSingleValueEvent(valueEventListener2);
-
-
         adapter2 = new ArrayAdapter<String>(getActivity(), R.layout.list_item_accueil_medicament, array2);
-
-
-        listview_voirEvenement.setAdapter(adapter2);
-
+        mListview_voirEvenement.setAdapter(adapter2);
         adapter2.notifyDataSetChanged();
 
 
         //afficher les informations déjà entrées par l'utilisateur
-        array = new ArrayList<>();
-        query=myRefMedicament.child(userID);
-        //  toastMessage(userID);
-        query.addChildEventListener(childEventListener);
 
+        array = new ArrayList<>();
+        query = myRefMedicament.child(userID);
+        query.addChildEventListener(childEventListener);
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_accueil_medicament, array);
         mListView.setAdapter(adapter);
 
+        /*************************** Affichage d'une nouvelle activité*****************************/
 
-        cal.setOnClickListener(new View.OnClickListener() {
+        //CalendarActivity
+
+        mCalendrier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentCalendrier = new Intent(getActivity(), CalendrierActivity.class);
                 startActivity(intentCalendrier);
             }
         });
-        ajouterEvenement.setOnClickListener(new View.OnClickListener() {
+        /************************** Ajout d'un événement depuis un menu pop up********************/
+
+        mAjouterEvenement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopup(getActivity().findViewById(R.id.bottom_navigation));
             }
         });
+
         String date_n = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(new Date());
         TextView tv_date = view.findViewById(R.id.date);
         tv_date.setText(date_n);
-        SharedPreferences prefs= getActivity().getSharedPreferences("aName", Context.MODE_PRIVATE);
-        //save the value
-        prefs.edit()
-                .putInt("steps", numSteps).apply();
-        // get the data
-        prefs.getInt("steps", numSteps);
+
         return view;
     }
 
+    /********************************** Méthode ***************************************************/
+
+
+    /**************************** Affichage du menu pop up**************************/
     public void showPopup(View v) {
         PopupMenu popupMenu = new PopupMenu(getActivity(), v);
         popupMenu.setOnMenuItemClickListener(this);
@@ -188,104 +188,49 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
         popupMenu.show();
     }
 
+    /******************** Afficher une autre activité en fonction du choix du patient**************/
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if(item.getItemId()==R.id.rdv)
-        {
-            Intent rdv = new Intent (getActivity(), AjoutRdvActivity.class);
+        if (item.getItemId() == R.id.rdv) {
+            Intent rdv = new Intent(getActivity(), AjoutRdvActivity.class);
             startActivity(rdv);
-        }
+        } else if (item.getItemId() == R.id.repas) {
 
-        else if(item.getItemId()==R.id.repas){
-
-            Intent repas = new Intent (getActivity(), AjoutRepasActivity.class);
+            Intent repas = new Intent(getActivity(), AjoutRepasActivity.class);
             startActivity(repas);
-        }
-        else if(item.getItemId()==R.id.activitePhysique){
+        } else if (item.getItemId() == R.id.activitePhysique) {
 
-            Intent activitePhysique = new Intent (getActivity(), AjoutPhysiqueActivity.class);
+            Intent activitePhysique = new Intent(getActivity(), AjoutPhysiqueActivity.class);
             startActivity(activitePhysique);
-        }
-        else if(item.getItemId()==R.id.symptome){
+        } else if (item.getItemId() == R.id.symptome) {
 
-            Intent symptome = new Intent (getActivity(), AjoutSymptomeActivity.class);
+            Intent symptome = new Intent(getActivity(), AjoutSymptomeActivity.class);
             startActivity(symptome);
         }
 
         return false;
     }
 
+    /********************************** Listener ***************************************************/
 
-    ValueEventListener valueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-            if (dataSnapshot.exists()) {
-                //  toastMessage("exist");
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String key = snapshot.getKey();
-                    //  toastMessage("child"+key);
-                    Query query1= myRefMedicament.child(userID).child(key);
-
-
-                    query1.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-
-                            array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
-                            adapter.notifyDataSetChanged();
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-                }
-
-            }
-        }
-
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            Log.e("error",databaseError.getMessage());
-        }
-    };
-
-
-
-
-
-
+    // Remplir le listView avec seulement les rendez-vous du jour
     ValueEventListener valueEventListener2 = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
 
-
             if (dataSnapshot.exists()) {
-                //  toastMessage("exist");
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String key = snapshot.getKey();
 
-                    Query query1= myRefRDV.child(userID).child(key);
-
-
+                    Query query1 = myRefRDV.child(userID).child(key);
 
                     query1.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                            RDV rdv = (RDV) dataSnapshot.getValue(RDV.class);
+                            RDV rdv = dataSnapshot.getValue(RDV.class);
                             String date_p = new SimpleDateFormat("dd/M/yyyy", Locale.getDefault()).format(new Date());
 
                             if (date_p.equals(rdv.getDate())) {
@@ -294,14 +239,10 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
                                     array2.add(rdv.gethDebut() + " h - " + rdv.gethFin() + " h " + rdv.getNom() + " à " + rdv.getLieu());
                                     adapter2.notifyDataSetChanged();
                                 } else {
-                                    array2.add( "Toute la journée : " + rdv.getNom() + " à " + rdv.getLieu());
+                                    array2.add("Toute la journée : " + rdv.getNom() + " à " + rdv.getLieu());
                                     adapter2.notifyDataSetChanged();
                                 }
-
                             }
-
-
-
                         }
 
                         @Override
@@ -310,27 +251,26 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
                         }
                     });
 
-
                 }
 
-                }
+            }
         }
-
 
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Log.e("error",databaseError.getMessage());
+            Log.e("error", databaseError.getMessage());
         }
 
     };
 
+    // se connecter à la base de données d'identification avec mail à l'ouverture de la page
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
+    // se déconnecter à la base de données d'identification avec mail à la fermeture de la page
     @Override
     public void onStop() {
         super.onStop();
@@ -338,28 +278,19 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
+
     @Override
-    public void onResume (){
+    public void onResume() {
         super.onResume();
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int min = calendar.get(Calendar.MINUTE);
-        if(hour==19 && min==56){
-           
-
-        }
-        toastMessage("hour" + Integer.toString(hour)+Integer.toString(min
-        ));
-
-        //reprendre la valeur deja préservée
+        //reprendre la valeur de pas après que le patient est quitté l'activité et continuer à compter
         settings = getActivity().getSharedPreferences("SauvegarderPas", Context.MODE_PRIVATE);
-        //get the sharepref
         int firstInt = settings.getInt("pas", 0);
-        numSteps=firstInt;
+        numSteps = firstInt;
 
-        steps.setText( String.valueOf(numSteps));
+        mPas.setText(String.valueOf(numSteps));
         sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_UI);
-       }
+    }
 
 
     @Override
@@ -382,24 +313,23 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
     public void step(long timeNs) {
         numSteps++;
-        steps.setText( String.valueOf(numSteps));
-
+        mPas.setText(String.valueOf(numSteps));
 
 
     }
-    /********************************* ChildEventListener pour récupérer****************************
-     * tous les médicaments en fonction du jour de la semaine
-     */
+
+    /*** ChildEventListener pour récupérer tous les médicaments en fonction du jour de la semaine****/
 
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
+
         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            userIdMed = dataSnapshot.getKey();
 
-            userIdMed=dataSnapshot.getKey();
-
-            final Query queryJour=myRefMedicament.child(userID).child(dataSnapshot.getKey());
+            final Query queryJour = myRefMedicament.child(userID).child(dataSnapshot.getKey());
             final Query query1 = myRefMedicament.child(userID).child(dataSnapshot.getKey()).child("jour");
             query1.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -407,50 +337,43 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
                     Calendar calendar = Calendar.getInstance();
                     int day = calendar.get(Calendar.DAY_OF_WEEK);
-
-                    Calendar cal = Calendar.getInstance();
-                    int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-                    String dayOfMonthStr = String.valueOf(dayOfMonth);
-
-
                     switch (day) {
                         case Calendar.MONDAY:
-                            if(dataSnapshot.getValue().equals("lundi")){
+                            if (dataSnapshot.getValue().equals("lundi")) {
                                 queryJour.addValueEventListener(valueEventListenerLundi);
                             }
                             break;
                         case Calendar.TUESDAY:
-                            if(dataSnapshot.getValue().equals("mardi")){
+                            if (dataSnapshot.getValue().equals("mardi")) {
                                 queryJour.addValueEventListener(valueEventListenerMardi);
                             }
                             break;
                         case Calendar.WEDNESDAY:
-                            if(dataSnapshot.getValue().equals("mercredi")){
+                            if (dataSnapshot.getValue().equals("mercredi")) {
                                 queryJour.addValueEventListener(valueEventListenerMercredi);
                             }
                             break;
                         case Calendar.THURSDAY:
-                            if(dataSnapshot.getValue().equals("jeudi")){
+                            if (dataSnapshot.getValue().equals("jeudi")) {
                                 queryJour.addValueEventListener(valueEventListenerJeudi);
                             }
                             break;
                         case Calendar.FRIDAY:
-                            if(dataSnapshot.getValue().equals("vendredi")){
+                            if (dataSnapshot.getValue().equals("vendredi")) {
                                 queryJour.addValueEventListener(valueEventListenerVendredi);
                             }
                             break;
                         case Calendar.SATURDAY:
-                            if(dataSnapshot.getValue().equals("samedi")){
+                            if (dataSnapshot.getValue().equals("samedi")) {
                                 queryJour.addValueEventListener(valueEventListenerSamedi);
                             }
                             break;
                         case Calendar.SUNDAY:
-                            if(dataSnapshot.getValue().equals("dimanche")){
+                            if (dataSnapshot.getValue().equals("dimanche")) {
                                 queryJour.addValueEventListener(valueEventListenerDimanche);
                             }
                             break;
                         default:
-
 
 
                     }
@@ -485,7 +408,6 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
             Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
 
 
-
         }
 
         @Override
@@ -503,32 +425,33 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
         }
     };
+
     /**********************ValueEventListener en fonction des jours de la semaine******************/
+
+                            /**********************Lundi******************/
     ValueEventListener valueEventListenerLundi = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            //Pour remplir la listView de medicament
+
             Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
-                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            if (medicament.getHoraires() != null && medicament.getNom() != null)
+                array.add(medicament.getHoraires() + " h" + "            " + medicament.getNom() + " " + medicament.getDosage() + " mg");
             adapter.notifyDataSetChanged();
 
-            //Pour remplir la listView de RDV
-
-        }
+          }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
 
         }
     };
-
+                            /**********************Mardi******************/
     ValueEventListener valueEventListenerMardi = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
-                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            if (medicament.getHoraires() != null && medicament.getNom() != null)
+                array.add(medicament.getHoraires() + " h" + "            " + medicament.getNom() + " " + medicament.getDosage() + " mg");
             adapter.notifyDataSetChanged();
         }
 
@@ -537,13 +460,13 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
         }
     };
-
+                            /**********************Mercredi******************/
     ValueEventListener valueEventListenerMercredi = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
-                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            if (medicament.getHoraires() != null && medicament.getNom() != null)
+                array.add(medicament.getHoraires() + " h" + "            " + medicament.getNom() + " " + medicament.getDosage() + " mg");
             adapter.notifyDataSetChanged();
         }
 
@@ -553,12 +476,13 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
         }
     };
 
+                                /**********************Jeudi******************/
     ValueEventListener valueEventListenerJeudi = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
-                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            if (medicament.getHoraires() != null && medicament.getNom() != null)
+                array.add(medicament.getHoraires() + " h" + "            " + medicament.getNom() + " " + medicament.getDosage() + " mg");
             adapter.notifyDataSetChanged();
         }
 
@@ -567,13 +491,13 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
         }
     };
-
-    ValueEventListener valueEventListenerVendredi= new ValueEventListener() {
+                                /**********************Vendredi******************/
+    ValueEventListener valueEventListenerVendredi = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
-                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            if (medicament.getHoraires() != null && medicament.getNom() != null)
+                array.add(medicament.getHoraires() + " h" + "            " + medicament.getNom() + " " + medicament.getDosage() + " mg");
             adapter.notifyDataSetChanged();
         }
 
@@ -584,13 +508,13 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
         }
     };
 
-
+                                /**********************Samedi******************/
     ValueEventListener valueEventListenerSamedi = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
-                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            if (medicament.getHoraires() != null && medicament.getNom() != null)
+                array.add(medicament.getHoraires() + " h" + "            " + medicament.getNom() + " " + medicament.getDosage() + " mg");
             adapter.notifyDataSetChanged();
         }
 
@@ -599,13 +523,13 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
         }
     };
-
+                                /**********************Dimanche******************/
     ValueEventListener valueEventListenerDimanche = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-            if(medicament.getHoraires()!=null&&medicament.getNom()!=null)
-                array.add( medicament.getHoraires()+" h"+"            "+medicament.getNom()+" "+ medicament.getDosage()+" mg");
+            if (medicament.getHoraires() != null && medicament.getNom() != null)
+                array.add(medicament.getHoraires() + " h" + "            " + medicament.getNom() + " " + medicament.getDosage() + " mg");
             adapter.notifyDataSetChanged();
         }
 
@@ -614,17 +538,14 @@ public class AccueilFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
         }
     };
-    private void toastMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
+
+    // Lorsque le patient va sur une autre page, on stocke la valeur du compteur de pas
     public void onDestroy() {
         super.onDestroy();
 
         settings = getActivity().getSharedPreferences("SauvegarderPas", Context.MODE_PRIVATE);
-        //set the sharedpref
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("pas", numSteps);
-
         editor.commit();
     }
 

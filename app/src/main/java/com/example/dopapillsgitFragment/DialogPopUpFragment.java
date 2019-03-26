@@ -14,6 +14,11 @@ import android.widget.EditText;
 import com.example.dopapillsgit.R;
 
 public class DialogPopUpFragment extends AppCompatDialogFragment  {
+
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     private EditText editTextNom;
     private EditText editTextPrenom;
     private EditText editTextNumTel;
@@ -43,7 +48,10 @@ public class DialogPopUpFragment extends AppCompatDialogFragment  {
                         listener.applyTexts(nom, prenom,numTel);
                     }
                 });
+        /********************************** Initialisation des  attributs *************************/
 
+
+        /**********************************Variables****************************************/
         editTextNom = view.findViewById(R.id.edit_nom_contact);
         editTextPrenom = view.findViewById(R.id.edit_prenom_contact);
         editTextNumTel= view.findViewById(R.id.edit_numTel_contact);
@@ -63,6 +71,9 @@ public class DialogPopUpFragment extends AppCompatDialogFragment  {
         }
     }
 
+
+
+    /**********************************Interface****************************************/
     public interface DialogListener {
         void applyTexts(String nom, String prenom,String numTel);
     }

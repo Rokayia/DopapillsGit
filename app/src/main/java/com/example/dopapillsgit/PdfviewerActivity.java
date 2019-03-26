@@ -48,7 +48,11 @@ import java.util.ArrayList;
 
 public class PdfviewerActivity extends AppCompatActivity {
 
-    //var
+
+    /********************************** Attributs de la classe*************************************/
+
+
+    /**********************************Variables****************************************/
     private static final String TAG = "PdfviewerActivity";
     private RelativeLayout mRlContainer;
     private int mwidth, mheight;
@@ -58,7 +62,7 @@ public class PdfviewerActivity extends AppCompatActivity {
     mTextViewEtatPatient;
 
 
-    //Firebase
+    /**********************************Firebase****************************************/
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -69,8 +73,7 @@ public class PdfviewerActivity extends AppCompatActivity {
 
 
 
-
-    //Query
+    /**********************************Query****************************************/
     private Query queryPatient,queryDonneesDeSante,queryMedicament,queryActivitePhysique,queryEtatPatient;
 
     @Override
@@ -161,7 +164,7 @@ public class PdfviewerActivity extends AppCompatActivity {
     ValueEventListener valueEventListenerPatient = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-//toastMessage(Boolean.toString(dataSnapshot.exists()));
+
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
@@ -185,7 +188,7 @@ public class PdfviewerActivity extends AppCompatActivity {
     ValueEventListener valueEventListenerDonneesDeSante = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-//toastMessage("snapshot"+Boolean.toString(dataSnapshot.exists()));
+
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     DonneesSante donneesSante = snapshot.getValue(DonneesSante.class);
@@ -213,7 +216,7 @@ public class PdfviewerActivity extends AppCompatActivity {
             Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
 
             mMedicament+=medicament.getNom()+" "+ medicament.getDosage()+" mg"+ "    "+ medicament.getHoraires()+" h"+'\n';
-            // toastMessage("annee"+anneeDiagnostic);
+
 
             mTextViewRecapitulatifMedicament.setText(  mMedicament);
 
