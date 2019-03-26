@@ -73,6 +73,7 @@ public class CalendrierActivity extends AppCompatActivity {
 
         query = myRef.child(userID);
         query.addChildEventListener(childEventListener);
+
        // Toast.makeText(getApplicationContext(), Integer.toString(mNombreDeFoisSemaine), Toast.LENGTH_LONG).show();
 
 
@@ -119,92 +120,6 @@ public class CalendrierActivity extends AppCompatActivity {
             }
         });
     }
-
-    ChildEventListener childEventListener= new ChildEventListener() {
-        @Override
-        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            //Toast.makeText(getApplicationContext(), dataSnapshot.getKey(), Toast.LENGTH_LONG).show();
-            userIdMed=dataSnapshot.getKey();
-final Query queryJour=myRef.child(userID).child(dataSnapshot.getKey());
-            final Query query1 = myRef.child(userID).child(dataSnapshot.getKey()).child("jour");
-            query1.addChildEventListener(new ChildEventListener() {
-                                            @Override
-                                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                                if(dataSnapshot.getValue().equals("lundi")){
-                                                    queryJour.addValueEventListener(valueEventListenerLundi);
-                                                }
-                                                else  if(dataSnapshot.getValue().equals("mardi")){
-                                                    queryJour.addValueEventListener(valueEventListenerMardi);
-                                                }
-                                                else  if(dataSnapshot.getValue().equals("mercredi")){
-                                                    queryJour.addValueEventListener(valueEventListenerMercredi);
-                                                }
-                                                else  if(dataSnapshot.getValue().equals("jeudi")){
-                                                    queryJour.addValueEventListener(valueEventListenerJeudi);
-                                                }
-                                                else  if(dataSnapshot.getValue().equals("vendredi")){
-                                                    queryJour.addValueEventListener(valueEventListenerVendredi);
-                                                }
-                                                else  if(dataSnapshot.getValue().equals("samedi")){
-                                                    queryJour.addValueEventListener(valueEventListenerSamedi);
-                                                }
-                                                else  if(dataSnapshot.getValue().equals("dimanche")){
-                                                    queryJour.addValueEventListener(valueEventListenerDimanche);
-                                                }
-
-
-
-
-                                            }
-
-                                            @Override
-                                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                            }
-
-                                            @Override
-                                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                                            }
-
-                                            @Override
-                                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-
-           // Toast.makeText(getApplicationContext(), medicament.getNom(), Toast.LENGTH_LONG).show();
-
-        }
-
-        @Override
-        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
-          //  Toast.makeText(getApplicationContext(), medicament.getNom(), Toast.LENGTH_LONG).show();
-
-
-        }
-
-        @Override
-        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-        }
-
-        @Override
-        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
-    };
 
 ValueEventListener valueEventListenerLundi = new ValueEventListener() {
     @Override
@@ -270,6 +185,92 @@ ValueEventListener valueEventListenerLundi = new ValueEventListener() {
                 mTextVendredi+= medicament.getHoraires()+ " "+ medicament.getNom()+'\n';
         }
 
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+    ChildEventListener childEventListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            //Toast.makeText(getApplicationContext(), dataSnapshot.getKey(), Toast.LENGTH_LONG).show();
+            userIdMed=dataSnapshot.getKey();
+            toastMessage(userIdMed);
+            final Query queryJour=myRef.child(userID).child(dataSnapshot.getKey());
+            final Query query1 = myRef.child(userID).child(dataSnapshot.getKey()).child("jour");
+            query1.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    if(dataSnapshot.getValue().equals("lundi")){
+                        queryJour.addValueEventListener(valueEventListenerLundi);
+                    }
+                    else  if(dataSnapshot.getValue().equals("mardi")){
+                        queryJour.addValueEventListener(valueEventListenerMardi);
+                    }
+                    else  if(dataSnapshot.getValue().equals("mercredi")){
+                        queryJour.addValueEventListener(valueEventListenerMercredi);
+                    }
+                    else  if(dataSnapshot.getValue().equals("jeudi")){
+                        queryJour.addValueEventListener(valueEventListenerJeudi);
+                    }
+                    else  if(dataSnapshot.getValue().equals("vendredi")){
+                        queryJour.addValueEventListener(valueEventListenerVendredi);
+                    }
+                    else  if(dataSnapshot.getValue().equals("samedi")){
+                        queryJour.addValueEventListener(valueEventListenerSamedi);
+                    }
+                    else  if(dataSnapshot.getValue().equals("dimanche")){
+                        queryJour.addValueEventListener(valueEventListenerDimanche);
+                    }
+
+
+
+
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+            // Toast.makeText(getApplicationContext(), medicament.getNom(), Toast.LENGTH_LONG).show();
+
+        }
+
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            Medicament medicament = (Medicament) dataSnapshot.getValue(Medicament.class);
+            //  Toast.makeText(getApplicationContext(), medicament.getNom(), Toast.LENGTH_LONG).show();
+
+
+        }
+
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
