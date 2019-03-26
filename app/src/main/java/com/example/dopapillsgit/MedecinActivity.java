@@ -44,7 +44,7 @@ import java.util.Map;
 public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjoutMedecinFragement.DialogListener, DialogPopUpRemoveFragment.DialogListener {
 
     //Var
-    String mNom, mPrenom, mVille, mRPPS, mMail, mSpecialite;
+    String mNom, mPrenom, mVille,  mMail, mSpecialite;
     private ListView mListView;
     private LinearLayout btnAjoutMed, btnSupprimerMed;
     private ArrayList<String> array;
@@ -115,7 +115,7 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
                 mNom = medecin.getNom();
                 mPrenom = medecin.getPrenom();
                 mVille = medecin.getVille();
-                mRPPS = medecin.getRPPS();
+
                 mMail = medecin.getMail();
                 mSpecialite = medecin.getSpecialite();
                 keyList.add(dataSnapshot.getKey());
@@ -226,18 +226,18 @@ public class MedecinActivity extends AppCompatActivity implements DialogPopUpAjo
 
     }
 
-    public void applyTexts(String nom, String prenom, String ville, String RPPS, String mail, String specialite) {
+    public void applyTexts(String nom, String prenom, String ville,  String mail, String specialite) {
 
         mNom = nom;
         mPrenom = prenom;
         mVille = ville;
-        mRPPS = RPPS;
+
         mMail = mail;
         mSpecialite = specialite;
 
         //ajouter dans firebase
         MedId = myRefMedecin.push().getKey();
-        Medecin medica = new Medecin(userID, MedId, mNom, mPrenom, mVille, mRPPS, mMail, mSpecialite);
+        Medecin medica = new Medecin(userID, MedId, mNom, mPrenom, mVille,  mMail, mSpecialite);
 
         childUpdates.put("/Medecin/" + userID + "/" + MedId + "/", medica);
         rootRef.updateChildren(childUpdates);
