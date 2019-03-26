@@ -130,10 +130,10 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
         mHoraire.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view2) {
                 Calendar cal2 = Calendar.getInstance();
-                int hour = cal2.get(Calendar.HOUR);
+                int hour = cal2.get(Calendar.HOUR_OF_DAY);
                 int minute = cal2.get(Calendar.MINUTE);
-                heure=hour;
-                min=minute;
+
+
 
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, mTimeSetListener, hour, minute, true);
@@ -147,6 +147,8 @@ public class DialogPopUpAjoutMedicamentFragment extends AppCompatDialogFragment 
                // Log.d("", "onTimeSet : hh:mm " + hour + ":" + minute);
                 mHoraire.setVisibility(View.GONE);
                 String time = hour + ":" + minute;
+                heure=hour;
+                min=minute;
                 horaire=time;
                 horaireTextView.setText(time);
 

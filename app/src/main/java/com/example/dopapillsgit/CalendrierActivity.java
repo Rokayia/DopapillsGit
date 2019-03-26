@@ -93,6 +93,7 @@ public class CalendrierActivity extends AppCompatActivity {
                 int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
                 if (dayOfWeek == 1) {
                     mTextView.setText(mTextDimanche);
+                    toastMessage("dimanche"+ mTextDimanche);
                 } else if (dayOfWeek == 2) {
                     mTextView.setText(mTextLundi);
 
@@ -303,4 +304,7 @@ ValueEventListener valueEventListenerLundi = new ValueEventListener() {
 
         }
     };
+    private void toastMessage(String message) {
+        Toast.makeText(CalendrierActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -1,10 +1,19 @@
 package com.example.dopapillsgitFragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +36,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class ProfilFragment extends Fragment {
     View view;
     //Interface utilisateur
     private TextView editTextNomPrenomProfil;
-    private LinearLayout  btnId, btnDonnes, btnMedicaments, btnMed;
-    private LinearLayout btnSignOut;
+    private LinearLayout btnId, btnDonnes, btnMedicaments, btnMed;
+    private LinearLayout btnSignOut, btnRecapitulatif;
     private ImageView imageViewAvatar;
     private static final String TAG = "ProfilFragment";
 
@@ -40,11 +53,8 @@ public class ProfilFragment extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference myRef,myRefAvatar;
-    private  String userID;
-
-
-
+    private DatabaseReference myRef, myRefAvatar;
+    private String userID;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,17 +64,18 @@ public class ProfilFragment extends Fragment {
         btnSignOut = (LinearLayout) view.findViewById(R.id.sign_out_button);
         btnId = (LinearLayout) view.findViewById(R.id.button_identifiants);
         btnDonnes = (LinearLayout) view.findViewById(R.id.button_donnees_sante);
-        btnMedicaments= (LinearLayout) view.findViewById(R.id.button_medicaments);
-        btnMed=(LinearLayout) view.findViewById(R.id.button_medecin);
-        imageViewAvatar= view.findViewById(R.id.imageView_avatarProfil);
+        btnMedicaments = (LinearLayout) view.findViewById(R.id.button_medicaments);
+        btnMed = (LinearLayout) view.findViewById(R.id.button_medecin);
+        btnRecapitulatif=view.findViewById(R.id.button_genererFicheNeurologue);
+        imageViewAvatar = view.findViewById(R.id.imageView_avatarProfil);
 
-       // btnMedicaments = (LinearLayout) view.findViewById(R.id.button_medicaments);
-    //    btnMedecin = (LinearLayout) view.findViewById(R.id.button_medecin);
+        // btnMedicaments = (LinearLayout) view.findViewById(R.id.button_medicaments);
+        //    btnMedecin = (LinearLayout) view.findViewById(R.id.button_medecin);
 //Firebase
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("Patient");
-        myRefAvatar=mFirebaseDatabase.getReference("Patient");
+        myRefAvatar = mFirebaseDatabase.getReference("Patient");
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
 
@@ -77,7 +88,7 @@ public class ProfilFragment extends Fragment {
         };
 
 //afficher le nom,prenoom et mail de l'utiilisateur
-        Query query=myRef
+        Query query = myRef
                 .orderByChild("id")
                 .equalTo(userID);
 
@@ -90,12 +101,27 @@ public class ProfilFragment extends Fragment {
 // Déconnection
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
-                mAuth.signOut();
-                startActivity(new Intent(getActivity(), MainActivity.class));
+               mAuth.signOut();
+               startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
+
+// Génerer un récapitulatif pdf pour le neurologue du patient
+        btnRecapitulatif.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View view) {
+
+                Intent intentConnexion = new Intent(getActivity(), PdfviewerActivity.class);
+                startActivity(intentConnexion);
+
+            }
+        });
+
+
 // Voir  ses identifiants
         btnId.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +157,7 @@ public class ProfilFragment extends Fragment {
         });
         return view;
     }
+
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -138,9 +165,9 @@ public class ProfilFragment extends Fragment {
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    String nom =user.getNom();
-                    String prenom =user.getPrenom();
-                    editTextNomPrenomProfil.setText(nom +" " +prenom);
+                    String nom = user.getNom();
+                    String prenom = user.getPrenom();
+                    editTextNomPrenomProfil.setText(nom + " " + prenom);
 
                 }
 
@@ -159,21 +186,18 @@ public class ProfilFragment extends Fragment {
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    String sexe =user.getSexe();
+                    String sexe = user.getSexe();
                     int age = Integer.parseInt(user.getAge());
 
-                   if(sexe.equals("Une femme")&&age<55){
-                      imageViewAvatar.setBackgroundResource(R.drawable.avatarfemmme);
-                   }
-                   else if(sexe.equals("Une femme") &&age>55){
-                       imageViewAvatar.setBackgroundResource(R.drawable.avatarfemmemature);
-                   }
-                   else if(sexe.equals("Un homme") && (age > 55)){
-                       imageViewAvatar.setBackgroundResource(R.drawable.avatarhommemature);
-                   }
-                   else if(sexe.equals("Un homme") &&age<55){
-                       imageViewAvatar.setBackgroundResource(R.drawable.avatarhomme);
-                   }
+                    if (sexe.equals("Une femme") && age < 55) {
+                        imageViewAvatar.setBackgroundResource(R.drawable.avatarfemmme);
+                    } else if (sexe.equals("Une femme") && age > 55) {
+                        imageViewAvatar.setBackgroundResource(R.drawable.avatarfemmemature);
+                    } else if (sexe.equals("Un homme") && (age > 55)) {
+                        imageViewAvatar.setBackgroundResource(R.drawable.avatarhommemature);
+                    } else if (sexe.equals("Un homme") && age < 55) {
+                        imageViewAvatar.setBackgroundResource(R.drawable.avatarhomme);
+                    }
 
 
                 }
@@ -200,7 +224,11 @@ public class ProfilFragment extends Fragment {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    private void toastMessage(String message){
-        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+
+    private void toastMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
+
+
+
 }

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.dopapillsgit.PdfviewerActivity"
+    android:id="@+id/mPdfViewer"
+    xmlns:tools="http://schemas.android.com/tools">
+   <TextView
+       android:id="@+id/titre_ViewPdf"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       android:textAlignment="center"
+       android:gravity="center"
+       android:textSize="20sp"
+       android:textColor="@color/vertBleu"
+       android:textStyle="bold"
+       android:text="Récapitulatif de l'état de santé du patient">
+   </TextView>
+<LinearLayout
+    android:id="@+id/layout_NomPatient"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@+id/titre_ViewPdf"
+    android:layout_marginTop="15dp">
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Nom : "
+       android:textStyle="bold"
+       android:gravity="left"
+       android:textSize="14sp" />
+   <TextView
+       android:id="@+id/textView_NomPatient"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:gravity="left" />
+
+</LinearLayout>
+   <LinearLayout
+       android:id="@+id/layout_PrenomPatient"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_marginTop="5dp"
+       android:layout_below="@+id/layout_NomPatient">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Prénom : "
+          android:textStyle="bold"
+          android:gravity="left"
+          android:textSize="14sp" />
+      <TextView
+          android:id="@+id/textView_PrenomPatient"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="left" />
+
+   </LinearLayout>
+
+   <LinearLayout
+       android:id="@+id/layout_AnneeDiagnosticPatient"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_marginTop="5dp"
+       android:layout_below="@+id/layout_PrenomPatient">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Année de diagnostic : "
+          android:textStyle="bold"
+          android:gravity="left"
+          android:textSize="14sp"  />
+      <TextView
+          android:id="@+id/textView_AnneeDiagnosticPatient"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="left" />
+
+   </LinearLayout>
+   <LinearLayout
+       android:id="@+id/layout_ContreIndicationPatient"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_marginTop="5dp"
+       android:layout_below="@+id/layout_AnneeDiagnosticPatient">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Contre Indication : "
+          android:textStyle="bold"
+          android:gravity="left"
+          android:textSize="14sp"  />
+      <TextView
+          android:id="@+id/textView_ContreIndicationPatient"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="left" />
+
+   </LinearLayout>
+   <LinearLayout
+       android:id="@+id/layout_RécapitulatifDesMedicamentsPatient"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_marginTop="5dp"
+       android:layout_below="@+id/layout_ContreIndicationPatient">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Récapitulatif des médicaments : "
+          android:textStyle="bold"
+          android:gravity="left"
+          android:textSize="14sp"  />
+      <TextView
+          android:id="@+id/textView_RécapitulatifDesMedicamentsPatient"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="left" />
+
+   </LinearLayout>
+   <LinearLayout
+       android:id="@+id/layout_RécapitulatifActivitePhysiquePatient"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_marginTop="5dp"
+       android:layout_below="@+id/layout_RécapitulatifDesMedicamentsPatient">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Récapitulatif de l'activité physique du patient : "
+          android:textStyle="bold"
+          android:gravity="left"
+          android:textSize="14sp"  />
+      <TextView
+          android:id="@+id/textView_RécapitulatifActivitePhysiquePatient"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="left" />
+
+   </LinearLayout>
+   <LinearLayout
+       android:id="@+id/layout_RécapitulatifEtatPatient"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_marginTop="5dp"
+       android:layout_below="@+id/layout_RécapitulatifActivitePhysiquePatient">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Récapitulatif de l'état du patient : "
+          android:textStyle="bold"
+          android:gravity="left"
+          android:textSize="14sp"  />
+      <TextView
+          android:id="@+id/textView_RécapitulatifEtatPatient"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="left" />
+
+   </LinearLayout>
+</RelativeLayout>
