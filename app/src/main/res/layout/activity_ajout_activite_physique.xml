@@ -270,7 +270,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:background="@drawable/basegrise"
-            android:text="Ajouter l'évènement"
+            android:text="Ajouter d'une activité physique"
             android:textColor="@color/blanc"
             android:layout_marginLeft="40dp" />
 
